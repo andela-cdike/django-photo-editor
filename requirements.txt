@@ -1,3 +1,4 @@
+cloudinary==1.4.0
 Django==1.8
 django-envie==0.0.9
 psycopg2==2.6.2

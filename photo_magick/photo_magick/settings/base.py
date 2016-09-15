@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+import cloudinary
+
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -72,7 +75,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'photo_magick.wsgi.application'
 
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -91,3 +93,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Image dimensions
+SITE_IMAGES = {
+    'large_image_width': 1000,
+    'large_image_height': 1000,
+    'thumbnail_image_width': 500,
+    'thumbnail_image_height': 500,
+}
+
+# Cloudinary configuration handshake
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.getenv('CLOUDINARY_API_KEY'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET')
+)
