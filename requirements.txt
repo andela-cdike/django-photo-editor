@@ -1,0 +1,4 @@
+Django==1.8
+django-envie==0.0.9
+psycopg2==2.6.2
+PyYAML==3.12
