@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
-from frontend.models import Folder, Image
+from photo_editor.models import Folder, Image
 
 
 class UserModelTestCase(TestCase):
@@ -31,7 +31,7 @@ class ImageModelTestCase(TestCase):
     def setUp(self):
         user = User.objects.create(username="rikky", password='marryam')
         folder = Folder.objects.create(name='None', owner=user)
-        image_path = 'frontend/tests/img/test.png'
+        image_path = 'photo_editor/tests/img/test.png'
         image = SimpleUploadedFile(
             name='test.png',
             content=open(image_path, 'rb').read(),
