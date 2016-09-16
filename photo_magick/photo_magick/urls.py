@@ -18,4 +18,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('photo_editor.urls')),
+    # url(r'^$', frontend.views.index),
+    url(r'^api-auth/',
+        include('rest_framework.urls', namespace='rest_framework'))
 ]
