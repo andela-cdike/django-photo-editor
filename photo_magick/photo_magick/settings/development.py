@@ -18,3 +18,12 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+
+# Setting for webpack_loader
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'photo_editor/bundles/local/',
+        'STATS_FILE': os.path.join(BASE_DIR, '../../webpack-stats-local.json'),
+    }
+}

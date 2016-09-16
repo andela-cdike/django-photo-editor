@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Do the bucket</title>
+
+    {% block base_css %}
+    <!-- Bootstrap Core CSS -->
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'photo_editor/bower_components/bootstrap/dist/css/bootstrap.min.css' %}"> -->
+    
+    <!-- Custom CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'photo_editor/css/styles.css' %}">
+
+    <!-- Custom Fonts -->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'photo_editor/bower_components/font-awesome/css/font-awesome.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic|Rock+Salt" rel="stylesheet" type="text/css">
+    {% endblock base_css %}
+
+    {% block extended_css %}
+        {# override this block to add app/feature-specific css in extending templates #}
+    {% endblock extended_css %}
+    
+  </head>
+
+  <body>
+
+    {% block main %}{% endblock %}
+
+    {% block base_js %}
+    <!-- Javascript libraries -->
+    {% load static %}
+    <!-- <script type="text/javascript" src="{% static 'photo_editor/bower_components/jquery/dist/jquery.min.js' %}"></script> -->
+    <script type="text/javascript" src="{% static 'photo_editor/bower_components/react/react.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'photo_editor/bower_components/react-bootstrap/react-bootstrap.min.js' %}"></script>
+    {% endblock base_js %}
+
+    {% block extended_js %}
+     <!-- override this block to add app/feature-specific js libraries and scripts in extending templates -->
+    {% endblock extended_js %}
+
+  </body>
+</html>

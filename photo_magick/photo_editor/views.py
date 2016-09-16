@@ -3,6 +3,8 @@ import os
 import StringIO
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.views.generic import View
+from django.shortcuts import render
 import PIL
 from rest_framework import generics, permissions, status
 from rest_framework.parsers import FormParser, MultiPartParser
@@ -155,3 +157,16 @@ class ProcessImage(APIView):
         request.session['processed_image_path'] = file_path
 
         return Response(image_partial_url)
+
+
+class HomeView(View):
+    """
+    This view points to the bucketlist frontend app.
+    Most of this section is implemented in reactJS folder.
+    Here, we just render the template.
+    """
+    def get(self, request):
+        """
+        Renders the bucketlist template
+        """
+        return render(request, 'home.html')

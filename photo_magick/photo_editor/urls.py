@@ -5,6 +5,9 @@ from photo_editor import views
 
 
 urlpatterns = [
+    # main page
+    url(r'^$', views.HomeView.as_view(), name='home'),
+
     # acquire and refresh JWT token
     url(r'^auth/login', obtain_jwt_token, name='user-login'),
     url(r'^auth/api-token-refresh/', refresh_jwt_token),

@@ -40,8 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djangobower',
     'rest_framework',
     'photo_editor',
+    'webpack_loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -60,7 +62,7 @@ ROOT_URLCONF = 'photo_magick.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, '../photo_editor/templates/photo_editor')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -95,6 +97,26 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(os.path.dirname(BASE_DIR), 'photo_editor/static')
+]
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'djangobower.finders.BowerFinder',
+)
+
+BOWER_COMPONENTS_ROOT = os.path.join(
+    os.path.dirname(BASE_DIR),
+    'photo_editor/static'
+)
+
+BOWER_INSTALLED_APPS = (
+    'font-awesome#4.6.3',
+    'react#15.3.1',
+    'react-bootstrap#0.30.3',
+)
 
 # Add setting for Django REST Framework
 REST_FRAMEWORK = {
