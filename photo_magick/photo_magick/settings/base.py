@@ -113,9 +113,12 @@ BOWER_COMPONENTS_ROOT = os.path.join(
 )
 
 BOWER_INSTALLED_APPS = (
+    'bootstrap#3.3.7',
     'font-awesome#4.6.3',
+    'jquery#3.1.0',
     'react#15.3.1',
     'react-bootstrap#0.30.3',
+    'bootstrap-slider#879a98dcd0923107363861e56423f3cc1c2472e7',
 )
 
 # Add setting for Django REST Framework

@@ -1,0 +1,322 @@
+/*font-family: 'Audiowide', cursive;
+font-family: 'Lancelot', cursive;
+font-family: 'Pirata One', cursive;
+*/
+html {
+  height: 100%
+}
+
+body {
+  background-color: #222;
+  height: 100%;
+  font-family: 'Audiowide', cursive;
+  color: #f1f1f1;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+#App1 {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+}
+
+header {
+  height: 8%;
+}
+
+figcaption {
+  font-family: font-family: 'Lancelot', cursive;;
+  font-size: 10px;
+  margin-bottom: 1rem;
+}
+
+#header-bar {
+  background-color: #222;
+}
+
+.navbar {
+  border-radius: 0;
+  border-color: transparent;
+}
+
+@media (min-width: 1100px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+#logo {
+  display: inline-block;
+  height: 30px;
+  width: 36px;
+  margin-top: -3px;
+}
+
+.brand-name {
+  color: #fff;
+  font-family: 'Pirata One', cursive;
+}
+
+.profile-link .dropdown-menu {
+  background-color: #222;
+}
+
+.profile-link .dropdown-menu > li > a {
+  color: #f1f1f1;
+}
+
+.profile-link .dropdown-menu > li > a:hover {
+  background-color: #aab5bc;
+}
+
+#content {
+  height: 92%;
+}
+
+#content .container {
+  height: 100%;
+}
+
+
+/**
+  TOP MENU BAR
+**/
+
+#top-menu-bar {
+  background-color: #aab5bc;
+  height: 12%;
+}
+
+#top-menu-bar .nav > li > a {
+  color: #f1f1f1;
+}
+
+#top-menu-bar .nav > li > a > i {
+  color: #222;
+}
+
+#top-menu-bar .nav > li > a:hover {
+  color: #fff;
+  background-color: transparent;
+}
+
+#top-menu-bar .nav > li.disabled > a {
+  color: #ccc;
+}
+
+
+/**
+  MID SECTION WHERE THE EDITING HAPPENS
+**/
+
+#mid {
+  height: 80%;
+}
+
+#mid .list-group-item {
+  background-color: transparent;
+  border: none;
+  color: #222;
+}
+
+
+/**
+  TOOLS GROUP BAR
+**/
+
+#left-tools-group-bar {
+  display: table;
+  background-color: #aab5bc;
+  height: 100%;
+}
+
+#left-tools-group-bar .list-group {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+}
+
+#left-tools-group-bar .list-group-item:hover {
+  color: #f1f1f1;
+}
+
+#left-tools-group-bar .list-group-item.active {
+  color: #f1f1f1;
+}
+
+#toolbar {
+  background-color: #222;
+  height: 100%;
+}
+
+#toolbar .list-group-item {
+  background-color: transparent;
+  border: none;
+  color: #aab5bc;
+}
+
+#toolbar .list-group-item:hover {
+  color: #f1f1f1;
+}
+
+/**
+  input sliders
+**/
+.form {
+  height: 52px;
+  margin: 0 auto;
+  padding-top: 15px;
+  width: 100%;
+}
+
+.formField {
+  margin-bottom: 5rem;
+}
+
+.InputRange {
+  cursor: pointer;
+  height: 1rem;
+  position: relative;
+  width: 100%;
+}
+
+.InputRange-label {
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.InputRange-label--min,
+.InputRange-label--max {
+  bottom: -1.4rem;
+  position: absolute;
+}
+
+.InputRange-label--min {
+  left: 0;
+}
+
+.InputRange-label--max {
+  right: -1rem;
+}
+
+.InputRange-label--value {
+  position: absolute;
+  top: -1.8rem;
+}
+
+.InputRange-labelContainer {
+  left: -50%;
+  position: relative;
+}
+
+.InputRange-labelContainer .InputRange-label--max {
+  left: 50%;
+}
+
+.InputRange-slider {
+  appearance: none;
+  background: #d6dbdf;
+  border: 1px solid #d6dbdf;
+  border-radius: 100%;
+  cursor: pointer;
+  display: block;
+  height: 1rem;
+  margin-left: -0.5rem;
+  margin-top: -0.65rem;
+  outline: none;
+  position: absolute;
+  top: 50%;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  width: 1rem;
+}
+
+.InputRange-slider:active {
+  transform: scale(1.3);
+}
+
+.InputRange-slider:focus {
+  box-shadow: 0 0 0 5px transparentize(#d6dbdf, 0.8)
+}
+
+.InputRange-slider .InputRange.is-disabled {
+  background: #aab5bc;
+  border: 1px solid #aab5bc;
+  box-shadow: none;
+  transform: none;
+}
+
+.InputRange-sliderContainer {
+  transition: left 0.3s ease-out;
+}
+
+.InputRange-track {
+  background: #aab5bc;
+  border-radius: 0.3rem;
+  display: block;
+  height: 0.3rem;
+  position: relative;
+  transition: left 0.3s ease-out, width 0.3s ease-out;
+}
+
+.InputRange-track .InputRange.is-disabled {
+  background: #cbd2d6;
+}
+
+.InputRange-track--container {
+  left: 0;
+  margin-top: -0.15rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.InputRange-track--active {
+  background: #d6dbdf;
+}
+
+
+/**
+  Misc Tools
+**/
+.form-control {
+  color: #f1f1f1;
+  background-color: #aab5bc;
+}
+
+#misc-toolbar .btn {
+  color: #f1f1f1;
+  background-color: #aab5bc;
+  border-color: #aab5bc;
+}
+
+
+/**
+  Image Pane
+**/
+
+#image-pane {
+  background-color: #222;
+  background-image: linear-gradient(45deg, #aab5bc 25%, transparent 25%, transparent 75%, #aab5bc 75%), 
+  linear-gradient(45deg, #aab5bc 25%, transparent 25%, transparent 75%, #aab5bc 75%);
+  background-size: 5px 5px;
+  background-position: 0 0, 10px 10px;
+  height: 100%;
+  opacity: 0.9;
+}
+
+#active-image {
+  width: 90%;
+  margin: 0.8rem auto;
+}
+
+#bottom-status-bar {
+  background-color: #aab5bc;
+  height: 8%;
+}
+
+/**
+  Helper classes
+**/
