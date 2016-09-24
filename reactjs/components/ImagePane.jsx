@@ -10,7 +10,7 @@ export default class ImagePane extends React.Component {
     return (
       <Row>
         <Col md={12}>
-          <Image id="active-image" src={image_url} width="80%" responsive alt="Current Image" />
+          <Image id="active-image" src={image_url} responsive alt="Current Image" />
         </Col>
       </Row>
     );

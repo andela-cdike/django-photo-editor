@@ -30,7 +30,8 @@ header {
 figcaption {
   font-family: font-family: 'Lancelot', cursive;;
   font-size: 10px;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
+  text-transform: capitalize;
 }
 
 #header-bar {
@@ -307,8 +308,13 @@ figcaption {
   opacity: 0.9;
 }
 
+#image-pane div {
+  height: 100%;
+}
+
 #active-image {
   width: 90%;
+  height: 97%;
   margin: 0.8rem auto;
 }
 

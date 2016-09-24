@@ -14,8 +14,10 @@ import requests
 
 from photo_editor.custom_permissions import IsOwner
 from photo_editor.image_utils import ImageProcessor
-from photo_editor.models import Folder, Image
-from photo_editor.serializers import FolderSerializer
+from photo_editor.models import Folder, Image, ImageProcessors
+from photo_editor.serializers import (
+    FolderSerializer, ImageProcessorsViewSerializer, ImageProcessorsSerializer
+)
 
 
 class ImageCreateDeleteView(APIView):
@@ -157,6 +159,32 @@ class ProcessImage(APIView):
         request.session['processed_image_path'] = file_path
 
         return Response(image_partial_url)
+
+
+class ImageProcessorsView(generics.ListAPIView):
+    """Lists all image processors in DB"""
+    queryset = ImageProcessors.objects.all()
+    serializer_class = ImageProcessorsViewSerializer
+
+    def list(self, request):
+        """
+        Override the default list method so obj are separated based
+        on processor_type
+        """
+        queryset = self.get_queryset('filter')
+        serializer = ImageProcessorsSerializer(queryset, many=True)
+        filter_tools = serializer.data
+        queryset = self.get_queryset('effect')
+        serializer = ImageProcessorsSerializer(queryset, many=True)
+        effect_tools = serializer.data
+        response = {
+            'filterTools': filter_tools,
+            'effectTools': effect_tools
+        }
+        return Response(response)
+
+    def get_queryset(self, filter):
+        return self.queryset.filter(processor_type=filter)
 
 
 class HomeView(View):

@@ -26,23 +26,28 @@ urlpatterns = [
         name='folder-detail'),
 
     # image processor view
-    url(r'^filter/(?P<image_id>[0-9]+)/(?P<action>\w+)$',
+    url(r'^images/process/(?P<image_id>[0-9]+)/(?P<action>\w+)$',
         views.ProcessImage.as_view(),
         name='process_image'),
-    url(r'^filter/(?P<image_id>[0-9]+)/(?P<action>\w+)/(?P<option>\w+)$',
+    url(r'^images/process/(?P<image_id>[0-9]+)/(?P<action>\w+)/(?P<option>\w+)$',
         views.ProcessImage.as_view(),
         name='process_image'),
-    url(r'^filter/(?P<image_id>[0-9]+)/(?P<action>\w+)/(?P<left>[0-9]+)/(?P<upper>[0-9]+)/(?P<right>[0-9]+)/(?P<lower>[0-9]+)/$',
+    url(r'^images/manipulate/(?P<image_id>[0-9]+)/(?P<action>\w+)/(?P<left>[0-9]+)/(?P<upper>[0-9]+)/(?P<right>[0-9]+)/(?P<lower>[0-9]+)/$',
         views.ProcessImage.as_view(),
         name='process_image'),
 
     # cancel changes
-    url(r'^filter/cancel/(?P<image_id>[0-9]+)$',
+    url(r'^images/process/cancel/(?P<image_id>[0-9]+)$',
         views.RevertToOriginal.as_view(),
         name='cancel_changes'),
 
     # save changes
-    url(r'^filter/save/(?P<image_id>[0-9]+)$',
+    url(r'^images/process/save/(?P<image_id>[0-9]+)$',
         views.ApplyImageProcessing.as_view(),
         name='apply_changes'),
+
+    # image processors
+    url(r'image-processors/$',
+        views.ImageProcessorsView.as_view(),
+        name="image_processors")
 ]

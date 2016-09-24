@@ -143,8 +143,8 @@ JWT_AUTH = {
 SITE_IMAGES = {
     'large_image_width': 1000,
     'large_image_height': 1000,
-    'thumbnail_image_width': 500,
-    'thumbnail_image_height': 500,
+    'thumbnail_image_width': 75,
+    'thumbnail_image_height': 100,
 }
 
 # Cloudinary configuration handshake

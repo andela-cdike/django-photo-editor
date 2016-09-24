@@ -41,7 +41,7 @@ class Image(Base):
         resource_type='image',
         type='upload',
         blank=True,
-        default="img/photo_default.png"
+        default="img/logo.jpg"
     )
     folder = models.ForeignKey(
         'Folder',
@@ -95,3 +95,28 @@ class Image(Base):
         """Delete this instance and its image on cloudinary"""
         cloudinary.uploader.destroy(self.image.public_id)
         super(Image, self).delete(*args, **kwargs)
+
+
+class ImageProcessors(Base):
+    image = CloudinaryField(
+        resource_type='image',
+        type='upload',
+        blank=True,
+        default='img/logo.jpg'
+    )
+    processor_type = models.CharField(max_length=50)
+
+    class Meta:
+        ordering = ('processor_type',)
+
+    def __unicode__(self):
+        return self.name
+
+    def thumbnail_image_url(self):
+        """Returns image url"""
+        image_url = self.image.build_url(
+            width=SITE_IMAGES['thumbnail_image_width'],
+            height=SITE_IMAGES['thumbnail_image_height'],
+            crop="fit",
+        )
+        return image_url

@@ -5,8 +5,11 @@ import {
 import { connect } from "react-redux";
 
 import {
+  fetchImageProcessorTools
+} from '../actions/imageProcessorToolsActions';
+import {
   updateToolBarVisibility
-} from "../actions/toolBarVisibilityActions";
+} from '../actions/toolBarVisibilityActions';
 import {
     updateEnhanceToolsValues
 } from '../actions/enhanceToolsActions';
@@ -22,6 +25,8 @@ import TopMenuBar from '../components/TopMenuBar';
   return {
     toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
     enhanceToolsValues: store.enhanceTools.enhanceToolsValues,
+    effectTools: store.imageProcessorTools.effectTools,
+    filterTools: store.imageProcessorTools.filterTools,
   };
 })
 
@@ -35,36 +40,10 @@ export default class Home extends React.Component {
   componentWillMount() {
     this.props.dispatch(updateToolBarVisibility())
     this.props.dispatch(updateEnhanceToolsValues())
+    this.props.dispatch(fetchImageProcessorTools())
   }
 
   render() {
-    // these guys would finally be passed in via redux stores
-    const url = window.location.origin + '/static/photo_editor/img/logo.jpg';
-
-    const filterTools = [
-      {name: 'Contour', url: url},
-      {name: 'Edge Enhance', url: url},
-      {name: 'Gaussian blur', url: url},
-      {name: 'Max filter', url: url},
-      {name: 'Unsharp mask', url: url},
-    ];
-
-    const effectTools = [
-      {name: 'Grayscale', url: url},
-      {name: 'Flip', url: url},
-      {name: 'Invert', url: url},
-      {name: 'Mirror', url: url},
-      {name: 'Posterize', url: url},
-      {name: 'Solarize', url: url},
-      {name: 'Watermark', url: url},
-      {name: 'roll', url: url},
-      {name: 'mix1', url: url},
-      {name: 'mix2', url: url},
-      {name: 'mix3', url: url},
-      {name: 'mix4', url: url},
-    ];
-
-
     return (
       <main>
         <header role="banner" id="nav-header">
@@ -90,8 +69,8 @@ export default class Home extends React.Component {
                   toolBarVisibility={this.props.toolBarVisibility}
                   enhanceToolsValues={this.props.enhanceToolsValues}
                   dispatch={this.props.dispatch}
-                  filterTools={filterTools}
-                  effectTools={effectTools}
+                  filterTools={this.props.filterTools}
+                  effectTools={this.props.effectTools}
                 />
               </Col>
               <Col md={8} id="image-pane">
