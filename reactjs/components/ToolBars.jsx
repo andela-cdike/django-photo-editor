@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { applyEffectFilter } from '../actions/imageActions';
+
 import EnhanceToolBar from './ToolBars/EnhanceToolBar';
 import FinderToolBar from './ToolBars/FinderToolBar';
 import MiscToolBar from './ToolBars/MiscToolBar';
@@ -38,18 +40,24 @@ export default class ToolBars extends React.Component {
         {
           filterTools
             ? <ThumbnailView
-                tools={this.props.filterTools}
+                action={applyEffectFilter}
+                activeImage={this.props.activeImage}
+                dispatch={this.props.dispatch}
                 id="filter-toolbar"
                 title="FILTER TOOLS"
+                items={this.props.filterTools}
               />
             : null
         }
         {
           effectTools
             ? <ThumbnailView
-                tools={this.props.effectTools}
+                action={applyEffectFilter}
+                activeImage={this.props.activeImage}
                 id="effect-toolbar"
+                dispatch={this.props.dispatch}
                 title="EFFECT TOOLS"
+                items={this.props.effectTools}
               />
             : null
         }

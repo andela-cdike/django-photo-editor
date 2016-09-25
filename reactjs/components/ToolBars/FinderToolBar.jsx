@@ -65,7 +65,7 @@ export default class FinderToolBar extends React.Component {
         </ListGroupItem>
         {
           this.state.active == folder.id
-            ?  <ThumbnailView action={changeActiveImage} dispatch={this.props.dispatch} tools={folder.images} class="thumbnail-view" title="" />
+            ?  <ThumbnailView action={changeActiveImage} dispatch={this.props.dispatch} items={folder.images} class="thumbnail-view" title="" />
             : null
         }
       </div>

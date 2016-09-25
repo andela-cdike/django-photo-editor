@@ -73,12 +73,13 @@ export default class Home extends React.Component {
               </Col>
               <Col md={3} id="toolbar">
                 <ToolBars
+                  activeImage={this.props.activeImage}
+                  dispatch={this.props.dispatch}
+                  effectTools={this.props.effectTools}
+                  enhanceToolsValues={this.props.enhanceToolsValues}
+                  filterTools={this.props.filterTools}
                   folders={this.props.folders}
                   toolBarVisibility={this.props.toolBarVisibility}
-                  enhanceToolsValues={this.props.enhanceToolsValues}
-                  dispatch={this.props.dispatch}
-                  filterTools={this.props.filterTools}
-                  effectTools={this.props.effectTools}
                 />
               </Col>
               <Col md={8} id="image-pane">

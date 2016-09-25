@@ -18,6 +18,7 @@ from photo_editor.models import Folder, Image, ImageProcessors
 from photo_editor.serializers import (
     FolderSerializer, ImageProcessorsViewSerializer, ImageProcessorsSerializer
 )
+from photo_magick.settings import STATICFILES_DIRS
 
 
 class ImageCreateDeleteView(APIView):
@@ -157,13 +158,13 @@ class ProcessImage(APIView):
         out = image_processor_methods[method_index - 1]()
 
         # save image to storage
-        image_partial_url = 'photo_editor/img/temp_image.%s' % (
+        image_partial_url = '/photo_editor/img/temp_image.%s' % (
             image.format.lower())
-        file_path = 'photo_editor/static/' + image_partial_url
+        file_path = STATICFILES_DIRS[0] + image_partial_url
         out.save(file_path, image.format)
         request.session['processed_image_path'] = file_path
 
-        return Response(image_partial_url)
+        return Response('/static{0}' .format(image_partial_url))
 
 
 class ImageProcessorsView(generics.ListAPIView):

@@ -9,24 +9,35 @@ var Packery = require('react-packery-component')(React);
 export default class ThumbNailView extends React.Component {
   handleClick(e) {
     e.preventDefault();
-    const image_url = e.currentTarget.href
-    console.log('yayayabinks: ', e.currentTarget.href)
-    this.props.dispatch(this.props.action(image_url))
+    const imageId = e.currentTarget.id
+    if (this.props.title === '') {
+      const url = e.currentTarget.href
+      this.props.dispatch(this.props.action(url, imageId));
+    } else {
+      console.log('shou;ndndgk be here: ', imageId)
+      const url = e.currentTarget.name
+      this.props.dispatch(this.props.action(url, imageId));
+    }
   }
 
   render() {
-    const { id, title, tools } = this.props;
-    const mappedTools = tools.map((tool, i) =>
+    const { id, title, items } = this.props;
+    const mappedItems = items.map((item, i) =>
       <Col key={i} md={4}>
-        <a id={i} href={tool.large_image_url} onClick={this.handleClick.bind(this)}>
+        <a
+          id={item.id || this.props.activeImage.id}
+          name = {item.name}
+          href={item.large_image_url}
+          onClick={this.handleClick.bind(this)}
+        >
             <Image
-              src={tool.thumbnail_image_url}
-              alt={tool.name}
+              src={item.thumbnail_image_url}
+              alt={item.name}
               height="60"
               width="90%"
               square
             />
-            <figcaption>{tool.name}</figcaption>
+            <figcaption>{item.name}</figcaption>
         </a>
       </Col>
     );
@@ -39,7 +50,7 @@ export default class ThumbNailView extends React.Component {
         <br />
         <Row>
           <Packery>
-            {mappedTools}
+            {mappedItems}
           </Packery>
         </Row>
       </div>
