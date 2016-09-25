@@ -4,6 +4,7 @@ import {
 } from 'react-bootstrap';
 import { connect } from "react-redux";
 
+import { fetchFolders } from '../actions/folderActions';
 import {
   fetchImageProcessorTools
 } from '../actions/imageProcessorToolsActions';
@@ -23,10 +24,12 @@ import TopMenuBar from '../components/TopMenuBar';
 
 @connect((store) => {
   return {
-    toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
-    enhanceToolsValues: store.enhanceTools.enhanceToolsValues,
+    activeImage: store.images.activeImage,
     effectTools: store.imageProcessorTools.effectTools,
+    enhanceToolsValues: store.enhanceTools.enhanceToolsValues,
     filterTools: store.imageProcessorTools.filterTools,
+    folders: store.folders,
+    toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
   };
 })
 
@@ -38,12 +41,16 @@ export default class Home extends React.Component {
   }
 
   componentWillMount() {
-    this.props.dispatch(updateToolBarVisibility())
-    this.props.dispatch(updateEnhanceToolsValues())
-    this.props.dispatch(fetchImageProcessorTools())
+    this.props.dispatch(fetchFolders());
+    this.props.dispatch(updateToolBarVisibility());
+    this.props.dispatch(updateEnhanceToolsValues());
+    this.props.dispatch(fetchImageProcessorTools());
   }
 
   render() {
+    console.log('folders: ', this.props.folders)
+    console.log('filterTools: ', this.props.filterTools)
+    console.log('effectTools: ', this.props.effectTools)
     return (
       <main>
         <header role="banner" id="nav-header">
@@ -66,6 +73,7 @@ export default class Home extends React.Component {
               </Col>
               <Col md={3} id="toolbar">
                 <ToolBars
+                  folders={this.props.folders}
                   toolBarVisibility={this.props.toolBarVisibility}
                   enhanceToolsValues={this.props.enhanceToolsValues}
                   dispatch={this.props.dispatch}
@@ -74,7 +82,10 @@ export default class Home extends React.Component {
                 />
               </Col>
               <Col md={8} id="image-pane">
-                <ImagePane />
+                <ImagePane
+                  activeImage={this.props.activeImage}
+                  dispatch={this.props.dispatch}
+                />
               </Col>
             </Row>
             <Row id="bottom-status-bar">

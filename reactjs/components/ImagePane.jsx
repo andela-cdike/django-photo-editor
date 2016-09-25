@@ -5,12 +5,12 @@ import {
 
 export default class ImagePane extends React.Component {
   render() {
-    const image_url = "http://res.cloudinary.com/andela-troupon/image/upload/v1473933078/w7dizwpiftulvy3arneh.png";
-
+    console.log('Image_pane: ', this.props.activeImage)
+  
     return (
       <Row>
         <Col md={12}>
-          <Image id="active-image" src={image_url} responsive alt="Current Image" />
+          <Image id="active-image" src={this.props.activeImage} responsive alt="Current Image" />
         </Col>
       </Row>
     );

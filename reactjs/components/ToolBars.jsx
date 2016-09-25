@@ -16,7 +16,10 @@ export default class ToolBars extends React.Component {
       <div>
         {
           finder
-            ? <FinderToolBar />
+            ? <FinderToolBar
+                folders={this.props.folders}
+                dispatch={this.props.dispatch}
+              />
             : null
         }
         {

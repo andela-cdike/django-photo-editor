@@ -40,8 +40,8 @@ export default class TopMenuBar extends React.Component {
           &nbsp; Cancel
         </NavItem>
         <NavItem eventKey={4} disabled={shareIsActive}>
-          <i class="fa fa-share-alt" aria-hidden="true"></i>
-          &nbsp; Share on FaceBook
+          <i class="fa fa-facebook-official" aria-hidden="true"></i>
+          &nbsp; Share
         </NavItem>
       </Nav>
     );

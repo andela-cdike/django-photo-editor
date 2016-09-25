@@ -34,6 +34,14 @@ figcaption {
   text-transform: capitalize;
 }
 
+/**
+  General styles
+**/
+
+:focus {
+  outline: none;
+}
+
 #header-bar {
   background-color: #222;
 }
@@ -99,6 +107,7 @@ figcaption {
   color: #222;
 }
 
+#top-menu-bar .nav > li > a:focus,
 #top-menu-bar .nav > li > a:hover {
   color: #fff;
   background-color: transparent;
@@ -148,9 +157,14 @@ figcaption {
   color: #f1f1f1;
 }
 
+
+/**
+  TOOL BAR
+**/
 #toolbar {
   background-color: #222;
   height: 100%;
+  overflow: auto;
 }
 
 #toolbar .list-group-item {
@@ -161,6 +175,16 @@ figcaption {
 
 #toolbar .list-group-item:hover {
   color: #f1f1f1;
+}
+
+.add-folder-button .default {
+  color: #aab5bc;
+}
+
+#toolbar .btn {
+  color: #f1f1f1;
+  background-color: #aab5bc;
+  border-color: #aab5bc;
 }
 
 /**
@@ -287,12 +311,12 @@ figcaption {
   background-color: #aab5bc;
 }
 
-#misc-toolbar .btn {
+/*#misc-toolbar .btn {
   color: #f1f1f1;
   background-color: #aab5bc;
   border-color: #aab5bc;
 }
-
+*/
 
 /**
   Image Pane
@@ -316,6 +340,7 @@ figcaption {
   width: 90%;
   height: 97%;
   margin: 0.8rem auto;
+  background-color: #fff;
 }
 
 #bottom-status-bar {

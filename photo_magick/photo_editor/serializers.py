@@ -24,7 +24,7 @@ class FolderSerializer(BaseSerializer):
 
     class Meta:
         model = Folder
-        fields = ('owner', 'name', 'date_created',
+        fields = ('id', 'owner', 'name', 'date_created',
                   'date_last_modified', 'images')
 
 

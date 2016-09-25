@@ -50,7 +50,12 @@ class FolderList(generics.ListCreateAPIView):
     """
     queryset = Folder.objects.all()
     serializer_class = FolderSerializer
-    permission_classes = (permissions.IsAuthenticated, IsOwner)
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get_queryset(self):
+        """Queryset should only return folders of authenticated user"""
+        authenticated_user = self.request.user
+        return Folder.objects.filter(owner=authenticated_user)
 
     def perform_create(self, serializer):
         """Include the owner information when saving a Folder"""
