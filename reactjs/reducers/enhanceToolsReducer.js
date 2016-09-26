@@ -9,13 +9,12 @@ export default function reducer(state={
     fetched: true,
     error: null
   }, action) {
-  console.log("HERE: ", state)
-    
+
   switch (action.type) {
-    case "INITIALIZE_ENHANCE_TOOLS_VALUES": {
+    case 'INITIALIZE_ENHANCE_TOOLS_VALUES': {
       return {...state}
     }
-    case "UPDATE_CONTRAST_VALUE": {
+    case 'UPDATE_CONTRAST_VALUE': {
       return {
         ...state,
         enhanceToolsValues: {
@@ -23,7 +22,7 @@ export default function reducer(state={
         }
       }
     }
-    case "UPDATE_BRIGHTNESS_VALUE": {
+    case 'UPDATE_BRIGHTNESS_VALUE': {
       return {
         ...state,
         enhanceToolsValues: {
@@ -31,7 +30,7 @@ export default function reducer(state={
         }
       }
     }
-    case "UPDATE_SHARPNESS_VALUE": {
+    case 'UPDATE_SHARPNESS_VALUE': {
       return {
         ...state,
         enhanceToolsValues: {
@@ -39,7 +38,7 @@ export default function reducer(state={
         }
       }
     }
-    case "UPDATE_COLOR_VALUE": {
+    case 'UPDATE_COLOR_VALUE': {
       return {
         ...state,
         enhanceToolsValue: {
@@ -47,7 +46,7 @@ export default function reducer(state={
         }
       }
     }
-    case "UPDATE_ENHANCE_TOOLS_REJECTED": {
+    case 'UPDATE_ENHANCE_TOOLS_REJECTED': {
       return {
         ...state,
         error: action.payload

@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^images/process/(?P<image_id>[0-9]+)/(?P<action>\w+)/(?P<option>\w+)$',
         views.ProcessImage.as_view(),
         name='process_image'),
-    url(r'^images/manipulate/(?P<image_id>[0-9]+)/(?P<action>\w+)/(?P<left>[0-9]+)/(?P<upper>[0-9]+)/(?P<right>[0-9]+)/(?P<lower>[0-9]+)/$',
+    url(r'^images/process/(?P<image_id>[0-9]+)/(?P<action>\w+)/(?P<left>[0-9]+)/(?P<upper>[0-9]+)/(?P<right>[0-9]+)/(?P<lower>[0-9]+)/$',
         views.ProcessImage.as_view(),
         name='process_image'),
 

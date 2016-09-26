@@ -15,7 +15,7 @@ export default class EnhanceToolBar extends React.Component {
       contrast, brightness, sharpness, color
     ];
     const enhanceTools = [
-      'Contrast', 'Brightness', 'Sharpness', 'Color'
+      'contrast', 'brightness', 'sharpness', 'color'
     ];
     const numTools = enhanceTools.length
 
@@ -23,9 +23,10 @@ export default class EnhanceToolBar extends React.Component {
       <div key={i} class="formField">
         <p>{tool}</p>
         <InputRangeSlider
+          dispatch={this.props.dispatch}
+          activeImageId={this.props.activeImageId}
           name={tool}
           value={enhanceToolsValues[i]}
-          dispatch={this.props.dispatch}
         />
       </div>
     );

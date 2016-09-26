@@ -109,14 +109,13 @@ class ImageProcessor(object):
 
         Args:
             img - the image to enhance
-            option - specifies if property should be increased or decreased
+            option - determines the new contrast
             operation - the property to adjust
         Returns:
             out - the flipped image
         """
-        option = {'increase': 1, 'decrease': -1}
-        factor = 0.1
-        base = 1.0
+        base = 5.0
+        factor = int(self.option) / base
         enhancers = {
             'contrast': ImageEnhance.Contrast,
             'brightness': ImageEnhance.Brightness,
@@ -124,7 +123,7 @@ class ImageProcessor(object):
             'color': ImageEnhance.Color
         }
         out = enhancers[self.operation](self.img)
-        out = out.enhance(base + option[self.option] * factor)
+        out = out.enhance(factor)
         return out
 
     def filter_image(self):

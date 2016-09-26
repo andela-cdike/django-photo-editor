@@ -180,7 +180,7 @@ from .http_header import ApiHeaderAuthorization
 #             'process_image',
 #             kwargs={
 #                 'image_id': self.image.id, 'action': 'contrast',
-#                 'option': 'decrease'
+#                 'option': '8'
 #             }
 #         )
 #         response = self.client.get(url)
@@ -192,7 +192,7 @@ from .http_header import ApiHeaderAuthorization
 #             'process_image',
 #             kwargs={
 #                 'image_id': self.image.id, 'action': 'brightness',
-#                 'option': 'increase'
+#                 'option': '3'
 #             }
 #         )
 #         response = self.client.get(url)
@@ -204,7 +204,7 @@ from .http_header import ApiHeaderAuthorization
 #             'process_image',
 #             kwargs={
 #                 'image_id': self.image.id, 'action': 'sharpness',
-#                 'option': 'increase'
+#                 'option': '2'
 #             }
 #         )
 #         response = self.client.get(url)
@@ -216,7 +216,7 @@ from .http_header import ApiHeaderAuthorization
 #             'process_image',
 #             kwargs={
 #                 'image_id': self.image.id, 'action': 'color',
-#                 'option': 'decrease'
+#                 'option': '6'
 #             }
 #         )
 #         response = self.client.get(url)
