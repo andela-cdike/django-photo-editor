@@ -7,33 +7,35 @@ export function updateEnhanceToolsValues(enhanceToolName=null, newValue=null) {
   }
 
   switch (enhanceToolName) {
-    case "Contrast": {
+    case "contrast": {
       return {
         type: "UPDATE_CONTRAST_VALUE",
         payload: newValue
       }
     }
-    case "Brightness": {
+    case "brightness": {
       return {
         type: "UPDATE_BRIGHTNESS_VALUE",
         payload: newValue
       }
     }
-    case "Sharpness": {
+    case "sharpness": {
       return {
         type: "UPDATE_SHARPNESS_VALUE",
         payload: newValue
       }
     }
-    case "Color": {
+    case "color": {
       return {
         type: "UPDATE_COLOR_VALUE",
         payload: newValue
       }
     }
-    return {
-      type: "UPDATE_ENHANCE_TOOLS_REJECTED",
-      payload: "ERROR: An invalid enhance tool name was supplied!!!"
+    default: {
+      return {
+        type: "UPDATE_ENHANCE_TOOLS_REJECTED",
+        payload: "ERROR: An invalid enhance tool name was supplied!!!"
+      }
     }
   }
 }

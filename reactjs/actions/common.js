@@ -6,7 +6,7 @@ export function constructConfig(token) {
 }
 
 // Prepare url for effect and filter tools
-export function prepareUrl(operationName, imageId) {
+export function prepareUrl(imageId, operationName) {
   const hostname = window.location.origin;
   const baseUrl = `${hostname}/images/process/${imageId}`;
   let url = '';

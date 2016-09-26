@@ -115,9 +115,9 @@ class ApplyImageProcessing(APIView):
 
 class ProcessImage(APIView):
     """
-    View to filter images
+    View to process images
     """
-    index_image_processor_methods = {
+    image_processor_methods_index = {
         'gray_scale': 1, 'flip': 1, 'invert': 1, 'mirror': 1,
         'posterize': 1, 'solarize': 1,
         'add_watermark': 2,
@@ -132,17 +132,27 @@ class ProcessImage(APIView):
     }
 
     def get(self, request, image_id, action, **kwargs):
-        # get image from database
-        image_obj = Image.objects.get(pk=image_id)
+        """
+        Applies different image processing operations to an image
+        """
+        # apply image processing on original image except for
+        # rotate and resize that should be additive
+        additive_operations = (
+            'rotate'
+        )
+        if action in additive_operations and request.session.get(
+                'last_action', None) == action:
+            image_path = request.session['processed_image_path']
+            image = PIL.Image.open(image_path)
+        else:
+            image_obj = Image.objects.get(pk=image_id)
+            image_url = image_obj.large_image_url()
+            response = requests.get(image_url)
+            image = PIL.Image.open(BytesIO(response.content))
+            request.session['original_image_url'] = image_url
 
-        # get image from cloudinary
-        image_url = image_obj.large_image_url()
-        response = requests.get(image_url)
-        image = PIL.Image.open(BytesIO(response.content))
-        request.session['original_image_url'] = image_url
-
-        # filter image
-        method_index = self.index_image_processor_methods[action]
+        # process image
+        method_index = self.image_processor_methods_index[action]
         processor = ImageProcessor(image, action, **kwargs)
         image_processor_methods = (
             processor.apply_pil_process_ops,
@@ -163,6 +173,7 @@ class ProcessImage(APIView):
         file_path = STATICFILES_DIRS[0] + image_partial_url
         out.save(file_path, image.format)
         request.session['processed_image_path'] = file_path
+        request.session['last_action'] = action
 
         return Response('/static{0}' .format(image_partial_url))
 

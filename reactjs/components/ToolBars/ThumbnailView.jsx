@@ -12,11 +12,11 @@ export default class ThumbNailView extends React.Component {
     const imageId = e.currentTarget.id
     if (this.props.title === '') {
       const url = e.currentTarget.href
-      this.props.dispatch(this.props.action(url, imageId));
+      this.props.dispatch(this.props.action(imageId, url));
     } else {
       console.log('shou;ndndgk be here: ', imageId)
       const url = e.currentTarget.name
-      this.props.dispatch(this.props.action(url, imageId));
+      this.props.dispatch(this.props.action(imageId, url));
     }
   }
 

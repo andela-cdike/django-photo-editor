@@ -29,12 +29,16 @@ export default class ToolBars extends React.Component {
             ? <EnhanceToolBar
                 enhanceToolsValues={this.props.enhanceToolsValues}
                 dispatch={this.props.dispatch}
+                activeImageId={this.props.activeImage.id}
               />
             : null
         }
         {
           miscTools
-            ? <MiscToolBar />
+            ? <MiscToolBar
+                activeImageId={this.props.activeImage.id}
+                dispatch={this.props.dispatch}
+              />
             : null
         }
         {
