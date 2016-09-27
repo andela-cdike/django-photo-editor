@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 import { 
     Button, Col, Checkbox, ControlLabel, Form,
     FormGroup, FormControl, Modal, Overlay,
     Popover, Tooltip 
-} from "react-bootstrap"
-import { findDOMNode } from "react-dom";
+} from 'react-bootstrap'
+import { findDOMNode } from 'react-dom';
 
-import { addFolder, fetchFolders } from "../../actions/folderActions";
+import { addFolder, fetchFolders } from '../../actions/folderActions';
 
 
 export default class AddButton extends React.Component {
@@ -70,9 +70,8 @@ export default class AddButton extends React.Component {
 
   // store name field in a state
   handleChange(e) {
-    const field = e.target.id;
     const name = e.target.value;
-    this.setState({ [field]: name});
+    this.setState({ name: name});
   }
 
   // store checkbox value in state

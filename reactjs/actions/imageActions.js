@@ -80,6 +80,34 @@ export function resizeImage(imageId, option) {
 } 
 
 
-// export function rotateImage(imageId) {
+export function uploadImage(name, folder_id, image) {
+  const url = `${hostname}/images/`;
+  const config = constructConfig(token);
+  let data = new FormData();
+  data.append('name', name)
+  data.append('folder_id', folder_id)
+  data.append('image', image)
 
-// }
+  return function(dispatch) {
+    axios.post(url, data, config)
+      .then((response) => {
+        dispatch({
+          type: 'UPLOAD_IMAGE_FULFILLED',
+          payload: response.data          
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: 'UPLOAD_IMAGE_REJECTED',
+          payload: err
+        })
+      })
+  }
+}
+
+export function resetUploadErrorStatus() {
+  return {
+    type: 'RESET_UPLOAD_ERROR_STATUS',
+    payload: {status: null, msg: null}
+  }
+}

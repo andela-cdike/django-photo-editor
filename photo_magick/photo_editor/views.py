@@ -3,6 +3,7 @@ import os
 import StringIO
 
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.db import IntegrityError
 from django.views.generic import View
 from django.shortcuts import render
 import PIL
@@ -29,14 +30,21 @@ class ImageCreateDeleteView(APIView):
 
     def post(self, request, format=None):
         upload = request.FILES['image']
-        folder = request.POST['folder_id']
-        folder = Folder.objects.filter(name='None')[0]
-        upload = Image.objects.create(
-            content_type='image/png',
-            image=upload,
-            folder=folder
-        )
-        return Response({upload.large_image_url()}, status=201)
+        folder_id = request.POST['folder_id']
+        name = request.POST['name']
+        folder = Folder.objects.filter(id=folder_id)[0]
+        try:
+            upload = Image.objects.create(
+                image=upload,
+                folder=folder,
+                name=name
+            )
+        except IntegrityError:
+            msg = {'msg': 'The image name has been taken. Please pick another'}
+            return Response(msg, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        data = {'id': upload.id, 'url': upload.large_image_url()}
+        return Response(data, status=201)
 
     def delete(self, request, image_id):
         image = Image.objects.get(pk=image_id)

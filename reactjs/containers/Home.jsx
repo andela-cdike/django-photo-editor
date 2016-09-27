@@ -30,6 +30,7 @@ import TopMenuBar from '../components/TopMenuBar';
     filterTools: store.imageProcessorTools.filterTools,
     folders: store.folders,
     toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
+    uploadImageErrorStatus: store.images.uploadImageErrorStatus,
   };
 })
 
@@ -51,6 +52,7 @@ export default class Home extends React.Component {
     console.log('folders: ', this.props.folders)
     console.log('filterTools: ', this.props.filterTools)
     console.log('effectTools: ', this.props.effectTools)
+    console.log('error: ', this.props.uploadImageErrorStatus)
     return (
       <main>
         <header role="banner" id="nav-header">
@@ -61,7 +63,12 @@ export default class Home extends React.Component {
           <Grid>
             <Row id="top-menu-bar">
               <Col lg={12}>
-                <TopMenuBar />
+                <TopMenuBar
+                  activeImage={this.props.activeImage}
+                  dispatch={this.props.dispatch}
+                  folders={this.props.folders}
+                  uploadImageErrorStatus={this.props.uploadImageErrorStatus}
+                />
               </Col>
             </Row>
             <Row id="mid">

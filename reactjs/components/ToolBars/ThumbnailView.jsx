@@ -27,7 +27,7 @@ export default class ThumbNailView extends React.Component {
         <a
           id={item.id || this.props.activeImage.id}
           name = {item.name}
-          href={item.large_image_url}
+          href={item.large_image_url || '#'}
           onClick={this.handleClick.bind(this)}
         >
             <Image

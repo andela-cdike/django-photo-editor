@@ -11,7 +11,6 @@ class Base(models.Model):
     """
     Common fields are abstracted here
     """
-    name = models.CharField(max_length=100, blank=False, unique=True)
     date_created = models.DateField(auto_now_add=True)
     date_last_modified = models.DateField(auto_now=True)
 
@@ -23,6 +22,7 @@ class Folder(Base):
     """
     Represents folders where images are stored
     """
+    name = models.CharField(max_length=100, blank=False, unique=True)
     owner = models.ForeignKey('auth.User', related_name='folders')
 
     def __unicode__(self):
@@ -36,6 +36,7 @@ class Image(Base):
     """
     Represents images on the site
     """
+    name = models.CharField(max_length=100)
     content_type = models.CharField(max_length=100, blank=True)
     image = CloudinaryField(
         resource_type='image',
@@ -55,11 +56,14 @@ class Image(Base):
 
     class Meta:
         ordering = ('date_last_modified',)
+        unique_together = ('name', 'folder')
 
     def save(self, *args, **kwargs):
         """Save content_type and name from image"""
-        self.name = self.image.name
+        if self.name == '':
+            self.name = self.image.name
         self.content_type = self.image.content_type
+        import ipdb; ipdb.set_trace()
         super(Image, self).save(*args, **kwargs)
 
     def thumbnail_image_url(self):
@@ -98,6 +102,7 @@ class Image(Base):
 
 
 class ImageProcessors(Base):
+    name = models.CharField(max_length=25, blank=False, unique=True)
     image = CloudinaryField(
         resource_type='image',
         type='upload',

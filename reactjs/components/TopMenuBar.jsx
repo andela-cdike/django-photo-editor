@@ -3,6 +3,8 @@ import {
   Nav, NavItem
 } from 'react-bootstrap';
 
+import UploadImageButton from './TopMenuBar/UploadImageButton';
+
 
 export default class TopMenuBar extends React.Component {
   constructor() {
@@ -19,25 +21,27 @@ export default class TopMenuBar extends React.Component {
   }
 
   render() {
+    console.log('hello: ', this.props.folders)
     const { saveIsActive, cancelIsActive, shareIsActive } = this.state;
-    console.log(saveIsActive)
+
     return (
       <Nav
         bsStyle="pills"
         pullRight
         onSelect={this.handleSelect.bind(this)}
       >
-        <NavItem eventKey={1} href="/home">
-          <i class="fa fa-upload" aria-hidden="true"></i>
-          &nbsp; Upload Image
-        </NavItem>
+        <UploadImageButton
+          dispatch={this.props.dispatch}
+          folders={this.props.folders}
+          uploadImageErrorStatus={this.props.uploadImageErrorStatus}
+        />
         <NavItem eventKey={2} title="Item" disabled={saveIsActive}>
           <i class="fa fa-floppy-o" aria-hidden="true"></i>
-          &nbsp; Save
+          &nbsp; Apply
         </NavItem>
         <NavItem eventKey={3} disabled={cancelIsActive}>
           <i class="fa fa-times" aria-hidden="true"></i>
-          &nbsp; Cancel
+          &nbsp; Undo
         </NavItem>
         <NavItem eventKey={4} disabled={shareIsActive}>
           <i class="fa fa-facebook-official" aria-hidden="true"></i>
