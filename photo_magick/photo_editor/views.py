@@ -85,14 +85,14 @@ class RevertToOriginal(APIView):
     View to cancel unapplied image processing operations
     and revert to original image
     """
-    def get(self, request, image_id):
+    def get(self, request):
         image_url = request.session['original_image_url']
 
         # delete temp image
         file_path = request.session['processed_image_path']
         os.remove(file_path)
 
-        return Response(image_url)
+        return Response({'url': image_url}, status=status.HTTP_200_OK)
 
 
 class ApplyImageProcessing(APIView):
@@ -118,7 +118,7 @@ class ApplyImageProcessing(APIView):
         image = image.update_image_field(image_file)
         image.save()
 
-        return Response(image.large_image_url())
+        return Response({'url': image.large_image_url()})
 
 
 class ProcessImage(APIView):
@@ -183,7 +183,7 @@ class ProcessImage(APIView):
         request.session['processed_image_path'] = file_path
         request.session['last_action'] = action
 
-        return Response('/static{0}' .format(image_partial_url))
+        return Response({'url': '/static{0}' .format(image_partial_url)})
 
 
 class ImageProcessorsView(generics.ListAPIView):

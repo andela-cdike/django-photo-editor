@@ -37,7 +37,7 @@ urlpatterns = [
         name='process_image'),
 
     # cancel changes
-    url(r'^images/process/cancel/(?P<image_id>[0-9]+)$',
+    url(r'^images/process/cancel/$',
         views.RevertToOriginal.as_view(),
         name='cancel_changes'),
 

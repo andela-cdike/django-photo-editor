@@ -5,7 +5,7 @@ import { constructConfig, prepareUrl } from './common';
 
 const hostname = window.location.origin;
 const baseUrl = hostname + '/images/process/';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NDczOTMxNCwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzUwMzkzMTR9.iRpgRFPJjA_doBNwA1_c1sVsTbuqoT6DyP2ccEfe4f8'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTA2MTI4OSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzUzNjEyODl9.RqWaMCbNAptMh5EXeeS5VWZTf5498u7hoNWibgCNZgQ'
 
 
 export function changeActiveImage(imageId, imageUrl) {
@@ -23,7 +23,7 @@ export function applyEffectFilter(imageId, operationName) {
       .then((response) => {
         dispatch({
           type: 'APPLY_FILTER_N_EFFECT_TOOLS_FULFILLED',
-          payload: `${response.data}?t=${new Date().getTime()}`
+          payload: `${response.data.url}?t=${new Date().getTime()}`
         })
       })
       .catch((err) => {
@@ -45,7 +45,7 @@ export function applyEnhanceTools(imageId, enhanceToolName, newValue) {
       .then((response) => {
         dispatch({
           type: 'APPLY_ENHANCE_TOOL_FULFILLED',
-          payload: `${response.data}?t=${new Date().getTime()}`
+          payload: `${response.data.url}?t=${new Date().getTime()}`
         })
       })
       .catch((err) => {
@@ -67,7 +67,7 @@ export function resizeImage(imageId, option) {
       .then((response) => {
         dispatch({
           type: 'RESIZE_IMAGE_FULFILLED',
-          payload: `${response.data}?t=${new Date().getTime()}`
+          payload: `${response.data.url}?t=${new Date().getTime()}`
         })
       })
       .catch((err) => {
@@ -78,6 +78,28 @@ export function resizeImage(imageId, option) {
       })
   }
 } 
+
+
+export function undoImageProcessing() {
+  const url = `${baseUrl}cancel/`;
+  const config = constructConfig(token);
+
+  return function(dispatch) {
+    axios.get(url, config)
+      .then((response) => {
+        dispatch({
+          type: 'UNDO_IMAGE_PROCESSING_FULFILLED',
+          payload: `${response.data.url}`
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: 'UNDO_IMAGE_PROCESSING_REJECTED',
+          payload: err
+        })
+      })
+  }
+}
 
 
 export function uploadImage(name, folder_id, image) {
@@ -105,9 +127,11 @@ export function uploadImage(name, folder_id, image) {
   }
 }
 
+
 export function resetUploadErrorStatus() {
   return {
     type: 'RESET_UPLOAD_ERROR_STATUS',
     payload: {status: null, msg: null}
   }
 }
+

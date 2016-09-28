@@ -7,6 +7,7 @@ export default function reducer(state={
       msg: null,
       status: null,
     },
+    processingInProgress: false,
     error: null,
   }, action) {
 
@@ -21,7 +22,11 @@ export default function reducer(state={
       const newActiveImage = {...state.activeImage};
       newActiveImage['url'] = action.payload;
 
-      return {...state, activeImage: newActiveImage};
+      return {
+        ...state,
+        activeImage: newActiveImage,
+        processingInProgress: true
+      };
     }
     case 'APPLY_ENHANCE_TOOL_REJECTED': {
       return {...state, error: action.payload};
@@ -30,7 +35,11 @@ export default function reducer(state={
       const newActiveImage = {...state.activeImage};
       newActiveImage['url'] = action.payload;
 
-      return {...state, activeImage: newActiveImage};
+      return {
+        ...state,
+        activeImage: newActiveImage,
+        processingInProgress: true
+      };
     }
     case 'RESIZE_IMAGE_REJECTED': {
       return {...state, error: action.payload};
@@ -39,7 +48,11 @@ export default function reducer(state={
       const newActiveImage = {...state.activeImage};
       newActiveImage['url'] = action.payload;
 
-      return {...state, activeImage: newActiveImage};
+      return {
+        ...state,
+        activeImage: newActiveImage,
+        processingInProgress: true
+      };
     }
     case 'RESET_UPLOAD_ERRORS_STATUS': {
       return {...state, uploadImageErrorStatus: action.payload}
@@ -50,7 +63,7 @@ export default function reducer(state={
         msg: msg,
         status: 'error' 
       };
-      console.log(newUploadImageErrorStatus)
+
       return {
         ...state,
         uploadImageErrorStatus: newUploadImageErrorStatus
@@ -70,6 +83,19 @@ export default function reducer(state={
         activeImage: newActiveImage,
         uploadImageErrorStatus: newUploadImageErrorStatus
       }
+    }
+    case 'UNDO_IMAGE_PROCESSING_REJECTED': {
+      return {...status, error: action.payload}
+    }
+    case 'UNDO_IMAGE_PROCESSING_FULFILLED': {
+      const newActiveImage = {...state.activeImage};
+      newActiveImage['url'] = action.payload;
+
+      return {
+        ...state,
+        activeImage: newActiveImage,
+        processingInProgress: false
+      };
     }
   }
   return state

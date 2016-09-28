@@ -29,6 +29,7 @@ import TopMenuBar from '../components/TopMenuBar';
     enhanceToolsValues: store.enhanceTools.enhanceToolsValues,
     filterTools: store.imageProcessorTools.filterTools,
     folders: store.folders,
+    processingInProgress: store.images.processingInProgress,
     toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
     uploadImageErrorStatus: store.images.uploadImageErrorStatus,
   };
@@ -67,6 +68,7 @@ export default class Home extends React.Component {
                   activeImage={this.props.activeImage}
                   dispatch={this.props.dispatch}
                   folders={this.props.folders}
+                  processingInProgress={this.props.processingInProgress}
                   uploadImageErrorStatus={this.props.uploadImageErrorStatus}
                 />
               </Col>
