@@ -102,6 +102,28 @@ export function undoImageProcessing() {
 }
 
 
+export function saveImageProcessing(imageId) {
+  const url =`${baseUrl}save/${imageId}`;
+  const config = constructConfig(token);
+
+  return function(dispatch) {
+    axios.put(url, config)
+      .then((response) => {
+        dispatch({
+          type: 'SAVE_IMAGE_PROCESSING_FULFILLED',
+          payload: `${response.data.url}`
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: 'SAVE_IMAGE_PROCESSING_REJECTED',
+          payload: err
+        })
+      })
+  }
+}
+
+
 export function uploadImage(name, folder_id, image) {
   const url = `${hostname}/images/`;
   const config = constructConfig(token);

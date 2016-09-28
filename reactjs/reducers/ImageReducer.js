@@ -97,6 +97,19 @@ export default function reducer(state={
         processingInProgress: false
       };
     }
+    case 'SAVE_IMAGE_PROCESSING_REJECTED': {
+      return {...status, error: action.payload}
+    }
+    case 'SAVE_IMAGE_PROCESSING_FULFILLED': {
+      const newActiveImage = {...state.activeImage};
+      newActiveImage['url'] = action.payload;
+
+      return {
+        ...state,
+        activeImage: newActiveImage,
+        processingInProgress: false
+      }
+    }
   }
   return state
 }  

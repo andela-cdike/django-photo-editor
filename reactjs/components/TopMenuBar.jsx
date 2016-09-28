@@ -3,7 +3,9 @@ import {
   Nav, NavItem
 } from 'react-bootstrap';
 
-import { undoImageProcessing } from '../actions/imageActions';
+import {
+  saveImageProcessing, undoImageProcessing
+} from '../actions/imageActions';
 
 import UploadImageButton from './TopMenuBar/UploadImageButton';
 
@@ -27,6 +29,10 @@ export default class TopMenuBar extends React.Component {
     alert('selected ' + selectedKey);
   }
 
+  save() {
+    this.props.dispatch(saveImageProcessing(this.props.activeImage.id));
+  }
+
   undo() {
     this.props.dispatch(undoImageProcessing());
   }
@@ -47,9 +53,10 @@ export default class TopMenuBar extends React.Component {
         <NavItem
           eventKey={2} title="Item"
           disabled={!this.props.processingInProgress}
+          onClick={this.save.bind(this)}
         >
           <i class="fa fa-floppy-o" aria-hidden="true"></i>
-          &nbsp; Apply
+          &nbsp; Save
         </NavItem>
         <NavItem
           eventKey={3}
