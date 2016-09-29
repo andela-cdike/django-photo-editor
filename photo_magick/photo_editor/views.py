@@ -118,6 +118,9 @@ class ApplyImageProcessing(APIView):
         image = image.update_image_field(image_file)
         image.save()
 
+        # delete temp image
+        os.remove(image_path)
+
         return Response({'url': image.large_image_url()})
 
 

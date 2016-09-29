@@ -39,13 +39,13 @@ export default function reducer(state={
         folders: [...state.folders, action.payload],
       }
     }
-    case 'EDIT_FOLDER': {
+    case 'RENAME_FOLDER': {
       return {...state, saving: true}
     }
-    case 'EDIT_FOLDER_REJECTED': {
+    case 'RENAME_FOLDER_REJECTED': {
       return {...state, saving: false, err: action.payload}
     }
-    case 'EDIT_FOLDER_FULFILLED': {
+    case 'RENAME_FOLDER_FULFILLED': {
       const { id, name } = action.payload;
       const newFolders = [...state.folders];
       const folderToUpdate = newFolders.findIndex(
@@ -66,13 +66,11 @@ export default function reducer(state={
       return {...state, saving: false, err: action.payload}
     }
     case 'DELETE_FOLDER_FULFILLED': {
+        console.log('payload: ', typeof(action.payload))
+        // console.log('compare: ',  !== action.payload)
       return {
         ...state,
-        saving: false,
-        saved: true,
-        folders: state.folders.filter(
-          folder => folder.id !== action.payload
-        )
+        folders: state.folders.filter(folder => folder.id !== action.payload),
       }
     }
   }

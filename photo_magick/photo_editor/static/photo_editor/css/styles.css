@@ -181,6 +181,16 @@ figcaption {
   color: #aab5bc;
 }
 
+.folder-delete-rename-btns {
+  visibility: hidden;
+  float: right;
+  top: 9px;
+}
+
+#toolbar .folder-list-item:hover .folder-delete-rename-btns {
+  visibility: visible;
+}
+
 #toolbar .btn {
   color: #f1f1f1;
   background-color: #aab5bc;

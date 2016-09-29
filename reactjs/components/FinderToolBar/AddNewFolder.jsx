@@ -81,7 +81,7 @@ export default class AddButton extends React.Component {
 
   // enter key should submit the form
   handleKeyPress(e) {
-    if (e.charCode == 13) {
+    if (e.charCode === 13) {
       e.preventDefault();
       this.addFolder();
     }

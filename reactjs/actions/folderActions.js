@@ -37,16 +37,16 @@ export function addFolder(name) {
   }
 }
 
-// Edit folder name on the server
-export function editFolder(id, name) {
+// Rename folder name on the server
+export function renameFolder(id, name) {
   const config = constructConfig(token);
   return function(dispatch) {
     axios.put(url + id, {name: name}, config)
       .then((response) => {
-        dispatch({type: 'EDIT_FOLDER_FULFILLED', payload: response.data})
+        dispatch({type: 'RENAME_FOLDER_FULFILLED', payload: response.data})
       })
       .catch((err) => {
-        dispatch({type: 'EDIT_FOLDER_REJECTED', payload: err})
+        dispatch({type: 'RENAME_FOLDER_REJECTED', payload: err})
       })
   }
 }
@@ -60,7 +60,7 @@ export function deleteFolder(id) {
         dispatch({type: 'DELETE_FOLDER_FULFILLED', payload: id})
       })
       .catch((err) => {
-        dispatch({type: 'DELETE_FOLDER_REJECTED'}, payload: err)
+        dispatch({type: 'DELETE_FOLDER_REJECTED', payload: err})
       })
   }
 } 
