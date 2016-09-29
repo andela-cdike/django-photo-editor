@@ -9,16 +9,15 @@ import { findDOMNode } from 'react-dom';
 export default class RenameModal extends React.Component {
   constructor(props) {
     super(props);
-    console.log('levels: ', props.folderName)
     this.state = {
-      name: props.folderName,
+      name: props.itemName,
       showModal: props.showModal
     }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ 
-      name: nextProps.folderName,
+      name: nextProps.itemName,
       showModal: nextProps.showModal 
     });
   }
@@ -32,7 +31,6 @@ export default class RenameModal extends React.Component {
   focusNameInput() {
     // focus on name input and move forward
     const element = findDOMNode(this.refs.nameInput);
-    console.log("CHEK: ", element)
     const temp_value = element.value;
     element.focus();
     element.value = '';
@@ -51,14 +49,12 @@ export default class RenameModal extends React.Component {
   }
 
   rename() {
-    this.props.dispatch(this.props.action(
-      this.props.folderId, this.state.name
-    ));
+    let args = Object.assign({}, this.props.arguments, {name: this.state.name});
+    this.props.dispatch(this.props.action(args));
     this.close();
   }
 
   render() {
-    console.log('MUNA CIKIN SANYI: ', this.state.name)
     return (
       <Modal
         show={this.state.showModal}

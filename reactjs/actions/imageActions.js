@@ -124,13 +124,13 @@ export function saveImageProcessing(imageId) {
 }
 
 
-export function uploadImage(name, folder_id, image) {
+export function uploadImage(name, folderId, image) {
   const url = `${hostname}/images/`;
   const config = constructConfig(token);
   let data = new FormData();
-  data.append('name', name)
-  data.append('folder_id', folder_id)
-  data.append('image', image)
+  data.append('name', name);
+  data.append('folder_id', folderId);
+  data.append('image', image);
 
   return function(dispatch) {
     axios.post(url, data, config)
@@ -150,10 +150,58 @@ export function uploadImage(name, folder_id, image) {
 }
 
 
+export function renameImage(obj) {
+  const url = `${hostname}/images/${obj.imageId}`;
+  const config = constructConfig(token);
+  let data = new FormData();
+  data.append('name', obj.name);
+
+  return function(dispatch) {
+    axios.put(url, data, config)
+      .then((response) => {
+        dispatch({
+          type: 'RENAME_IMAGE_FULFILLED',
+          payload: {
+            imageId: obj.imageId,
+            folderId: obj.folderId,
+            name: response.data.name
+          }
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: 'RENAME_IMAGE_REJECTED',
+          payload: err
+        })
+      })
+  }
+}
+
+export function deleteImage(obj) {
+  const url = `${hostname}/images/${obj.imageId}`;
+  const config = constructConfig(token);
+
+  return function(dispatch) {
+    axios.delete(url, config)
+      .then((response) => {
+        dispatch({
+          type: 'DELETE_IMAGE_FULFILLED',
+          payload: {imageId: obj.imageId, folderId: obj.folderId}
+        })
+      })
+      .catch((err) => {
+        dispatch({
+          type: 'DELETE_IMAGE_REJECTED',
+          payload: err
+        })
+      })
+  }
+}
+
+
 export function resetUploadErrorStatus() {
   return {
     type: 'RESET_UPLOAD_ERROR_STATUS',
     payload: {status: null, msg: null}
   }
 }
-

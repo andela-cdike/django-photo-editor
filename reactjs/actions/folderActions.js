@@ -24,7 +24,6 @@ export function fetchFolders() {
 
 // Creates a new folder on server
 export function addFolder(name) {
-  console.log('NAEM: ', name)
   const config = constructConfig(token);
   return function(dispatch) {
     axios.post(url, { name: name }, config)
@@ -38,10 +37,10 @@ export function addFolder(name) {
 }
 
 // Rename folder name on the server
-export function renameFolder(id, name) {
+export function renameFolder(obj) {
   const config = constructConfig(token);
   return function(dispatch) {
-    axios.put(url + id, {name: name}, config)
+    axios.put(url + obj.folderId, {name: obj.name}, config)
       .then((response) => {
         dispatch({type: 'RENAME_FOLDER_FULFILLED', payload: response.data})
       })
@@ -52,12 +51,12 @@ export function renameFolder(id, name) {
 }
 
 // Delete folder from server
-export function deleteFolder(id) {
+export function deleteFolder(obj) {
   const config = constructConfig(token);
   return function(dispatch) {
-    axios.delete(url + id, config)
+    axios.delete(url + obj.folderId, config)
       .then((response) => {
-        dispatch({type: 'DELETE_FOLDER_FULFILLED', payload: id})
+        dispatch({type: 'DELETE_FOLDER_FULFILLED', payload: obj.folderId})
       })
       .catch((err) => {
         dispatch({type: 'DELETE_FOLDER_REJECTED', payload: err})

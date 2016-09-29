@@ -23,7 +23,7 @@ export default class DeleteModal extends React.Component {
   }
 
   delete() {
-    this.props.dispatch(this.props.action(this.props.folderId));
+    this.props.dispatch(this.props.action(this.props.arguments));
     this.close();
   }
 
@@ -39,7 +39,7 @@ export default class DeleteModal extends React.Component {
 
         <Modal.Body>
             <Alert bsStyle="warning">
-              <strong>Are you sure you want to delete the {this.props.folderName} folder?</strong>
+              <strong>Are you sure you want to delete the {this.props.itemName} folder?</strong>
             </Alert>
           </Modal.Body>
           

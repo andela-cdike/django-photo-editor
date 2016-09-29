@@ -2,6 +2,7 @@ from io import BytesIO
 import os
 import StringIO
 
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import IntegrityError
 from django.views.generic import View
@@ -46,8 +47,20 @@ class ImageCreateDeleteView(APIView):
         data = {'id': upload.id, 'url': upload.large_image_url()}
         return Response(data, status=201)
 
-    def delete(self, request, image_id):
+    def put(self, request, image_id):
+        # View permits users to change name of image
+        new_name = request.POST['name']
         image = Image.objects.get(pk=image_id)
+        image.name = new_name
+        image.save()
+        data = {'id': image.id, 'name': image.name}
+        return Response(data, status=status.HTTP_200_OK)
+
+    def delete(self, request, image_id):
+        try:
+            image = Image.objects.get(pk=image_id)
+        except ObjectDoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
         image.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 

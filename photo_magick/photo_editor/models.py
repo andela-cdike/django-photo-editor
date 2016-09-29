@@ -62,8 +62,8 @@ class Image(Base):
         """Save content_type and name from image"""
         if self.name == '':
             self.name = self.image.name
-        self.content_type = self.image.content_type
-        import ipdb; ipdb.set_trace()
+        if self.content_type == '':
+            self.content_type = self.image.content_type
         super(Image, self).save(*args, **kwargs)
 
     def thumbnail_image_url(self):
@@ -94,6 +94,12 @@ class Image(Base):
         cloudinary.uploader.destroy(self.image.public_id)
         self.image = img
         return self
+
+    def update_name_field(self):
+        """
+        Updates name field
+        """
+        self.name = name
 
     def delete(self, *args, **kwargs):
         """Delete this instance and its image on cloudinary"""

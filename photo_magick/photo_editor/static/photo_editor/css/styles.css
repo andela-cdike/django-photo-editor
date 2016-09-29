@@ -172,9 +172,17 @@ figcaption {
   border: none;
   color: #aab5bc;
 }
-
 #toolbar .list-group-item:hover {
   color: #f1f1f1;
+}
+
+
+/**
+  FOLDER TOOLBAR
+**/
+#toolbar .folder-list-item .row {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .add-folder-button .default {
@@ -191,6 +199,24 @@ figcaption {
   visibility: visible;
 }
 
+#toolbar .image-menu-btns {
+  visibility: hidden;
+  position: absolute;
+  top: -20px;
+}
+
+#toolbar .image-thumbnail:hover .image-menu-btns {
+  visibility: visible;
+}
+
+#toolbar .image-menu-btns .delete-image-link {
+  position: absolute;
+  right: -48px;
+}
+
+/**
+  MISC TOOLBAR
+**/
 #toolbar .btn {
   color: #f1f1f1;
   background-color: #aab5bc;

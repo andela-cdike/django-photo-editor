@@ -17,7 +17,7 @@ urlpatterns = [
         name='create-image'),
     url(r'^images/(?P<image_id>[0-9]+)$',
         views.ImageCreateDeleteView.as_view(),
-        name='delete-image'),
+        name='image-detail'),
 
     # folder views
     url(r'^folders/$', views.FolderList.as_view(), name='folder-list'),

@@ -66,11 +66,60 @@ export default function reducer(state={
       return {...state, saving: false, err: action.payload}
     }
     case 'DELETE_FOLDER_FULFILLED': {
-        console.log('payload: ', typeof(action.payload))
-        // console.log('compare: ',  !== action.payload)
       return {
         ...state,
+        saving: false,
+        saved: true,
         folders: state.folders.filter(folder => folder.id !== action.payload),
+      }
+    }
+    case 'RENAME_IMAGE': {
+      return {...state, saving: true}
+    }
+    case 'RENAME_IMAGE_REJECTED': {
+      return {...state, saving: false, err: action.payload}
+    }
+    case 'RENAME_IMAGE_FULFILLED': {
+      const { imageId, folderId, name } = action.payload;
+      console.log(`imId: ${imageId}; fId: ${folderId}; name: ${name}`)
+      const newFolders = [...state.folders];
+      const folderToUpdate = newFolders.findIndex(
+        folder => folder.id === folderId
+      );
+      const imageToUpdate = newFolders[folderToUpdate].images.findIndex(
+        image => image.id === imageId
+      );
+      newFolders[folderToUpdate].images[imageToUpdate].name = name
+
+      return {
+        ...state,
+        saving: false,
+        saved: true,
+        folders: newFolders
+      }
+    }
+    case 'DELETE_IMAGE': {
+      return {...state, saving: true}
+    }
+    case 'DELETE_IMAGE_REJECTED': {
+      return {...state, saving: false, err: action.payload}
+    }
+    case 'DELETE_IMAGE_FULFILLED': {
+      const { imageId, folderId } = action.payload;
+      const newFolders = [...state.folders];
+      const folderToUpdate = newFolders.findIndex(
+        folder => folder.id === folderId
+      );
+      const updatedFolderImages = newFolders[folderToUpdate].images.filter(
+        image => image.id !== imageId
+      );
+      newFolders[folderToUpdate].images = updatedFolderImages;
+      
+      return {
+        ...state,
+        saving: false,
+        saved: true,
+        folders: newFolders
       }
     }
   }

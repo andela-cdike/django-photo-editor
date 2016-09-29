@@ -50,10 +50,6 @@ export default class Home extends React.Component {
   }
 
   render() {
-    console.log('folders: ', this.props.folders)
-    console.log('filterTools: ', this.props.filterTools)
-    console.log('effectTools: ', this.props.effectTools)
-    console.log('error: ', this.props.uploadImageErrorStatus)
     return (
       <main>
         <header role="banner" id="nav-header">
