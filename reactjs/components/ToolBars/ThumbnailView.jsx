@@ -10,11 +10,15 @@ export default class ThumbNailView extends React.Component {
   handleClick(e) {
     e.preventDefault();
     const imageId = e.currentTarget.id
+    this.props.dispatch(this.props.showSpinner());
+
+    // separate image thumbnails from tools thumbnails
     if (this.props.title === '') {
-      const url = e.currentTarget.href
-      this.props.dispatch(this.props.action(imageId, url));
+      const url = e.currentTarget.href;
+      const name = e.currentTarget.name
+      this.props.dispatch(this.props.action(imageId, url, name));
     } else {
-      const url = e.currentTarget.name
+      const url = e.currentTarget.name;
       this.props.dispatch(this.props.action(imageId, url));
     }
   }

@@ -6,7 +6,9 @@ import {
 import { findDOMNode } from 'react-dom'
 
 import { fetchFolders } from '../../actions/folderActions';
-import { resetUploadErrorStatus, uploadImage } from '../../actions/imageActions';
+import {
+  resetUploadErrorStatus, uploadImage, showSpinner
+} from '../../actions/imageActions';
 
 
 export default class UploadImageButton extends React.Component {
@@ -20,7 +22,7 @@ export default class UploadImageButton extends React.Component {
       nameFieldValid: true,
       folderFieldValid: true,
       imageFieldValid: true,
-      imageValidityState: '',
+      imageValidityState: null,
       uploadImageFailed: false,
     }
   }
@@ -98,15 +100,12 @@ export default class UploadImageButton extends React.Component {
     const { folderId, image, name } = this.state;
     
     if (this.state.imageValidityState === 'success') {
+      dispatch(showSpinner());
       dispatch(uploadImage(name, folderId, image));
     }
     else {
       this.setState({ uploadImageFailed: true });
     }
-  }
-
-  refreshFolders() {
-    this.props.dispatch(fetchFolders());
   }
 
   render() {
@@ -133,7 +132,6 @@ export default class UploadImageButton extends React.Component {
           show={this.state.showModal}
           onHide={this.close.bind(this)}
           onEnter={this.focusNameInput.bind(this)}
-          onExited={this.refreshFolders.bind(this)}
         >
           <Modal.Header closeButton>
             <Modal.Title>Upload Image</Modal.Title>

@@ -4,26 +4,22 @@ import {
   ListGroup, ListGroupItem, Row
 } from 'react-bootstrap';
 
-import { applyEffectFilter, resizeImage, rotateImage } from '../../actions/imageActions';
+import {
+  applyEffectFilter, resizeImage, rotateImage, showSpinner
+} from '../../actions/imageActions';
 
 import InputRangeSlider from './EnhanceToolBar/InputRangeSlider';
 
 
 export default class MiscToolBar extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-
-    }
-  }
-
   handleClick(e) {
-    console.log("You clicked the rotate button")
+    this.props.dispatch(showSpinner());
     this.props.dispatch(applyEffectFilter(this.props.activeImageId, 'rotate'));
   }
 
   handleChange(e) {
     const { value } = e.target;
+    this.props.dispatch(showSpinner());
     this.props.dispatch(resizeImage(this.props.activeImageId, value));
   }
 

@@ -1,5 +1,9 @@
 export default function reducer(state={
     folders: [],
+    statistics: {
+      numFolders: null,
+      numImages: null
+    },
     fetching: false,
     fetched: false,
     saving: false,
@@ -15,28 +19,53 @@ export default function reducer(state={
       return {...state, fetching: false, error: action.payload}
     }
     case 'FETCH_FOLDERS_FULFILLED': {
+      const numFolders = action.payload.length;
+      let numImages = 0;
+      for (let i = 0; i < numFolders; i++) {
+        numImages += action.payload[i].images.length;
+      }
+
       return {
         ...state,
         fetching: false,
         fetched: true,
+        statistics: {numFolders: numFolders, numImages: numImages},
         folders: action.payload
       }
     }
     case 'ADD_FOLDER': {
-      return {
-        ...state,
-        saving: true,
-      }
+      return {...state, saving: true}
     }
     case 'ADD_FOLDER_REJECTED': {
       return {...state, saving: false, error: action.payload}
     }
     case 'ADD_FOLDER_FULFILLED': {
+      const newStatistics = {...state.statistics};
+      newStatistics['numFolders'] = state.statistics.numFolders + 1;
+
       return {
         ...state,
         saving: false,
         saved: true,
+        statistics: newStatistics,
         folders: [...state.folders, action.payload],
+      }
+    }
+    case 'ADD_NEW_IMAGE_TO_FOLDERS': {
+      let newFolders = [...state.folders];
+      const folderToUpdate = newFolders.findIndex(
+        folder => folder.id === action.payload.folder
+      );
+      const updatedFolderImages = [...newFolders[folderToUpdate].images, action.payload];
+      newFolders[folderToUpdate].images = updatedFolderImages;
+
+      const newStatistics = {...state.statistics};
+      newStatistics['numImages'] = state.statistics.numImages + 1;
+
+      return {
+        ...state,
+        statistics: newStatistics,
+        folders: newFolders
       }
     }
     case 'RENAME_FOLDER': {
@@ -66,10 +95,14 @@ export default function reducer(state={
       return {...state, saving: false, err: action.payload}
     }
     case 'DELETE_FOLDER_FULFILLED': {
+      const newStatistics = {...state.statistics};
+      newStatistics['numFolders'] = state.statistics.numFolders - 1;
+
       return {
         ...state,
         saving: false,
         saved: true,
+        statistics: newStatistics,
         folders: state.folders.filter(folder => folder.id !== action.payload),
       }
     }
@@ -81,7 +114,6 @@ export default function reducer(state={
     }
     case 'RENAME_IMAGE_FULFILLED': {
       const { imageId, folderId, name } = action.payload;
-      console.log(`imId: ${imageId}; fId: ${folderId}; name: ${name}`)
       const newFolders = [...state.folders];
       const folderToUpdate = newFolders.findIndex(
         folder => folder.id === folderId
@@ -115,10 +147,14 @@ export default function reducer(state={
       );
       newFolders[folderToUpdate].images = updatedFolderImages;
       
+      const newStatistics = {...state.statistics};
+      newStatistics['numImages'] = state.statistics.numImages - 1
+      
       return {
         ...state,
         saving: false,
         saved: true,
+        statistics: newStatistics,
         folders: newFolders
       }
     }

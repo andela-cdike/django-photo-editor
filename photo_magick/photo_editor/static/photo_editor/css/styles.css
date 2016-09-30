@@ -368,7 +368,12 @@ figcaption {
   opacity: 0.9;
 }
 
-#image-pane div {
+#image-pane .row {
+  height: 100%;
+}
+
+#image-pane .col-md-12 {
+  position: relative;
   height: 100%;
 }
 
@@ -376,12 +381,26 @@ figcaption {
   width: 90%;
   height: 97%;
   margin: 0.8rem auto;
-  background-color: #fff;
 }
+
+#spinner-icon {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+
+/**
+  Status bar
+**/
 
 #bottom-status-bar {
   background-color: #aab5bc;
   height: 8%;
+}
+
+#bottom-status-bar p {
+  text-align: center;
 }
 
 /**

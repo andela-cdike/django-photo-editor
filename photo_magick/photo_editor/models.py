@@ -60,9 +60,8 @@ class Image(Base):
 
     def save(self, *args, **kwargs):
         """Save content_type and name from image"""
-        if self.name == '':
+        if not self.id:
             self.name = self.image.name
-        if self.content_type == '':
             self.content_type = self.image.content_type
         super(Image, self).save(*args, **kwargs)
 
@@ -94,12 +93,6 @@ class Image(Base):
         cloudinary.uploader.destroy(self.image.public_id)
         self.image = img
         return self
-
-    def update_name_field(self):
-        """
-        Updates name field
-        """
-        self.name = name
 
     def delete(self, *args, **kwargs):
         """Delete this instance and its image on cloudinary"""

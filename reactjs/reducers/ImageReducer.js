@@ -1,7 +1,8 @@
 export default function reducer(state={
     activeImage: {
       id: null,
-      url: null
+      url: null,
+      name: null
     },
     uploadImageErrorStatus: {
       msg: null,
@@ -9,11 +10,15 @@ export default function reducer(state={
     },
     processingInProgress: false,
     error: null,
+    showSpinner: false,
   }, action) {
 
   switch (action.type) {
     case 'CHANGE_ACTIVE_IMAGE': {
-      return {...state, activeImage: action.payload};
+      return {...state, activeImage: action.payload, showSpinner: false};
+    }
+    case 'SHOW_SPINNER_ANIMATION': {
+      return {...state, showSpinner: action.payload};
     }
     case 'APPLY_FILTER_N_EFFECT_TOOLS_REJECTED': {
       return {...state, error: action.payload};
@@ -25,7 +30,8 @@ export default function reducer(state={
       return {
         ...state,
         activeImage: newActiveImage,
-        processingInProgress: true
+        processingInProgress: true,
+        showSpinner: false
       };
     }
     case 'APPLY_ENHANCE_TOOL_REJECTED': {
@@ -38,7 +44,8 @@ export default function reducer(state={
       return {
         ...state,
         activeImage: newActiveImage,
-        processingInProgress: true
+        processingInProgress: true,
+        showSpinner: false
       };
     }
     case 'RESIZE_IMAGE_REJECTED': {
@@ -51,7 +58,8 @@ export default function reducer(state={
       return {
         ...state,
         activeImage: newActiveImage,
-        processingInProgress: true
+        processingInProgress: true,
+        showSpinner: false
       };
     }
     case 'RESET_UPLOAD_ERRORS_STATUS': {
@@ -73,6 +81,7 @@ export default function reducer(state={
       const newActiveImage = {...state.activeImage};
       newActiveImage['id'] = action.payload.id;
       newActiveImage['url'] = action.payload.url;
+      newActiveImage['name'] = action.payload.name;
       const newUploadImageErrorStatus = {
         msg: null,
         status: 'success'
@@ -81,7 +90,8 @@ export default function reducer(state={
       return {
         ...state,
         activeImage: newActiveImage,
-        uploadImageErrorStatus: newUploadImageErrorStatus
+        uploadImageErrorStatus: newUploadImageErrorStatus,
+        showSpinner: false
       }
     }
     case 'UNDO_IMAGE_PROCESSING_REJECTED': {
@@ -94,7 +104,8 @@ export default function reducer(state={
       return {
         ...state,
         activeImage: newActiveImage,
-        processingInProgress: false
+        processingInProgress: false,
+        showSpinner: false
       };
     }
     case 'SAVE_IMAGE_PROCESSING_REJECTED': {
@@ -107,7 +118,8 @@ export default function reducer(state={
       return {
         ...state,
         activeImage: newActiveImage,
-        processingInProgress: false
+        processingInProgress: false,
+        showSpinner: false
       }
     }
   }

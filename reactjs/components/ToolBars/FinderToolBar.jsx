@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 
 import {
-  changeActiveImage, deleteImage, renameImage
+  changeActiveImage, deleteImage, renameImage, showSpinner
 } from '../../actions/imageActions';
 import { deleteFolder, renameFolder } from '../../actions/folderActions';
 
@@ -128,7 +128,7 @@ export default class FinderToolBar extends React.Component {
         </Col>
         {
           this.state.activeFolderId == folder.id
-            ?  <ThumbnailView class="thumbnail-view" action={changeActiveImage} dispatch={this.props.dispatch} items={folder.images} thumbnailMenu={imgMenu} title="" />
+            ?  <ThumbnailView class="thumbnail-view" action={changeActiveImage} dispatch={this.props.dispatch} items={folder.images} showSpinner={showSpinner} thumbnailMenu={imgMenu} title="" />
             : null
         }
       </Row>

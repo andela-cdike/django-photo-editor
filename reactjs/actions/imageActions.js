@@ -8,10 +8,10 @@ const baseUrl = hostname + '/images/process/';
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTA2MTI4OSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzUzNjEyODl9.RqWaMCbNAptMh5EXeeS5VWZTf5498u7hoNWibgCNZgQ'
 
 
-export function changeActiveImage(imageId, imageUrl) {
+export function changeActiveImage(imageId, imageUrl, imageName) {
   return {
     type: 'CHANGE_ACTIVE_IMAGE',
-    payload: {id: imageId, url: imageUrl}
+    payload: {id: imageId, url: imageUrl, name: imageName}
   }
 }
 
@@ -139,6 +139,10 @@ export function uploadImage(name, folderId, image) {
           type: 'UPLOAD_IMAGE_FULFILLED',
           payload: response.data          
         })
+        dispatch({
+          type: 'ADD_NEW_IMAGE_TO_FOLDERS',
+          payload: response.data
+        })
       })
       .catch((err) => {
         dispatch({
@@ -203,5 +207,12 @@ export function resetUploadErrorStatus() {
   return {
     type: 'RESET_UPLOAD_ERROR_STATUS',
     payload: {status: null, msg: null}
+  }
+}
+
+export function showSpinner() {
+  return {
+    type: 'SHOW_SPINNER_ANIMATION',
+    payload: true
   }
 }

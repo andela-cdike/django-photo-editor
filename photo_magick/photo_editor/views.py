@@ -18,7 +18,8 @@ from photo_editor.custom_permissions import IsOwner
 from photo_editor.image_utils import ImageProcessor
 from photo_editor.models import Folder, Image, ImageProcessors
 from photo_editor.serializers import (
-    FolderSerializer, ImageProcessorsViewSerializer, ImageProcessorsSerializer
+    FolderSerializer, ImageSerializer,
+    ImageProcessorsViewSerializer, ImageProcessorsSerializer
 )
 from photo_magick.settings import STATICFILES_DIRS
 
@@ -44,8 +45,8 @@ class ImageCreateDeleteView(APIView):
             msg = {'msg': 'The image name has been taken. Please pick another'}
             return Response(msg, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        data = {'id': upload.id, 'url': upload.large_image_url()}
-        return Response(data, status=201)
+        serializer = ImageSerializer(upload)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def put(self, request, image_id):
         # View permits users to change name of image

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { applyEffectFilter } from '../actions/imageActions';
+import { applyEffectFilter, showSpinner } from '../actions/imageActions';
 
 import EnhanceToolBar from './ToolBars/EnhanceToolBar';
 import FinderToolBar from './ToolBars/FinderToolBar';
@@ -50,6 +50,7 @@ export default class ToolBars extends React.Component {
                 id="filter-toolbar"
                 title="FILTER TOOLS"
                 items={this.props.filterTools}
+                showSpinner={showSpinner}
               />
             : null
         }
@@ -62,6 +63,7 @@ export default class ToolBars extends React.Component {
                 dispatch={this.props.dispatch}
                 title="EFFECT TOOLS"
                 items={this.props.effectTools}
+                showSpinner={showSpinner}
               />
             : null
         }

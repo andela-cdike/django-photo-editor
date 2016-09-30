@@ -1,7 +1,9 @@
 import React from 'react';
 import InputRange from 'react-input-range';
 
-import { applyEnhanceTools } from '../../../actions/imageActions';
+import { 
+  showSpinner, applyEnhanceTools
+} from '../../../actions/imageActions';
 import {
   updateEnhanceToolsValues
 } from '../../../actions/enhanceToolsActions';
@@ -23,6 +25,7 @@ export default class InputRangeSlider extends React.Component {
     const { activeImageId } = this.props;
 
     this.setState({ value: value });
+    this.props.dispatch(showSpinner());
     this.props.dispatch(
       applyEnhanceTools(activeImageId, name, value)
     );

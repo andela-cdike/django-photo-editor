@@ -19,6 +19,7 @@ import ImagePane from '../components/ImagePane';
 import LeftToolsGroupBar from '../components/LeftToolsGroupBar';
 import Navigation from '../components/Navigation';
 import ToolBars from '../components/ToolBars';
+import StatusBar from '../components/StatusBar';
 import TopMenuBar from '../components/TopMenuBar';
 
 
@@ -30,18 +31,14 @@ import TopMenuBar from '../components/TopMenuBar';
     filterTools: store.imageProcessorTools.filterTools,
     folders: store.folders,
     processingInProgress: store.images.processingInProgress,
+    showSpinner: store.images.showSpinner,
+    statistics: store.folders.statistics,
     toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
     uploadImageErrorStatus: store.images.uploadImageErrorStatus,
   };
 })
 
 export default class Home extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-    };
-  }
-
   componentWillMount() {
     this.props.dispatch(fetchFolders());
     this.props.dispatch(updateToolBarVisibility());
@@ -91,12 +88,19 @@ export default class Home extends React.Component {
                 <ImagePane
                   activeImage={this.props.activeImage}
                   dispatch={this.props.dispatch}
+                  showSpinner={this.props.showSpinner}
                 />
               </Col>
             </Row>
             <Row id="bottom-status-bar">
               <Col md={12}>
-                STATUS: 200 OK
+                <StatusBar
+                  activeImage={this.props.activeImage}
+                  processingInProgress={this.props.processingInProgress}
+                  showSpinner={this.props.showSpinner}
+                  statistics={this.props.statistics}
+                  uploadImageErrorStatus={this.props.uploadImageErrorStatus}
+                />
               </Col>
             </Row>
           </Grid>
