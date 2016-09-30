@@ -5,7 +5,7 @@ import { constructConfig, prepareUrl } from './common';
 
 const hostname = window.location.origin;
 const baseUrl = hostname + '/images/process/';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTA2MTI4OSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzUzNjEyODl9.RqWaMCbNAptMh5EXeeS5VWZTf5498u7hoNWibgCNZgQ'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTI0ODY0MSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzU1NDg2NDF9.RN8p93fQQC3NV1uQbfSZIvvGTQV04wJ1pOAE3dyV2aQ'
 
 
 export function changeActiveImage(imageId, imageUrl, imageName) {

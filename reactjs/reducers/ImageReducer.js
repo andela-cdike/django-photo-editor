@@ -80,7 +80,7 @@ export default function reducer(state={
     case 'UPLOAD_IMAGE_FULFILLED': {
       const newActiveImage = {...state.activeImage};
       newActiveImage['id'] = action.payload.id;
-      newActiveImage['url'] = action.payload.url;
+      newActiveImage['url'] = action.payload.large_image_url;
       newActiveImage['name'] = action.payload.name;
       const newUploadImageErrorStatus = {
         msg: null,

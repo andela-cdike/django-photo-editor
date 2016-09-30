@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 
 import {
-  saveImageProcessing, undoImageProcessing
+  saveImageProcessing, showSpinner, undoImageProcessing
 } from '../actions/imageActions';
 
 import UploadImageButton from './TopMenuBar/UploadImageButton';
@@ -25,20 +25,17 @@ export default class TopMenuBar extends React.Component {
     }
   }
 
-  handleSelect(selectedKey) {
-    alert('selected ' + selectedKey);
-  }
-
   save() {
+    this.props.dispatch(showSpinner());
     this.props.dispatch(saveImageProcessing(this.props.activeImage.id));
   }
 
   undo() {
+    this.props.dispatch(showSpinner());
     this.props.dispatch(undoImageProcessing());
   }
 
   render() {
-    console.log('processingInprog: ', this.props.processingInProgress)
     return (
       <Nav
         bsStyle="pills"
