@@ -9,7 +9,7 @@ html {
 body {
   background-color: #222;
   height: 100%;
-  font-family: 'Audiowide', cursive;
+  font-family: 'Ubuntu', sans-serif;
   color: #f1f1f1;
   font-size: 15px;
   font-weight: 400;
@@ -34,8 +34,85 @@ figcaption {
   text-transform: capitalize;
 }
 
+
 /**
-  General styles
+  Login page styles
+**/
+.login-page-background {
+  background-image: url("../img/city-night-evening-river.jpg");
+  background-size: 100%;
+}
+
+#login-container {
+  background-color: rgba;
+}
+
+.fadeIndDown {
+  animation-name: fadeInDown;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+#content {
+  margin-top: 10%;
+}
+
+.panel {
+  background-color: rgba(31, 56, 58, 0.9);
+  box-shadow: 0px 0px 20px 1px black;
+  border-radius: 20px;
+  height: 30rem;
+}
+
+.panel-title {
+  font-family: 'Old Standard TT', serif;
+}
+
+.btn-social {
+  position: relative;
+  padding-left: 44px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-social.btn-lg {
+  padding-left: 61px;
+}
+
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-facebook:hover {
+  color: #fff;
+  background-color: #30487b;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-social.btn-lg :first-child {
+  line-height: 1.5em;
+  width: 45px;
+  font-size: 1.7em;
+}
+
+.btn-social :first-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/**
+  App styles
 **/
 
 :focus {
@@ -66,7 +143,7 @@ figcaption {
 
 .brand-name {
   color: #fff;
-  font-family: 'Pirata One', cursive;
+  font-family: 'Old Standard TT', serif;
 }
 
 .profile-link .dropdown-menu {

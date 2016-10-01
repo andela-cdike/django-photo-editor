@@ -2,11 +2,15 @@ from io import BytesIO
 import os
 import StringIO
 
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.urlresolvers import reverse
 from django.db import IntegrityError
+from django.utils.decorators import method_decorator
 from django.views.generic import View
-from django.shortcuts import render
+from django.shortcuts import HttpResponseRedirect, render
 import PIL
 from rest_framework import generics, permissions, status
 from rest_framework.parsers import FormParser, MultiPartParser
@@ -22,6 +26,22 @@ from photo_editor.serializers import (
     ImageProcessorsViewSerializer, ImageProcessorsSerializer
 )
 from photo_magick.settings import STATICFILES_DIRS
+
+
+class LoginRequiredMixin(object):
+    """
+    Enforces user authentication on views
+    """
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        """Overrides the dispatch method of the view class.
+
+        Args: request, other arguments and key-value pairs.
+        Returns: The call to the dispatch method of the parent class
+                  i.e. the View class
+        """
+        return super(LoginRequiredMixin, self).dispatch(
+            request, *args, **kwargs)
 
 
 class ImageCreateDeleteView(APIView):
@@ -229,7 +249,20 @@ class ImageProcessorsView(generics.ListAPIView):
         return self.queryset.filter(processor_type=filter)
 
 
-class HomeView(View):
+class LoginView(View):
+    """View logins users via facebook social authentication"""
+    def get(self, request):
+        return render(request, 'login.html')
+
+
+class LogoutView(View):
+    """View logouts a user"""
+    def get(self, request):
+        logout(request)
+        return HttpResponseRedirect(reverse('logout'))
+
+
+class HomeView(LoginRequiredMixin, View):
     """
     This view points to the bucketlist frontend app.
     Most of this section is implemented in reactJS folder.

@@ -40,7 +40,6 @@ export default class TopMenuBar extends React.Component {
       <Nav
         bsStyle="pills"
         pullRight
-        onSelect={this.handleSelect.bind(this)}
       >
         <UploadImageButton
           dispatch={this.props.dispatch}
