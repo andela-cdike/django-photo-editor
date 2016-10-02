@@ -14,13 +14,17 @@ import InputRangeSlider from './EnhanceToolBar/InputRangeSlider';
 export default class MiscToolBar extends React.Component {
   handleClick(e) {
     this.props.dispatch(showSpinner());
-    this.props.dispatch(applyEffectFilter(this.props.activeImageId, 'rotate'));
+    this.props.dispatch(applyEffectFilter(
+      this.props.token, this.props.activeImageId, 'rotate'
+    ));
   }
 
   handleChange(e) {
     const { value } = e.target;
     this.props.dispatch(showSpinner());
-    this.props.dispatch(resizeImage(this.props.activeImageId, value));
+    this.props.dispatch(resizeImage(
+      this.props.token, this.props.activeImageId, value
+    ));
   }
 
   render() {

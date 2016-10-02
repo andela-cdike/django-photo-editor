@@ -21,6 +21,7 @@ export default class ToolBars extends React.Component {
             ? <FinderToolBar
                 folders={this.props.folders}
                 dispatch={this.props.dispatch}
+                token={this.props.token}
               />
             : null
         }
@@ -30,6 +31,7 @@ export default class ToolBars extends React.Component {
                 enhanceToolsValues={this.props.enhanceToolsValues}
                 dispatch={this.props.dispatch}
                 activeImageId={this.props.activeImage.id}
+                token={this.props.token}
               />
             : null
         }
@@ -38,6 +40,7 @@ export default class ToolBars extends React.Component {
             ? <MiscToolBar
                 activeImageId={this.props.activeImage.id}
                 dispatch={this.props.dispatch}
+                token={this.props.token}
               />
             : null
         }
@@ -51,6 +54,7 @@ export default class ToolBars extends React.Component {
                 title="FILTER TOOLS"
                 items={this.props.filterTools}
                 showSpinner={showSpinner}
+                token={this.props.token}
               />
             : null
         }
@@ -64,6 +68,7 @@ export default class ToolBars extends React.Component {
                 title="EFFECT TOOLS"
                 items={this.props.effectTools}
                 showSpinner={showSpinner}
+                token={this.props.token}
               />
             : null
         }

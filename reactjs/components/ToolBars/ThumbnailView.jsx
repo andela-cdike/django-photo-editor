@@ -19,7 +19,7 @@ export default class ThumbNailView extends React.Component {
       this.props.dispatch(this.props.action(imageId, url, name));
     } else {
       const url = e.currentTarget.name;
-      this.props.dispatch(this.props.action(imageId, url));
+      this.props.dispatch(this.props.action(this.props.token, imageId, url));
     }
   }
 

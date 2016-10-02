@@ -5,7 +5,7 @@ import { constructConfig, prepareUrl } from './common';
 
 const hostname = window.location.origin;
 const baseUrl = hostname + '/images/process/';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTI0ODY0MSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzU1NDg2NDF9.RN8p93fQQC3NV1uQbfSZIvvGTQV04wJ1pOAE3dyV2aQ'
+// const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTI0ODY0MSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzU1NDg2NDF9.RN8p93fQQC3NV1uQbfSZIvvGTQV04wJ1pOAE3dyV2aQ'
 
 
 export function changeActiveImage(imageId, imageUrl, imageName) {
@@ -15,7 +15,7 @@ export function changeActiveImage(imageId, imageUrl, imageName) {
   }
 }
 
-export function applyEffectFilter(imageId, operationName) {
+export function applyEffectFilter(token, imageId, operationName) {
   const url = prepareUrl(imageId, operationName);
   const config = constructConfig(token);
   return function(dispatch) {
@@ -36,7 +36,7 @@ export function applyEffectFilter(imageId, operationName) {
 }
 
 
-export function applyEnhanceTools(imageId, enhanceToolName, newValue) {
+export function applyEnhanceTools(token, imageId, enhanceToolName, newValue) {
   const url = `${baseUrl}${imageId}/${enhanceToolName}/${newValue}`;
   const config = constructConfig(token);
 
@@ -58,7 +58,7 @@ export function applyEnhanceTools(imageId, enhanceToolName, newValue) {
 }
 
 
-export function resizeImage(imageId, option) {
+export function resizeImage(token, imageId, option) {
   const url =  `${baseUrl}${imageId}/resize/${option}`;
   const config = constructConfig(token);
 
@@ -80,7 +80,7 @@ export function resizeImage(imageId, option) {
 } 
 
 
-export function undoImageProcessing() {
+export function undoImageProcessing(token) {
   const url = `${baseUrl}cancel/`;
   const config = constructConfig(token);
 
@@ -102,12 +102,12 @@ export function undoImageProcessing() {
 }
 
 
-export function saveImageProcessing(imageId) {
+export function saveImageProcessing(token, imageId) {
   const url =`${baseUrl}save/${imageId}`;
   const config = constructConfig(token);
 
   return function(dispatch) {
-    axios.put(url, config)
+    axios.put(url, {}, config)
       .then((response) => {
         dispatch({
           type: 'SAVE_IMAGE_PROCESSING_FULFILLED',
@@ -124,7 +124,7 @@ export function saveImageProcessing(imageId) {
 }
 
 
-export function uploadImage(name, folderId, image) {
+export function uploadImage(token, name, folderId, image) {
   const url = `${hostname}/images/`;
   const config = constructConfig(token);
   let data = new FormData();
@@ -156,7 +156,7 @@ export function uploadImage(name, folderId, image) {
 
 export function renameImage(obj) {
   const url = `${hostname}/images/${obj.imageId}`;
-  const config = constructConfig(token);
+  const config = constructConfig(obj.token);
   let data = new FormData();
   data.append('name', obj.name);
 
@@ -183,7 +183,7 @@ export function renameImage(obj) {
 
 export function deleteImage(obj) {
   const url = `${hostname}/images/${obj.imageId}`;
-  const config = constructConfig(token);
+  const config = constructConfig(obj.token);
 
   return function(dispatch) {
     axios.delete(url, config)

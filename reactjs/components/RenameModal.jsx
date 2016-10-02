@@ -49,7 +49,9 @@ export default class RenameModal extends React.Component {
   }
 
   rename() {
-    let args = Object.assign({}, this.props.arguments, {name: this.state.name});
+    let args = Object.assign({}, this.props.arguments,
+      {name: this.state.name}
+    );
     this.props.dispatch(this.props.action(args));
     this.close();
   }

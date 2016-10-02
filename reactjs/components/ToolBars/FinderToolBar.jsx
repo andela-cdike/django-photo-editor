@@ -76,7 +76,7 @@ export default class FinderToolBar extends React.Component {
     const { folders } = this.props.folders;
     const closedFolderIcon = <i class="fa fa-folder" aria-hidden="true"></i>;
     const openFolderIcon = <i class="fa fa-folder-open" aria-hidden="true"></i>;
-    
+
     const folderMenuBtns = (
       <span>
         <a href="#" name="showDeleteFolderModal" onClick={this.openFolderModals.bind(this)}>
@@ -128,7 +128,12 @@ export default class FinderToolBar extends React.Component {
         </Col>
         {
           this.state.activeFolderId == folder.id
-            ?  <ThumbnailView class="thumbnail-view" action={changeActiveImage} dispatch={this.props.dispatch} items={folder.images} showSpinner={showSpinner} thumbnailMenu={imgMenu} title="" />
+            ? (<ThumbnailView
+                class="thumbnail-view" action={changeActiveImage}
+                dispatch={this.props.dispatch} items={folder.images}
+                showSpinner={showSpinner} thumbnailMenu={imgMenu} title=""
+                token={this.props.token}
+               />)
             : null
         }
       </Row>
@@ -140,6 +145,7 @@ export default class FinderToolBar extends React.Component {
           <Col md={10}>FOLDERS</Col>
             <AddNewFolder
               dispatch={this.props.dispatch}
+              token={this.props.token}
             />
         </Row>
         <br />
@@ -150,7 +156,10 @@ export default class FinderToolBar extends React.Component {
             </ListGroup>
             <DeleteModal
               action={deleteFolder}
-              arguments={{folderId: this.state.activeFolderId}}
+              arguments={{
+                folderId: this.state.activeFolderId,
+                token: this.props.token
+              }}
               callBackParent={this.onChildChanged.bind(this)}
               childKey="showDeleteFolderModal"
               dispatch={this.props.dispatch}
@@ -162,6 +171,7 @@ export default class FinderToolBar extends React.Component {
               action={renameFolder}
               arguments={{
                 folderId: this.state.activeFolderId,
+                token: this.props.token
               }}
               callBackParent={this.onChildChanged.bind(this)}
               childKey="showRenameFolderModal"
@@ -174,7 +184,8 @@ export default class FinderToolBar extends React.Component {
               action={deleteImage}
               arguments={{
                 folderId: this.state.activeFolderId,
-                imageId: this.state.activeImageId
+                imageId: this.state.activeImageId,
+                token: this.props.token
               }}
               callBackParent={this.onChildChanged.bind(this)}
               childKey="showDeleteImageModal"
@@ -188,6 +199,7 @@ export default class FinderToolBar extends React.Component {
               arguments={{
                 folderId: this.state.activeFolderId,
                 imageId: this.state.activeImageId,
+                token: this.props.token
               }}
               callBackParent={this.onChildChanged.bind(this)}
               childKey="showRenameImageModal"

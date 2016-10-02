@@ -27,6 +27,7 @@ export default class EnhanceToolBar extends React.Component {
           activeImageId={this.props.activeImageId}
           name={tool}
           value={enhanceToolsValues[i]}
+          token={this.props.token}
         />
       </div>
     );

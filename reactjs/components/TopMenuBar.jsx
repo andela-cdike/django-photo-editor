@@ -46,12 +46,14 @@ export default class TopMenuBar extends React.Component {
 
   save() {
     this.props.dispatch(showSpinner());
-    this.props.dispatch(saveImageProcessing(this.props.activeImage.id));
+    this.props.dispatch(saveImageProcessing(
+      this.props.token, this.props.activeImage.id
+    ));
   }
 
   undo() {
     this.props.dispatch(showSpinner());
-    this.props.dispatch(undoImageProcessing());
+    this.props.dispatch(undoImageProcessing(this.props.token));
   }
 
   render() {
@@ -66,6 +68,7 @@ export default class TopMenuBar extends React.Component {
         <UploadImageButton
           dispatch={this.props.dispatch}
           folders={this.props.folders}
+          token={this.props.token}
           uploadImageErrorStatus={this.props.uploadImageErrorStatus}
         />
         <NavItem

@@ -22,10 +22,13 @@ import ToolBars from '../components/ToolBars';
 import StatusBar from '../components/StatusBar';
 import TopMenuBar from '../components/TopMenuBar';
 
+import { shouldRefreshToken } from "../utils/refreshToken";
+
 
 @connect((store) => {
   return {
     activeImage: store.images.activeImage,
+    cookie: store.cookie.cookie,
     effectTools: store.imageProcessorTools.effectTools,
     enhanceToolsValues: store.enhanceTools.enhanceToolsValues,
     filterTools: store.imageProcessorTools.filterTools,
@@ -38,12 +41,20 @@ import TopMenuBar from '../components/TopMenuBar';
   };
 })
 
+
 export default class Home extends React.Component {
   componentWillMount() {
-    this.props.dispatch(fetchFolders());
+    this.props.dispatch(fetchFolders(this.props.cookie.user_token));
+    this.props.dispatch(fetchImageProcessorTools(this.props.cookie.user_token));
     this.props.dispatch(updateToolBarVisibility());
     this.props.dispatch(updateEnhanceToolsValues());
-    this.props.dispatch(fetchImageProcessorTools());
+  }
+
+  componentWillReceiveProps(nextprops) {
+    // check JWT expiry time
+    if (shouldRefreshToken(nextprops.cookie.user_token)) {
+      this.props.dispatch(refreshToken(nextprops.cookie.user_token));
+    }
   }
 
   render() {
@@ -62,6 +73,7 @@ export default class Home extends React.Component {
                   dispatch={this.props.dispatch}
                   folders={this.props.folders}
                   processingInProgress={this.props.processingInProgress}
+                  token={this.props.cookie.user_token}
                   uploadImageErrorStatus={this.props.uploadImageErrorStatus}
                 />
               </Col>
@@ -81,13 +93,13 @@ export default class Home extends React.Component {
                   enhanceToolsValues={this.props.enhanceToolsValues}
                   filterTools={this.props.filterTools}
                   folders={this.props.folders}
+                  token={this.props.cookie.user_token}
                   toolBarVisibility={this.props.toolBarVisibility}
                 />
               </Col>
               <Col md={8} id="image-pane">
                 <ImagePane
                   activeImage={this.props.activeImage}
-                  dispatch={this.props.dispatch}
                   showSpinner={this.props.showSpinner}
                 />
               </Col>

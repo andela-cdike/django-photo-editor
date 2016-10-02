@@ -22,12 +22,12 @@ export default class InputRangeSlider extends React.Component {
 
   handleValueChange(component, value) {
     const { name } = component.props;
-    const { activeImageId } = this.props;
+    const { activeImageId, token } = this.props;
 
     this.setState({ value: value });
     this.props.dispatch(showSpinner());
     this.props.dispatch(
-      applyEnhanceTools(activeImageId, name, value)
+      applyEnhanceTools(token, activeImageId, name, value)
     );
     this.props.dispatch(updateEnhanceToolsValues(name, value));
   }

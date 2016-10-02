@@ -16,6 +16,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework_jwt.settings import api_settings
 import requests
 
 from photo_editor.custom_permissions import IsOwner
@@ -267,11 +268,27 @@ class HomeView(LoginRequiredMixin, View):
     """
     This view points to the bucketlist frontend app.
     Most of this section is implemented in reactJS folder.
-    Here, we just render the template.
+    Here, template is rendered with appropriate context and cookies
     """
     def get(self, request):
         """
         Renders the bucketlist template
         """
+
+        # obtain JW token
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+        payload = jwt_payload_handler(request.user)
+        user_token = jwt_encode_handler(payload)
+
+        # set context
         context = {'FACEBOOK_APP_ID': SOCIAL_AUTH_FACEBOOK_KEY}
-        return render(request, 'home.html', context)
+
+        response = render(request, 'home.html', context)
+
+        # set cookie
+        response.set_cookie('user_token', user_token)
+        response.set_cookie('user_id', request.user.id)
+        request.session.set_expiry(600)
+
+        return response

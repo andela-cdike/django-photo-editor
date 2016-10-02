@@ -96,12 +96,12 @@ export default class UploadImageButton extends React.Component {
   }
 
   uploadImage() {
-    const {dispatch} = this.props;
+    const { token, dispatch } = this.props;
     const { folderId, image, name } = this.state;
-    
+
     if (this.state.imageValidityState === 'success') {
       dispatch(showSpinner());
-      dispatch(uploadImage(name, folderId, image));
+      dispatch(uploadImage(token, name, folderId, image));
     }
     else {
       this.setState({ uploadImageFailed: true });

@@ -3,6 +3,7 @@ import {
   Col, Row
 } from 'react-bootstrap';
 
+
 export default class StatusBar extends React.Component {
   render() {
     return(

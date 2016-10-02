@@ -5,11 +5,11 @@ import { constructConfig } from './common';
 
 const hostname = window.location.origin;
 const url = hostname + '/folders/';
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTI0ODY0MSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzU1NDg2NDF9.RN8p93fQQC3NV1uQbfSZIvvGTQV04wJ1pOAE3dyV2aQ'
+// const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTI0ODY0MSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzU1NDg2NDF9.RN8p93fQQC3NV1uQbfSZIvvGTQV04wJ1pOAE3dyV2aQ'
 
 
 // Action fetches all folders as well as containing images
-export function fetchFolders() {
+export function fetchFolders(token) {
   const config = constructConfig(token);
   return function(dispatch) {
     axios.get(url, config)
@@ -23,7 +23,7 @@ export function fetchFolders() {
 }
 
 // Creates a new folder on server
-export function addFolder(name) {
+export function addFolder(token, name) {
   const config = constructConfig(token);
   return function(dispatch) {
     axios.post(url, { name: name }, config)
@@ -38,7 +38,7 @@ export function addFolder(name) {
 
 // Rename folder name on the server
 export function renameFolder(obj) {
-  const config = constructConfig(token);
+  const config = constructConfig(obj.token);
   return function(dispatch) {
     axios.put(url + obj.folderId, {name: obj.name}, config)
       .then((response) => {
@@ -52,7 +52,7 @@ export function renameFolder(obj) {
 
 // Delete folder from server
 export function deleteFolder(obj) {
-  const config = constructConfig(token);
+  const config = constructConfig(obj.token);
   return function(dispatch) {
     axios.delete(url + obj.folderId, config)
       .then((response) => {

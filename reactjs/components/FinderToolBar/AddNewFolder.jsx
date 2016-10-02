@@ -48,14 +48,13 @@ export default class AddButton extends React.Component {
 
   addFolder() {
     // add new Folder
-    const { dispatch} = this.props;
+    const { dispatch, token } = this.props;
     const { name } = this.state;
 
     if (this.validateNameFieldFailed()) {
       return;
     }
-    dispatch(addFolder(name));
-    dispatch(fetchFolders());
+    dispatch(addFolder(token, name));
     this.setState({ name: '' });
     this.close();
   }
