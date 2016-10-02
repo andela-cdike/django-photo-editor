@@ -25,7 +25,7 @@ from photo_editor.serializers import (
     FolderSerializer, ImageSerializer,
     ImageProcessorsViewSerializer, ImageProcessorsSerializer
 )
-from photo_magick.settings import STATICFILES_DIRS
+from photo_magick.settings import SOCIAL_AUTH_FACEBOOK_KEY, STATICFILES_DIRS
 
 
 class LoginRequiredMixin(object):
@@ -252,7 +252,8 @@ class ImageProcessorsView(generics.ListAPIView):
 class LoginView(View):
     """View logins users via facebook social authentication"""
     def get(self, request):
-        return render(request, 'login.html')
+        context = {'FACEBOOK_APP_ID': SOCIAL_AUTH_FACEBOOK_KEY}
+        return render(request, 'login.html', context)
 
 
 class LogoutView(View):
@@ -272,4 +273,5 @@ class HomeView(LoginRequiredMixin, View):
         """
         Renders the bucketlist template
         """
-        return render(request, 'home.html')
+        context = {'FACEBOOK_APP_ID': SOCIAL_AUTH_FACEBOOK_KEY}
+        return render(request, 'home.html', context)

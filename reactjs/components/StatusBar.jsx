@@ -5,7 +5,6 @@ import {
 
 export default class StatusBar extends React.Component {
   render() {
-  console.log(this.props)
     return(
       <Row>
         <Col sm={3} smOffset={1}>
