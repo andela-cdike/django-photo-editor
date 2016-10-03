@@ -21,7 +21,7 @@ export default function reducer(state={
       return {...state, showSpinner: action.payload};
     }
     case 'APPLY_FILTER_N_EFFECT_TOOLS_REJECTED': {
-      return {...state, error: action.payload};
+      return {...state, showSpinner: false, error: action.payload};
     }
     case 'APPLY_FILTER_N_EFFECT_TOOLS_FULFILLED': {
       const newActiveImage = {...state.activeImage};
@@ -35,7 +35,7 @@ export default function reducer(state={
       };
     }
     case 'APPLY_ENHANCE_TOOL_REJECTED': {
-      return {...state, error: action.payload};
+      return {...state, showSpinner: false, error: action.payload};
     }
     case 'APPLY_ENHANCE_TOOL_FULFILLED': {
       const newActiveImage = {...state.activeImage};
@@ -49,7 +49,7 @@ export default function reducer(state={
       };
     }
     case 'RESIZE_IMAGE_REJECTED': {
-      return {...state, error: action.payload};
+      return {...state, showSpinner: false, error: action.payload};
     }
     case 'RESIZE_IMAGE_FULFILLED': {
       const newActiveImage = {...state.activeImage};
@@ -62,7 +62,7 @@ export default function reducer(state={
         showSpinner: false
       };
     }
-    case 'RESET_UPLOAD_ERRORS_STATUS': {
+    case 'RESET_UPLOAD_ERROR_STATUS': {
       return {...state, uploadImageErrorStatus: action.payload}
     }
     case 'UPLOAD_IMAGE_REJECTED': {
@@ -74,7 +74,8 @@ export default function reducer(state={
 
       return {
         ...state,
-        uploadImageErrorStatus: newUploadImageErrorStatus
+        uploadImageErrorStatus: newUploadImageErrorStatus,
+        showSpinner: false
       };
     }
     case 'UPLOAD_IMAGE_FULFILLED': {
@@ -95,7 +96,7 @@ export default function reducer(state={
       }
     }
     case 'UNDO_IMAGE_PROCESSING_REJECTED': {
-      return {...status, error: action.payload}
+      return {...status, showSpinner: false, error: action.payload}
     }
     case 'UNDO_IMAGE_PROCESSING_FULFILLED': {
       const newActiveImage = {...state.activeImage};
@@ -109,7 +110,7 @@ export default function reducer(state={
       };
     }
     case 'SAVE_IMAGE_PROCESSING_REJECTED': {
-      return {...status, error: action.payload}
+      return {...status, showSpinner: false, error: action.payload}
     }
     case 'SAVE_IMAGE_PROCESSING_FULFILLED': {
       const newActiveImage = {...state.activeImage};

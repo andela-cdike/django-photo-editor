@@ -69,6 +69,7 @@ class Image(Base):
         """Returns a thumbnail image URL
         """
         image_url = self.image.build_url(
+            secure=True,
             width=SITE_IMAGES['thumbnail_image_width'],
             height=SITE_IMAGES['thumbnail_image_height'],
             crop="fit",
@@ -79,6 +80,7 @@ class Image(Base):
         """Returns a large size image URL
         """
         image_url = self.image.build_url(
+            secure=True,
             width=SITE_IMAGES['large_image_width'],
             height=SITE_IMAGES['large_image_height'],
             crop="fit",
@@ -119,6 +121,7 @@ class ImageProcessors(Base):
     def thumbnail_image_url(self):
         """Returns image url"""
         image_url = self.image.build_url(
+            secure=True,
             width=SITE_IMAGES['thumbnail_image_width'],
             height=SITE_IMAGES['thumbnail_image_height'],
             crop="fit",

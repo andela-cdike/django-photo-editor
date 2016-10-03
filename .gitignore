@@ -22,7 +22,7 @@ node_modules/
 photo_magick/photo_editor/static/photo_editor/bower_components
 
 # staticfiles
-photo_magick/photo_edit/staticfiles
+photo_magick/photo_editor/staticfiles
 
 # image files
 processor_tools_imgs

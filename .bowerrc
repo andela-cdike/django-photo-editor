@@ -1,5 +1,5 @@
 {
-  "directory": "photo_editor/bower_components",
+  "directory": "photo_magick/photo_editor/static/photo_editor/bower_components",
   "analytics": false,
   "timeout": 120000,
   "interactive": false

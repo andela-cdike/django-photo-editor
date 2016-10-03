@@ -16,8 +16,10 @@
     "tests"
   ],
   "dependencies": {
+    "bootstrap": "~3.3.7",
     "font-awesome": "~4.6.3",
-    "react": "~15.2.1",
-    "react-bootstrap": "~0.29.5",
+    "jquery": "~3.1.0",
+    "react": "~15.3.1",
+    "react-bootstrap": "~0.30.3"
   }
 }
