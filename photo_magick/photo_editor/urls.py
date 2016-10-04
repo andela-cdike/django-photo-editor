@@ -56,7 +56,7 @@ urlpatterns = [
         name='apply_changes'),
 
     # image processors
-    url(r'image-processors/$',
-        views.ImageProcessorsView.as_view(),
-        name="image_processors")
+    url(r'images/process/tools/$',
+        views.ImageProcessorToolView.as_view(),
+        name="image_processor_tools")
 ]

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
-from photo_editor.models import Folder, Image
+from photo_editor.models import Folder, Image, ImageProcessorTool
 
 
 class UserModelTestCase(TestCase):
@@ -52,3 +52,27 @@ class ImageModelTestCase(TestCase):
     def tearDown(self):
         image = Image.objects.all()[0]
         image.delete()
+
+
+class ImageProcessorToolTestCase(TestCase):
+    """Tests for the ImageProcessor model"""
+    def setUp(self):
+        image_path = '{0}/photo_editor/tests/img/test.png'.format(
+            dirname(settings.BASE_DIR))
+        image = SimpleUploadedFile(
+            name='test.png',
+            content=open(image_path, 'rb').read(),
+            content_type='image/png'
+        )
+        ImageProcessorTool.objects.create(
+            name='gray scale',
+            image=image,
+            processor_type='effect'
+        )
+
+    def test_image_processor_model(self):
+        processor_tool = ImageProcessorTool.objects.all()[0]
+        self.assertEqual(str(processor_tool), 'gray scale')
+        self.assertEqual(
+            type(processor_tool.thumbnail_image_url()), unicode
+        )

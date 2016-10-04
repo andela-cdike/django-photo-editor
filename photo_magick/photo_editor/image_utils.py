@@ -1,3 +1,6 @@
+import os
+
+from django.conf import settings
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageEnhance
@@ -68,7 +71,10 @@ class ImageProcessor(object):
             (0, self.img.size[1], self.img.size[0], 0),
             fill=(255, 255, 255)
         )
-        font = ImageFont.truetype('/Users/mac/Library/Fonts/ARESSENCE.ttf', 50)
+        font_file = (
+            '{0}/photo_editor/static/photo_editor/fonts/ARESSENCE.ttf'
+        ).format(os.path.dirname(settings.BASE_DIR))
+        font = ImageFont.truetype(font_file, 50)
         width, height = font.getsize(text)
         draw.text(
             (self.img.size[0] / 2 - width / 2, self.img.size[1] / 2 + 20),

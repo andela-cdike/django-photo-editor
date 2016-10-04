@@ -21,10 +21,9 @@ import requests
 
 from photo_editor.custom_permissions import IsOwner
 from photo_editor.image_utils import ImageProcessor
-from photo_editor.models import Folder, Image, ImageProcessors
+from photo_editor.models import Folder, Image, ImageProcessorTool
 from photo_editor.serializers import (
-    FolderSerializer, ImageSerializer,
-    ImageProcessorsViewSerializer, ImageProcessorsSerializer
+    FolderSerializer, ImageSerializer, ImageProcessorToolSerializer
 )
 from photo_magick.settings.base import (
     SOCIAL_AUTH_FACEBOOK_KEY, STATICFILES_DIRS
@@ -226,10 +225,9 @@ class ProcessImage(APIView):
         return Response({'url': '/static{0}' .format(image_partial_url)})
 
 
-class ImageProcessorsView(generics.ListAPIView):
+class ImageProcessorToolView(generics.ListAPIView):
     """Lists all image processors in DB"""
-    queryset = ImageProcessors.objects.all()
-    serializer_class = ImageProcessorsViewSerializer
+    queryset = ImageProcessorTool.objects.all()
 
     def list(self, request):
         """
@@ -237,10 +235,10 @@ class ImageProcessorsView(generics.ListAPIView):
         on processor_type
         """
         queryset = self.get_queryset('filter')
-        serializer = ImageProcessorsSerializer(queryset, many=True)
+        serializer = ImageProcessorToolSerializer(queryset, many=True)
         filter_tools = serializer.data
         queryset = self.get_queryset('effect')
-        serializer = ImageProcessorsSerializer(queryset, many=True)
+        serializer = ImageProcessorToolSerializer(queryset, many=True)
         effect_tools = serializer.data
         response = {
             'filterTools': filter_tools,

@@ -60,8 +60,9 @@ class Image(Base):
 
     def save(self, *args, **kwargs):
         """Save content_type and name from image"""
-        if not self.id:
+        if not self.name:
             self.name = self.image.name
+        if not self.id:
             self.content_type = self.image.content_type
         super(Image, self).save(*args, **kwargs)
 
@@ -102,7 +103,8 @@ class Image(Base):
         super(Image, self).delete(*args, **kwargs)
 
 
-class ImageProcessors(Base):
+class ImageProcessorTool(Base):
+    """Represents filter and effect processor tools on the app"""
     name = models.CharField(max_length=25, blank=False, unique=True)
     image = CloudinaryField(
         resource_type='image',
