@@ -26,7 +26,9 @@ from photo_editor.serializers import (
     FolderSerializer, ImageSerializer,
     ImageProcessorsViewSerializer, ImageProcessorsSerializer
 )
-from photo_magick.settings import SOCIAL_AUTH_FACEBOOK_KEY, STATICFILES_DIRS
+from photo_magick.settings.base import (
+    SOCIAL_AUTH_FACEBOOK_KEY, STATICFILES_DIRS
+)
 
 
 class LoginRequiredMixin(object):

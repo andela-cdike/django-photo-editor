@@ -5,11 +5,6 @@ convertfiletovars()
 from .base import *
 
 
-# Python social auth test config for facebook backend
-
-SOCIAL_AUTH_FACEBOOK_KEY = '1822791144619366'
-SOCIAL_AUTH_FACEBOOK_SECRET = '24466747b45f994af24fb7be36d8a4cb'
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#database
 

@@ -40,11 +40,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_nose',
-    'social.apps.django_app.default',
     'djangobower',
     'photo_editor',
     'rest_framework',
+    'social.apps.django_app.default',
     'webpack_loader',
 )
 
@@ -179,13 +178,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-SOCIAL_AUTH_ADMIN_USER_SEARCH_FIELDS = ['username', 'first_name', 'last_name']
-
-# Use nose to run all tests
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-# Tell nose to measure coverage on the 'foo' and 'bar' apps
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=photo_editor',
-]
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv('FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv('FACEBOOK_SECRET')

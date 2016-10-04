@@ -17,7 +17,11 @@ install:
 script:
   - bower install --settings=photo_magick.settings.test
   - python photo_magick/manage.py collectstatic --noinput --settings=photo_magick.settings.test
-  - python photo_magick/manage.py test --noinput --settings=photo_magick.settings.test
+  - coverage run --source=photo_editor photo_magick/manage.py test photo_magick --noinput --settings=photo_magick.settings.test
+
+# run coveralls after successful tests
+after_success:
+  - coveralls
 
 # Deploy to staging or production with proper settings
 deploy:
