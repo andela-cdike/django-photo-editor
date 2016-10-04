@@ -2,6 +2,7 @@
 
 import os
 
+from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse_lazy
 import PIL
@@ -12,77 +13,82 @@ from photo_editor.models import Folder, Image
 from .http_header import ApiHeaderAuthorization
 
 
-# class FolderViewTestCase(ApiHeaderAuthorization):
-#     """Tests that folder can be created and deleted"""
-#     def test_user_view_folder(self):
-#         url = reverse_lazy('folder-list')
-#         response = self.client.get(url)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
+class FolderViewTestCase(ApiHeaderAuthorization):
+    """Tests that folder can be created and deleted"""
+    def test_user_view_folder(self):
+        url = reverse_lazy('folder-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-#     def test_user_can_create_folder(self):
-#         url = reverse_lazy('folder-list')
-#         data = {'name': 'Chilling'}
-#         response = self.client.post(url, data)
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    def test_user_can_create_folder(self):
+        url = reverse_lazy('folder-list')
+        data = {'name': 'Chilling'}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
-#     def test_user_can_rename_folder(self):
-#         url = reverse_lazy('folder-detail', kwargs={'pk': 1})
-#         data = {'name': 'Unknown'}
-#         response = self.client.put(url, data)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_user_can_rename_folder(self):
+        url = reverse_lazy('folder-detail', kwargs={'pk': 1})
+        data = {'name': 'Unknown'}
+        response = self.client.put(url, data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-#     def test_user_can_delete_folder(self):
-#         url = reverse_lazy('folder-detail', kwargs={'pk': 1})
-#         response = self.client.delete(url)
-#         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-
-
-# class ImageCreateDeleteViewTestCase(ApiHeaderAuthorization):
-#     """Tests the UploadImage view"""
-#     def setUp(self, *args, **kwargs):
-#         image_path = 'photo_editor/tests/img/test.png'
-#         self.image = SimpleUploadedFile(
-#             name='test.png',
-#             content=open(image_path, 'rb').read(),
-#             content_type='image/png'
-#         )
-#         super(ImageCreateDeleteViewTestCase, self).setUp(*args, **kwargs)
-
-#     def test_user_can_upload_images(self):
-#         url = reverse_lazy('create-image')
-#         data = {'image': self.image, 'folder_id': 1}
-#         response = self.client.post(url, data)
-#         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-#         self.assertIn("http://res.cloudinary.com/andela-troupon/image/upload",
-#                       response.content)
-
-#     def test_user_can_delete_images(self):
-#         folder = Folder.objects.filter(name='None')[0]
-#         image = Image.objects.create(image=self.image, folder=folder)
-#         url = reverse_lazy('delete-image', kwargs={'image_id': image.id})
-#         response = self.client.delete(url)
-#         self.assertEquals(response.status_code, status.HTTP_204_NO_CONTENT)
-
-#     @classmethod
-#     def tearDownClass(cls):
-#         images = Image.objects.all()
-#         for image in images:
-#             image.delete()
+    def test_user_can_delete_folder(self):
+        url = reverse_lazy('folder-detail', kwargs={'pk': 1})
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
 
-# class setUpTestDataForProcessImage(ApiHeaderAuthorization):
-#     """Creates data that would be used for tests that inherit from it"""
-#     def setUpClass(self, *args, **kwargs):
-#         self.temp_file_path = 'photo_editor/img/temp_image.png'
-#         folder = Folder.objects.filter(name='None')[0]
-#         self.image_path = 'photo_editor/tests/img/test.png'
-#         image = SimpleUploadedFile(
-#             name='test.png',
-#             content=open(self.image_path, 'rb').read(),
-#             content_type='image/png'
-#         )
-#         self.image = Image.objects.create(image=image, folder=folder)
-#         super(setUpTestDataForProcessImage, self).setUp(*args, **kwargs)
+class ImageCreateDeleteViewTestCase(ApiHeaderAuthorization):
+    """Tests the UploadImage view"""
+    def setUp(self, *args, **kwargs):
+        image_path = '{0}/photo_editor/tests/img/test.png'.format(
+            os.path.dirname(settings.BASE_DIR))
+        self.image = SimpleUploadedFile(
+            name='test.png',
+            content=open(image_path, 'rb').read(),
+            content_type='image/png'
+        )
+        super(ImageCreateDeleteViewTestCase, self).setUp(*args, **kwargs)
+
+    def test_user_can_upload_image(self):
+        url = reverse_lazy('create-image')
+        data = {'image': self.image, 'folder_id': 1, 'name': 'test'}
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIn("https://res.cloudinary.com/andela-troupon/image/upload",
+                      response.content)
+
+    def test_user_can_rename_image(self):
+        folder = Folder.objects.filter(name='None')[0]
+        image = Image.objects.create(image=self.image, folder=folder)
+        url = reverse_lazy('image-detail', kwargs={'image_id': image.id})
+        data = {'name': 'retest'}
+        response = self.client.put(url, data)
+        image = Image.objects.get(name=data['name'])
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(image.name, data['name'])
+
+    def test_user_can_delete_image(self):
+        folder = Folder.objects.filter(name='None')[0]
+        image = Image.objects.create(image=self.image, folder=folder)
+        url = reverse_lazy('image-detail', kwargs={'image_id': image.id})
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+
+class setUpTestDataForProcessImage(ApiHeaderAuthorization):
+    """Creates data that would be used for tests that inherit from it"""
+    def setUpClass(self, *args, **kwargs):
+        self.temp_file_path = 'photo_editor/img/temp_image.png'
+        folder = Folder.objects.filter(name='None')[0]
+        self.image_path = 'photo_editor/tests/img/test.png'
+        image = SimpleUploadedFile(
+            name='test.png',
+            content=open(self.image_path, 'rb').read(),
+            content_type='image/png'
+        )
+        self.image = Image.objects.create(image=image, folder=folder)
+        super(setUpTestDataForProcessImage, self).setUp(*args, **kwargs)
 
 
 # class ProcessImageTestCase(ApiHeaderAuthorization):
@@ -335,7 +341,8 @@ class ProcessedImage(ApiHeaderAuthorization):
     def setUp(self, *args, **kwargs):
         super(ProcessedImage, self).setUp(*args, **kwargs)
         folder = Folder.objects.filter(name='None')[0]
-        image_path = 'photo_editor/tests/img/test.png'
+        image_path = '{0}/photo_editor/tests/img/test.png'.format(
+            os.path.dirname(settings.BASE_DIR))
         image = SimpleUploadedFile(
             name='test.png',
             content=open(image_path, 'rb').read(),
@@ -349,7 +356,9 @@ class ProcessedImage(ApiHeaderAuthorization):
         image = image_processor.apply_pil_process_ops()
 
         # these views will be expecting a temp file and a session variable
-        temp_image_path = 'photo_editor/static/photo_editor/img/temp_image.png'
+        temp_image_path = (
+            '{0}/photo_editor/static/photo_editor/img/temp_image.png'
+        ).format(os.path.dirname(settings.BASE_DIR))
         image.save(temp_image_path, 'PNG')
 
         session = self.client.session
@@ -364,7 +373,7 @@ class ApplyImageProcessingViewTestCase(ProcessedImage):
         url = reverse_lazy('apply_changes', kwargs={'image_id': self.image.id})
         response = self.client.put(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("http://res.cloudinary.com/andela-troupon/image/upload",
+        self.assertIn("https://res.cloudinary.com/andela-troupon/image/upload",
                       response.content)
 
     def tearDown(self):
@@ -375,12 +384,10 @@ class ApplyImageProcessingViewTestCase(ProcessedImage):
 class RevertToOriginalViewTestCase(ProcessedImage):
     """Tests the UploadImage view"""
     def test_user_can_apply_changes_to_image(self):
-        url = reverse_lazy(
-            'cancel_changes', kwargs={'image_id': self.image.id}
-        )
+        url = reverse_lazy('cancel_changes')
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn("http://res.cloudinary.com/andela-troupon/image/upload",
+        self.assertIn("https://res.cloudinary.com/andela-troupon/image/upload",
                       response.content)
 
     def tearDown(self):

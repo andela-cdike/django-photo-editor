@@ -4,7 +4,7 @@ import cloudinary
 from cloudinary.models import CloudinaryField
 from django.db import models
 
-from photo_magick.settings import SITE_IMAGES
+from photo_magick.settings.base import SITE_IMAGES
 
 
 class Base(models.Model):
