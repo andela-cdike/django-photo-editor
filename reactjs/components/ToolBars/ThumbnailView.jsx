@@ -7,6 +7,8 @@ var Packery = require('react-packery-component')(React);
 
 
 export default class ThumbNailView extends React.Component {
+
+  // Calls appropriate actions when thumbnail is clicked
   handleClick(e) {
     e.preventDefault();
     const imageId = e.currentTarget.id
@@ -27,7 +29,7 @@ export default class ThumbNailView extends React.Component {
     const { id, title, items, shouldHaveOptions } = this.props;
 
     const mappedItems = items.map((item, i) =>
-      <Col key={item.id} md={4} class="image-thumbnail">
+      <Col key={i} md={4} class="image-thumbnail">
         <a
           id={item.id || this.props.activeImage.id}
           data-folderid={item.folder || null}

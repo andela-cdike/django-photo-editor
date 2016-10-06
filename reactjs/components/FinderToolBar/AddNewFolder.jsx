@@ -100,15 +100,14 @@ export default class AddButton extends React.Component {
     return (
       <Col md={2}>
         <div id="add-folder-button"> 
-          <Button
-            bsStyle="default"
+          <a
             ref="addFolderButton"
             onMouseEnter={this.toggleTooltipOn.bind(this)}
             onMouseLeave={this.toggleTooltipOff.bind(this)}
             onClick={this.open.bind(this)}
           >
             <i class="fa fa-plus-square-o" aria-hidden="true"></i>
-          </Button>
+          </a>
 
           <Overlay
             show={this.state.showTooltip}

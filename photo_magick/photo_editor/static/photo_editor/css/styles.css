@@ -39,7 +39,7 @@ figcaption {
   Login page styles
 **/
 .login-page-background {
-  background-image: url("../img/city-night-evening-river.jpg");
+  background-image: url("../img/background-img.jpg");
   background-size: 100%;
 }
 
@@ -56,7 +56,7 @@ figcaption {
   animation-fill-mode: both;
 }
 
-#content {
+#frame {
   margin-top: 10%;
 }
 

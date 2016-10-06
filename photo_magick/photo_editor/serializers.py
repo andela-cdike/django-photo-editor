@@ -1,3 +1,5 @@
+"""Serializers for the api views"""
+
 from rest_framework import serializers
 
 from photo_editor.models import Base, Folder, Image, ImageProcessorTool

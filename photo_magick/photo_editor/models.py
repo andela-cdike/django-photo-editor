@@ -115,7 +115,7 @@ class ImageProcessorTool(Base):
     processor_type = models.CharField(max_length=50)
 
     class Meta:
-        ordering = ('processor_type',)
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name
