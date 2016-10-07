@@ -79,12 +79,11 @@ export default class FinderToolBar extends React.Component {
 
     const folderMenuBtns = (
       <span>
-        <a href="#" name="showDeleteFolderModal" onClick={this.openFolderModals.bind(this)}>
-          <i class="fa fa-ban" aria-hidden="true" show={true}></i>
-        </a>
-        &nbsp;
         <a href="#" name="showRenameFolderModal" onClick={this.openFolderModals.bind(this)}>
           <i class="fa fa-pencil" aria-hidden="true" show={false}></i>
+        </a>
+        <a href="#" name="showDeleteFolderModal" onClick={this.openFolderModals.bind(this)}>
+          <i class="fa fa-times-circle-o" show={true}></i>
         </a>
       </span>
     );

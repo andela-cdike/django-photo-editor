@@ -34,6 +34,15 @@ figcaption {
   text-transform: capitalize;
 }
 
+a {
+  color: #f1f1f1;
+}
+
+a:focus,
+a:hover {
+  color: #fff;
+  text-decoration: none;
+}
 
 /**
   Login page styles
@@ -130,7 +139,7 @@ figcaption {
 
 @media (min-width: 1100px) {
   .container {
-    width: 1170px;
+    width: 100%;
   }
 }
 
@@ -164,6 +173,7 @@ figcaption {
 
 #content .container {
   height: 100%;
+  width: 100%;
 }
 
 
@@ -173,7 +183,7 @@ figcaption {
 
 #top-menu-bar {
   background-color: #aab5bc;
-  height: 12%;
+  height: 7%;
 }
 
 #top-menu-bar .nav > li > a {
@@ -207,7 +217,7 @@ figcaption {
 **/
 
 #mid {
-  height: 80%;
+  height: 85%;
 }
 
 #mid .list-group-item {
@@ -275,8 +285,8 @@ figcaption {
 
 .folder-delete-rename-btns {
   visibility: hidden;
-  float: right;
   top: 9px;
+  right : -6px;
 }
 
 #toolbar .folder-list-item:hover .folder-delete-rename-btns {
@@ -286,7 +296,7 @@ figcaption {
 #toolbar .image-menu-btns {
   visibility: hidden;
   position: absolute;
-  top: -20px;
+  top: -17px;
 }
 
 #toolbar .image-thumbnail:hover .image-menu-btns {
@@ -296,6 +306,10 @@ figcaption {
 #toolbar .image-menu-btns .delete-image-link {
   position: absolute;
   right: -48px;
+}
+
+#toolbar .fa-pencil {
+  margin-right: 4px;
 }
 
 /**
@@ -308,6 +322,7 @@ figcaption {
 }
 
 /**
+  Enhance toolbar
   input sliders
 **/
 .form {
@@ -319,6 +334,10 @@ figcaption {
 
 .formField {
   margin-bottom: 5rem;
+}
+
+.formField p {
+  text-transform: capitalize;
 }
 
 .InputRange {
@@ -488,5 +507,34 @@ figcaption {
 }
 
 /**
-  Helper classes
+  Modals Reset
 **/
+.modal-content {
+  background-color: #222;
+}
+
+.modal-header {
+  border-bottom: 1px solid #aab5bc;
+}
+
+.modal-header .close {
+  color: #f1f1f1;
+}
+
+.modal-footer {
+  border-top: 1px solid #aab5bc;
+}
+
+.modal-footer .btn-default {
+  background-color: #aab5bc;
+  color: #f1f1f1;
+}
+
+
+/**
+  Alert Box
+**/
+.alert.alert-danger.alert-dismissable {
+  background-color: #aab5bc;
+}
+

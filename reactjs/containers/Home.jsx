@@ -61,13 +61,13 @@ export default class Home extends React.Component {
     return (
       <main>
         <header role="banner" id="nav-header">
-          <Navigation />
+          <Navigation username={this.props.cookie.username} />
         </header>
 
         <section id="content">
           <Grid>
             <Row id="top-menu-bar">
-              <Col lg={12}>
+              <Col sm={12}>
                 <TopMenuBar
                   activeImage={this.props.activeImage}
                   dispatch={this.props.dispatch}
@@ -79,13 +79,13 @@ export default class Home extends React.Component {
               </Col>
             </Row>
             <Row id="mid">
-              <Col md={1} id="left-tools-group-bar">
+              <Col sm={1} id="left-tools-group-bar">
                 <LeftToolsGroupBar
                   toolBarVisibility={this.props.toolBarVisibility}
                   dispatch={this.props.dispatch}
                 />
               </Col>
-              <Col md={3} id="toolbar">
+              <Col sm={3} id="toolbar">
                 <ToolBars
                   activeImage={this.props.activeImage}
                   dispatch={this.props.dispatch}
@@ -97,7 +97,7 @@ export default class Home extends React.Component {
                   toolBarVisibility={this.props.toolBarVisibility}
                 />
               </Col>
-              <Col md={8} id="image-pane">
+              <Col sm={8} id="image-pane">
                 <ImagePane
                   activeImage={this.props.activeImage}
                   showSpinner={this.props.showSpinner}
@@ -105,7 +105,7 @@ export default class Home extends React.Component {
               </Col>
             </Row>
             <Row id="bottom-status-bar">
-              <Col md={12}>
+              <Col sm={12}>
                 <StatusBar
                   activeImage={this.props.activeImage}
                   processingInProgress={this.props.processingInProgress}

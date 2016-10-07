@@ -63,7 +63,8 @@ export default class AddButton extends React.Component {
     this.setState({ showModal: false });
   }
 
-  open() {
+  open(e) {
+    e.preventDefault();
     this.setState({ showModal: true });
   }
 
@@ -101,12 +102,13 @@ export default class AddButton extends React.Component {
       <Col md={2}>
         <div id="add-folder-button"> 
           <a
+            href="#"
             ref="addFolderButton"
             onMouseEnter={this.toggleTooltipOn.bind(this)}
             onMouseLeave={this.toggleTooltipOff.bind(this)}
             onClick={this.open.bind(this)}
           >
-            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+            <i class="fa fa-plus-circle" aria-hidden="true"></i>
           </a>
 
           <Overlay

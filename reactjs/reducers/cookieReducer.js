@@ -2,7 +2,7 @@ export default function reducer(state={
     cookie: {
       csrftoken: null,
       user_token: null,
-      user_id: null,
+      username: null,
     },
     fetching: true
   }, action) {

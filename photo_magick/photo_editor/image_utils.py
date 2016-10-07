@@ -64,7 +64,7 @@ class ImageProcessor(object):
             img - ???
             draw - ???
         """
-        text = "ALTAIR"  # TODO: Let user supply text
+        text = "PHOTOMAGICK"
         draw = ImageDraw.Draw(self.img)
         draw.line((0, 0) + self.img.size, fill=(255, 255, 255))
         draw.line(

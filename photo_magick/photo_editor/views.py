@@ -36,7 +36,7 @@ class LogoutView(View):
     """View logouts a user"""
     def get(self, request):
         logout(request)
-        return HttpResponseRedirect(reverse('logout'))
+        return HttpResponseRedirect(reverse('login'))
 
 
 class HomeView(LoginRequiredMixin, View):
@@ -63,7 +63,7 @@ class HomeView(LoginRequiredMixin, View):
 
         # set cookie
         response.set_cookie('user_token', user_token)
-        response.set_cookie('user_id', request.user.id)
+        response.set_cookie('username', request.user.first_name)
         request.session.set_expiry(600)
 
         return response
