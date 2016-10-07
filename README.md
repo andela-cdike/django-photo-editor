@@ -5,30 +5,7 @@
 # django-photo-editor
 
 ### Overview
-Photomagick is a basic photo editing web application. It also allows users share their images on Facebook when they are satisfied with their creations.
-
-
-# Features
-+ Common image filters
-+ Common image effects
-+ Adjust common image properties
-
-
-### Technologies
-The following technologies were employed in creating photomagick:
-+ [Django](https://www.djangoproject.com/) - a high-level Python Web framework that encourages rapid development and clean, pragmatic design.
-+ [Django REST Framework](http://www.django-rest-framework.org/) - Django REST framework is a powerful and flexible toolkit for building Web APIs.
-+ [PostgreSQL](https://www.postgresql.org/) - a powerful, open source object-relational database system.
-+ [Bower](https://bower.io/) - package that manages components that contain HTML, CSS, JavaScript, fonts or image files.
-+ [Django-bower](https://github.com/nvbn/django-bower) - Easy way to use bower with your Django project.
-+ [React](https://facebook.github.io/react/) - a Javascript library for building user interfaces.
-+ [React-bootstrap](https://react-bootstrap.github.io/) - CSS framework rebuilt for React.
-+ [Webpack](https://webpack.github.io/) - a module bundler.
-+ [React Packery Component](http://packery.metafizzy.co/) - Javascript library that makes gapless and draggable layouts.
-+ [Axios](https://github.com/mzabriskie/axios) - Promise based HTTP client for the browser and node.js.
-+ [Pillow](https://pillow.readthedocs.io/en/3.4.x/) - Python Imaging Library
-+ [Facebook Javascript SDK] (https://developers.facebook.com/docs/javascript) - A rich set of client-side functionality for adding Social plugins, Facebook Login and Graph API calls.
-+ [Python social auth] (http://psa.matiasaguirre.net/) - An easy to setup social authentication/registratin mechanism with support for several frameworks and auth providers.
+Photomagick is a basic photo editing web application. It also allows users share their images on Facebook when they are satisfied with their creations. Read more on the PROJECTPLAN.md file located in the assets directory.
 
 
 ### Pre-requisites
