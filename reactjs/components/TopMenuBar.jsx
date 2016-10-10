@@ -61,7 +61,7 @@ export default class TopMenuBar extends React.Component {
   save() {
     this.props.dispatch(showSpinner());
     this.props.dispatch(saveImageProcessing(
-      this.props.token, this.props.activeImage.id
+      this.props.token, this.props.activeImage
     ));
   }
 

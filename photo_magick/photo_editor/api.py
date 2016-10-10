@@ -134,7 +134,10 @@ class ApplyImageProcessing(APIView):
         # delete temp image
         os.remove(image_path)
 
-        return Response({'url': image.large_image_url()})
+        return Response({
+            'largeImageUrl': image.large_image_url(),
+            'thumbnailImageUrl': image.thumbnail_image_url()
+        })
 
 
 class ProcessImage(APIView):

@@ -6,13 +6,11 @@ function getTimeLeftToExpire(token) {
   const expiryTime = jwtDecode(token).exp;
   const now = Math.floor(new Date().getTime() / 1000);
   const timeLeftToExpire = expiryTime - now;
-  console.log('timeToExpire: ', timeLeftToExpire)
   return timeLeftToExpire;
 }
 
 // logout user if token has expired
 export function logoutIfTokenExpired(token) {
-  console.log(token)
   const timeLeftToExpire = getTimeLeftToExpire(token);
 
   if (timeLeftToExpire < 0) {

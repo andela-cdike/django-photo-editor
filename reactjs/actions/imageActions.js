@@ -5,13 +5,15 @@ import { constructConfig, prepareUrl } from './common';
 
 const hostname = window.location.origin;
 const baseUrl = hostname + '/images/process/';
-// const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVyRXJpa2EiLCJvcmlnX2lhdCI6MTQ3NTI0ODY0MSwidXNlcl9pZCI6MiwiZW1haWwiOiJhZG1pbkBlbGVjdHJvY29ycC5jb20iLCJleHAiOjE0NzU1NDg2NDF9.RN8p93fQQC3NV1uQbfSZIvvGTQV04wJ1pOAE3dyV2aQ'
 
 
-export function changeActiveImage(imageId, imageUrl, imageName) {
+export function changeActiveImage(folderId, imageId, imageUrl, imageName) {
   return {
     type: 'CHANGE_ACTIVE_IMAGE',
-    payload: {id: imageId, url: imageUrl, name: imageName}
+    payload: {
+      folderId: Number(folderId), id: Number(imageId),
+      url: imageUrl, name: imageName
+    }
   }
 }
 
@@ -89,7 +91,7 @@ export function undoImageProcessing(token) {
       .then((response) => {
         dispatch({
           type: 'UNDO_IMAGE_PROCESSING_FULFILLED',
-          payload: `${response.data.url}`
+          payload: response.data.url
         })
       })
       .catch((err) => {
@@ -102,8 +104,8 @@ export function undoImageProcessing(token) {
 }
 
 
-export function saveImageProcessing(token, imageId) {
-  const url =`${baseUrl}save/${imageId}`;
+export function saveImageProcessing(token, imageObj) {
+  const url =`${baseUrl}save/${imageObj.id}`;
   const config = constructConfig(token);
 
   return function(dispatch) {
@@ -111,7 +113,16 @@ export function saveImageProcessing(token, imageId) {
       .then((response) => {
         dispatch({
           type: 'SAVE_IMAGE_PROCESSING_FULFILLED',
-          payload: `${response.data.url}`
+          payload: response.data.largeImageUrl
+        })
+        dispatch({
+          type: 'SAVE_MODIFIED_IMAGE_TO_FOLDER',
+          payload: {
+            folderId: imageObj.folderId,
+            imageId: imageObj.id,
+            largeImageUrl: response.data.largeImageUrl,
+            thumbnailImageUrl: response.data.thumbnailImageUrl
+          }
         })
       })
       .catch((err) => {

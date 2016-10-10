@@ -11,24 +11,6 @@ import LinkWithTooltip from './LeftToolsGroupBar/LinkWithTooltip';
 
 
 export default class LeftToolsGroupBar extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      
-    };
-  }
-
-  selectGroupToolBar(toolName) {
-    console.log('toolName: ', toolName)
-    console.log(this.props.toolBarVisibility)
-    // this.state.setState({toolGroup: true})
-    // this.props.updateParent(toolGroupView)
-  }
-
-  onSelectAlert(eventKey) {
-    alert(`Alert from menu item.\neventKey: ${eventKey}`);
-  }
-
   render() {
     const {
       finder, colorIntensityTools, miscTools,

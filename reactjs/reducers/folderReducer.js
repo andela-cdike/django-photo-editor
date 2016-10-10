@@ -130,6 +130,23 @@ export default function reducer(state={
         folders: newFolders
       }
     }
+    case 'SAVE_MODIFIED_IMAGE_TO_FOLDER': {
+      const { folderId, imageId, largeImageUrl, thumbnailImageUrl } = action.payload;
+      let newFolders = [...state.folders];
+      const folderToUpdate = newFolders.findIndex(
+        folder => folder.id === folderId
+      );
+      const imageToUpdate = newFolders[folderToUpdate].images.findIndex(
+        image => image.id === imageId
+      );
+      newFolders[folderToUpdate].images[imageToUpdate].large_image_url = largeImageUrl;
+      newFolders[folderToUpdate].images[imageToUpdate].thumbnail_image_url = thumbnailImageUrl;
+
+      return {
+        ...state,
+        folders: newFolders
+      }
+    }
     case 'DELETE_IMAGE': {
       return {...state, saving: true}
     }

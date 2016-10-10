@@ -2,7 +2,8 @@ export default function reducer(state={
     activeImage: {
       id: null,
       url: null,
-      name: null
+      name: null,
+      folderId: null
     },
     uploadImageErrorStatus: {
       msg: null,
@@ -83,6 +84,7 @@ export default function reducer(state={
       newActiveImage['id'] = action.payload.id;
       newActiveImage['url'] = action.payload.large_image_url;
       newActiveImage['name'] = action.payload.name;
+      newActiveImage['folderId'] = action.payload.folder;
       const newUploadImageErrorStatus = {
         msg: null,
         status: 'success'

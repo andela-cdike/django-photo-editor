@@ -17,8 +17,9 @@ export default class ThumbNailView extends React.Component {
     // separate image thumbnails from tools thumbnails
     if (this.props.title === '') {
       const url = e.currentTarget.href;
-      const name = e.currentTarget.name
-      this.props.dispatch(this.props.action(imageId, url, name));
+      const name = e.currentTarget.name;
+      const folderId = e.currentTarget.getAttribute('data-folderid');
+      this.props.dispatch(this.props.action(folderId, imageId, url, name));
     } else {
       const url = e.currentTarget.name;
       this.props.dispatch(this.props.action(this.props.token, imageId, url));
