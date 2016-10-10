@@ -538,3 +538,24 @@ a:hover {
   background-color: #aab5bc;
 }
 
+
+/**
+  Popover box
+**/
+#popover-positioned-bottom {
+  background-color: #aab5bc;
+}
+
+.popover.bottom>.arrow:after {
+  border-bottom-color: #aab5bc;
+}
+
+h3.popover-title {
+  background-color: #222;
+  border-bottom: 1px solid #aab5bc;
+  color: #a94442;
+}
+
+.popover-content {
+  background-color: #aab5bc;
+}
