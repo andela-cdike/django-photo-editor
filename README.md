@@ -12,7 +12,7 @@ Photomagick is a basic photo editing web application. It also allows users share
 + Python version >= 2.7. Get it [here](https://www.python.org/downloads/release/python-2711/).
 + [Postgres](https://www.postgresql.org/download/)
 + [NodeJS and NPM](https://docs.npmjs.com/getting-started/installing-node)
-+ Have a postgresSQL database called bucketlist_db.
++ Have a postgresSQL database called Photo_Magick.
 
 ### optional
 + [virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
