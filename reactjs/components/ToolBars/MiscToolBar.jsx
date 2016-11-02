@@ -1,18 +1,22 @@
 import React from 'react';
 import {
   Button, Col, ControlLabel, FormControl, FormGroup,
-  ListGroup, ListGroupItem, Row
+  Row,
 } from 'react-bootstrap';
 
 import {
-  applyEffectFilter, resizeImage, rotateImage, showSpinner
+  applyEffectFilter, resizeImage, showSpinner,
 } from '../../actions/imageActions';
-
-import InputRangeSlider from './EnhanceToolBar/InputRangeSlider';
 
 
 export default class MiscToolBar extends React.Component {
-  handleClick(e) {
+  constructor() {
+    super();
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
     this.props.dispatch(showSpinner());
     this.props.dispatch(applyEffectFilter(
       this.props.token, this.props.activeImageId, 'rotate'
@@ -44,10 +48,10 @@ export default class MiscToolBar extends React.Component {
           <Col sm={11}>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Resize</ControlLabel>
-              <FormControl 
+              <FormControl
                 componentClass="select"
                 placeholder="Select option"
-                onChange={this.handleChange.bind(this)}
+                onChange={this.handleChange}
               >
                 {mappedSelectOptions}
               </FormControl>
@@ -57,10 +61,10 @@ export default class MiscToolBar extends React.Component {
         <br />
         <Row>
           <Col sm={11}>
-            <Button onClick={this.handleClick.bind(this)}>
+            <Button onClick={this.handleClick}>
               Rotate
               &nbsp;
-              <i class="fa fa-undo" aria-hidden="true"></i>
+              <i className="fa fa-undo" aria-hidden="true" />
             </Button>
           </Col>
         </Row>
@@ -68,3 +72,9 @@ export default class MiscToolBar extends React.Component {
     );
   }
 }
+
+MiscToolBar.propTypes = {
+  activeImageId: React.PropTypes.number,
+  dispatch: React.PropTypes.func.isRequired,
+  token: React.PropTypes.string.isRequired,
+};

@@ -1,7 +1,7 @@
 // Add JWT token to header
 export function constructConfig(token) {
   return {
-    headers: {'Authorization': 'JWT ' + token}
+    headers: { Authorization: `JWT  ${token}` },
   };
 }
 
@@ -13,24 +13,24 @@ export function prepareUrl(imageId, operationName) {
 
   // split operationName with multiple words into individual words
   // so you could join them with an underscore
-  // all mixes (e.g. mix 1, mix 2) must be combined into mix_n_match 
+  // all mixes (e.g. mix 1, mix 2) must be combined into mix_n_match
   // to be identified with their accompanying integer
-  operationName = operationName.split(' ');
+  let operationNameCopy = operationName.split(' ');
 
-  switch (operationName[0]) {
+  switch (operationNameCopy[0]) {
     case 'mix': {
-      url = `${baseUrl}/mix_n_match/${operationName[1]}`;
+      url = `${baseUrl}/mix_n_match/${operationNameCopy[1]}`;
       break;
     }
     case 'watermark': {
-        url = `${baseUrl}/add_watermark`;
-        break;
+      url = `${baseUrl}/add_watermark`;
+      break;
     }
     default: {
-      operationName = operationName.join('_');
-      url = `${baseUrl}/${operationName}`
+      operationNameCopy = operationNameCopy.join('_');
+      url = `${baseUrl}/${operationNameCopy}`;
     }
   }
 
-  return url
+  return url;
 }

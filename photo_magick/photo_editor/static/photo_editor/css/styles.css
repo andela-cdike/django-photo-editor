@@ -266,7 +266,12 @@ a:hover {
   border: none;
   color: #aab5bc;
 }
+
 #toolbar .list-group-item:hover {
+  color: #f1f1f1;
+}
+
+#toolbar .btn {
   color: #f1f1f1;
 }
 
@@ -286,11 +291,17 @@ a:hover {
 .folder-delete-rename-btns {
   visibility: hidden;
   top: 9px;
-  right : -6px;
+  right : -9px;
 }
 
 #toolbar .folder-list-item:hover .folder-delete-rename-btns {
   visibility: visible;
+}
+
+#toolbar .btn-link {
+  padding: 0;
+  background-color: transparent;
+  border-color: transparent;
 }
 
 #toolbar .image-menu-btns {
@@ -315,8 +326,7 @@ a:hover {
 /**
   MISC TOOLBAR
 **/
-#toolbar .btn {
-  color: #f1f1f1;
+#toolbar .btn-default {
   background-color: #aab5bc;
   border-color: #aab5bc;
 }

@@ -14,4 +14,4 @@ export default combineReducers({
   images,
   imageProcessorTools,
   toolBarVisibility,
-})
+});

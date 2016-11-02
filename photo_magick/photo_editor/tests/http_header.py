@@ -18,18 +18,3 @@ class ApiHeaderAuthorization(APITestCase):
         token = jwt_encode_handler(payload)
         self.client = APIClient()
         self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)
-
-
-class ApiHeaderWrongAuthorization(APITestCase):
-    """Base class used to attach header to all request on setup."""
-    fixtures = ['initial_data', ]
-
-    def setUp(self):
-        """Include an appropriate `Authorization:` header on all requests"""
-        user = User.objects.all()[1]
-        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-        payload = jwt_payload_handler(user)
-        token = jwt_encode_handler(payload)
-        self.client = APIClient()
-        self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token)

@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  Button, Col, ListGroup, ListGroupItem, Row
+  Button, Col, ListGroup, ListGroupItem, Row,
 } from 'react-bootstrap';
 
 import {
-  changeActiveImage, deleteImage, renameImage, showSpinner
+  changeActiveImage, deleteImage, renameImage, showSpinner,
 } from '../../actions/imageActions';
 import { deleteFolder, renameFolder } from '../../actions/folderActions';
 
@@ -17,6 +17,10 @@ import ThumbnailView from './ThumbnailView';
 export default class FinderToolBar extends React.Component {
   constructor() {
     super();
+    this.onChildChanged = this.onChildChanged.bind(this);
+    this.openFolderModals = this.openFolderModals.bind(this);
+    this.openImageActionModals = this.openImageActionModals.bind(this);
+    this.toggleFolderIcon = this.toggleFolderIcon.bind(this);
     this.state = {
       activeFolderId: null,
       activeFolderName: null,
@@ -27,33 +31,32 @@ export default class FinderToolBar extends React.Component {
       showRenameFolderModal: false,
       showDeleteImageModal: false,
       showRenameImageModal: false,
-    }
-  }
-
-  toggleFolderIcon(e) {
-    const elementId = e.currentTarget.id;
-    if (this.state.activeFolderId === elementId){
-      this.setState({ activeFolderId: null })
-    }
-    else {
-      this.setState({ activeFolderId: e.currentTarget.id })
-    }
+    };
   }
 
   onChildChanged(childKey, state) {
     this.setState({ [childKey]: state });
   }
 
+  toggleFolderIcon(e) {
+    const elementId = Number(e.currentTarget.id);
+    if (this.state.activeFolderId === elementId) {
+      this.setState({ activeFolderId: null });
+    } else {
+      this.setState({ activeFolderId: elementId });
+    }
+  }
+
   openFolderModals(e) {
-    e.preventDefault()
+    e.preventDefault();
     const key = e.currentTarget.name;
     const element = e.currentTarget.parentNode.parentNode;
     const folderId = element.getAttribute('id');
-    const folderName = element.getAttribute('data')
-    this.setState({ 
+    const folderName = element.getAttribute('data');
+    this.setState({
       [key]: true,
       activeFolderId: Number(folderId),
-      activeFolderName: folderName
+      activeFolderName: folderName,
     });
   }
 
@@ -69,52 +72,53 @@ export default class FinderToolBar extends React.Component {
       activeFolderId: Number(folderId),
       activeImageId: Number(imageId),
       activeImageName: imageName,
-    })
+    });
   }
 
   render() {
-    const { folders } = this.props.folders;
-    const closedFolderIcon = <i class="fa fa-folder" aria-hidden="true"></i>;
-    const openFolderIcon = <i class="fa fa-folder-open" aria-hidden="true"></i>;
+    const { folders } = this.props;
+    const count = folders.length;
+    const closedFolderIcon = <i className="fa fa-folder" aria-hidden="true" />;
+    const openFolderIcon = <i className="fa fa-folder-open" aria-hidden="true" />;
 
     const folderMenuBtns = (
       <span>
-        <a href="#" name="showRenameFolderModal" onClick={this.openFolderModals.bind(this)}>
-          <i class="fa fa-pencil" aria-hidden="true" show={false}></i>
-        </a>
-        <a href="#" name="showDeleteFolderModal" onClick={this.openFolderModals.bind(this)}>
-          <i class="fa fa-times-circle-o" show={true}></i>
-        </a>
+        <Button bsStyle="link" name="showRenameFolderModal" onClick={this.openFolderModals}>
+          <i className="fa fa-pencil" aria-hidden="true" show={false} />
+        </Button>
+        <Button bsStyle="link" name="showDeleteFolderModal" onClick={this.openFolderModals}>
+          <i className="fa fa-times-circle-o" show />
+        </Button>
       </span>
     );
-    
-    const imgMenu = (
-      <span class="image-menu-btns">
-        <a
-          name="showDeleteImageModal" class="delete-image-link"
-          href="" onClick={this.openImageActionModals.bind(this)}
-        >
-          <i class="fa fa-times-circle-o" aria-hidden="true"></i>
-        </a>
-        <a
-          name="showRenameImageModal" class="rename-image-link"
-          href="" onClick={this.openImageActionModals.bind(this)}
-        >
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-        </a>
-      </span>
-    );
-    
 
-    const mappedFolders = folders.map((folder, i) =>
+    const imgMenu = (
+      <span className="image-menu-btns">
+        <a
+          name="showDeleteImageModal" className="delete-image-link"
+          href="" onClick={this.openImageActionModals}
+        >
+          <i className="fa fa-times-circle-o" aria-hidden="true" />
+        </a>
+        <a
+          name="showRenameImageModal" className="rename-image-link"
+          href="" onClick={this.openImageActionModals}
+        >
+          <i className="fa fa-pencil" aria-hidden="true" />
+        </a>
+      </span>
+    );
+
+
+    const mappedFolders = folders.map(folder =>
       <Row key={folder.id} class="folder-list-item">
         <Col md={9}>
           <ListGroupItem
             id={folder.id}
-            onClick={this.toggleFolderIcon.bind(this)}
+            onClick={this.toggleFolderIcon}
           >
             {
-              this.state.activeFolderId == folder.id
+              this.state.activeFolderId === folder.id
                 ? openFolderIcon
                 : closedFolderIcon
             }
@@ -126,13 +130,15 @@ export default class FinderToolBar extends React.Component {
           {folderMenuBtns}
         </Col>
         {
-          this.state.activeFolderId == folder.id
-            ? (<ThumbnailView
+          this.state.activeFolderId === folder.id
+            ? (
+              <ThumbnailView
                 class="thumbnail-view" action={changeActiveImage}
                 dispatch={this.props.dispatch} items={folder.images}
                 showSpinner={showSpinner} thumbnailMenu={imgMenu} title=""
                 token={this.props.token}
-               />)
+              />
+              )
             : null
         }
       </Row>
@@ -142,10 +148,11 @@ export default class FinderToolBar extends React.Component {
       <div>
         <Row>
           <Col md={10}>FOLDERS</Col>
-            <AddNewFolder
-              dispatch={this.props.dispatch}
-              token={this.props.token}
-            />
+          <AddNewFolder
+            count={count}
+            dispatch={this.props.dispatch}
+            token={this.props.token}
+          />
         </Row>
         <br />
         <Row>
@@ -157,9 +164,9 @@ export default class FinderToolBar extends React.Component {
               action={deleteFolder}
               arguments={{
                 folderId: this.state.activeFolderId,
-                token: this.props.token
+                token: this.props.token,
               }}
-              callBackParent={this.onChildChanged.bind(this)}
+              callBackParent={this.onChildChanged}
               childKey="showDeleteFolderModal"
               dispatch={this.props.dispatch}
               itemName={this.state.activeFolderName}
@@ -170,9 +177,9 @@ export default class FinderToolBar extends React.Component {
               action={renameFolder}
               arguments={{
                 folderId: this.state.activeFolderId,
-                token: this.props.token
+                token: this.props.token,
               }}
-              callBackParent={this.onChildChanged.bind(this)}
+              callBackParent={this.onChildChanged}
               childKey="showRenameFolderModal"
               dispatch={this.props.dispatch}
               itemName={this.state.activeFolderName}
@@ -184,9 +191,9 @@ export default class FinderToolBar extends React.Component {
               arguments={{
                 folderId: this.state.activeFolderId,
                 imageId: this.state.activeImageId,
-                token: this.props.token
+                token: this.props.token,
               }}
-              callBackParent={this.onChildChanged.bind(this)}
+              callBackParent={this.onChildChanged}
               childKey="showDeleteImageModal"
               dispatch={this.props.dispatch}
               itemName={this.state.activeImageName}
@@ -198,9 +205,9 @@ export default class FinderToolBar extends React.Component {
               arguments={{
                 folderId: this.state.activeFolderId,
                 imageId: this.state.activeImageId,
-                token: this.props.token
+                token: this.props.token,
               }}
-              callBackParent={this.onChildChanged.bind(this)}
+              callBackParent={this.onChildChanged}
               childKey="showRenameImageModal"
               dispatch={this.props.dispatch}
               itemName={this.state.activeImageName}
@@ -213,3 +220,11 @@ export default class FinderToolBar extends React.Component {
     );
   }
 }
+
+FinderToolBar.propTypes = {
+  dispatch: React.PropTypes.func.isRequired,
+  folders: React.PropTypes.arrayOf(
+    React.PropTypes.object,
+  ),
+  token: React.PropTypes.string.isRequired,
+};

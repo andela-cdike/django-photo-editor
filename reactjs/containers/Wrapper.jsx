@@ -1,16 +1,14 @@
 import React from 'react';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
 import { objectifyCookie } from '../actions/cookieActions';
 
 import Home from './Home';
 
 
-@connect((store) => {
-  return {
-    cookie: store.cookie.cookie,
-  }
-})
+@connect(store => ({
+  cookie: store.cookie.cookie,
+}))
 
 
 export default class Wrapper extends React.Component {
@@ -20,7 +18,11 @@ export default class Wrapper extends React.Component {
 
   render() {
     return (
-      <Home  />
+      <Home />
     );
   }
 }
+
+Wrapper.propTypes = {
+  dispatch: React.PropTypes.func,
+};

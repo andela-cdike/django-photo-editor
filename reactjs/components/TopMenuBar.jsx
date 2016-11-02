@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  Nav, NavItem
+  Nav, NavItem,
 } from 'react-bootstrap';
 
 import {
-  resetUploadErrorStatus, saveImageProcessing, showSpinner, undoImageProcessing
+  saveImageProcessing, showSpinner, undoImageProcessing,
 } from '../actions/imageActions';
 
 import CustomAlert from './CustomAlert';
@@ -14,25 +14,30 @@ import UploadImageModal from './TopMenuBar/UploadImageModal';
 export default class TopMenuBar extends React.Component {
   constructor() {
     super();
+    this.handleShare = this.handleShare.bind(this);
+    this.onChildChanged = this.onChildChanged.bind(this);
+    this.open = this.open.bind(this);
+    this.save = this.save.bind(this);
+    this.undo = this.undo.bind(this);
     this.state = {
       defaultFolderId: null,
       uploadAlertVisible: false,
       shareIsDisabled: true,
       shareAlertVisible: false,
-      showUploadModal: false
+      showUploadModal: false,
     };
   }
 
   componentWillReceiveProps(nextprops) {
     // enable if there is an image on image pane
     if (nextprops.activeImage.id) {
-      this.setState({ shareIsDisabled: false})
+      this.setState({ shareIsDisabled: false });
     }
   }
 
   onChildChanged(childKey, state) {
     // update visibility of alert from child
-    this.setState({ [childKey]: state});
+    this.setState({ [childKey]: state });
   }
 
   handleShare() {
@@ -48,10 +53,10 @@ export default class TopMenuBar extends React.Component {
   }
 
   open() {
-    if (this.props.folders.folders.length > 0) {
+    if (this.props.folders.length > 0) {
       this.setState({
-        defaultFolderId: this.props.folders.folders[0].id,
-        showUploadModal: true
+        defaultFolderId: this.props.folders[0].id,
+        showUploadModal: true,
       });
     } else {
       this.setState({ uploadAlertVisible: true });
@@ -72,11 +77,11 @@ export default class TopMenuBar extends React.Component {
 
   render() {
     const shareAlertMessage = (
-      "You need to either cancel or save the current changes to share image"
+      'You need to either cancel or save the current changes to share image'
     );
     const uploadAlertMessage = (
       'You need to create a folder first before you can upload an image!!!'
-    )
+    );
 
     return (
       <Nav
@@ -85,40 +90,40 @@ export default class TopMenuBar extends React.Component {
       >
         <NavItem
           eventKey={1} href="#"
-          ref="UploadImageButton"
-          onClick={this.open.bind(this)}
+          ref={(input) => { this.UploadImageButton = input; }}
+          onClick={this.open}
         >
-          <i class="fa fa-upload" aria-hidden="true"></i>
+          <i className="fa fa-upload" aria-hidden="true" />
           &nbsp; Upload Image
         </NavItem>
         <NavItem
           eventKey={2} title="Item"
           disabled={!this.props.processingInProgress}
-          onClick={this.save.bind(this)}
+          onClick={this.save}
         >
-          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          <i className="fa fa-floppy-o" aria-hidden="true" />
           &nbsp; Save
         </NavItem>
         <NavItem
           eventKey={3}
           disabled={!this.props.processingInProgress}
-          onClick={this.undo.bind(this)}
+          onClick={this.undo}
         >
-          <i class="fa fa-times" aria-hidden="true"></i>
+          <i className="fa fa-times" aria-hidden="true" />
           &nbsp; Undo
         </NavItem>
         <NavItem
           class="fb-share-button" data-href={this.props.activeImage.url}
           data-layout="button" data-size="small" data-mobile-iframe="true"
           eventKey={4} disabled={this.state.shareIsDisabled}
-          onClick={this.handleShare.bind(this)}
+          onClick={this.handleShare}
         >
-          <i class="fa fa-facebook-official" aria-hidden="true"></i>
+          <i className="fa fa-facebook-official" aria-hidden="true" />
           &nbsp; Share
         </NavItem>
 
         <UploadImageModal
-          callBackParent={this.onChildChanged.bind(this)}
+          callBackParent={this.onChildChanged}
           childKey="showUploadModal"
           defaultFolderId={this.state.defaultFolderId}
           dispatch={this.props.dispatch}
@@ -129,20 +134,20 @@ export default class TopMenuBar extends React.Component {
         />
 
         <CustomAlert
-          callBackParent={this.onChildChanged.bind(this)}
+          callBackParent={this.onChildChanged}
           childKey="uploadAlertVisible"
           spanClass="share-error-alert"
-          style="warning"
+          customStyle="warning"
           title="Error"
           message={uploadAlertMessage}
           showAlert={this.state.uploadAlertVisible}
         />
 
         <CustomAlert
-          callBackParent={this.onChildChanged.bind(this)}
+          callBackParent={this.onChildChanged}
           childKey="shareAlertVisible"
           spanClass="share-error-alert"
-          style="danger"
+          customStyle="danger"
           title="ERROR"
           message={shareAlertMessage}
           showAlert={this.state.shareAlertVisible}
@@ -152,3 +157,19 @@ export default class TopMenuBar extends React.Component {
     );
   }
 }
+
+TopMenuBar.propTypes = {
+  activeImage: React.PropTypes.shape({
+    id: React.PropTypes.number,
+    url: React.PropTypes.string,
+  }),
+  dispatch: React.PropTypes.func.isRequired,
+  folders: React.PropTypes.arrayOf(
+    React.PropTypes.object,
+  ),
+  processingInProgress: React.PropTypes.bool.isRequired,
+  token: React.PropTypes.string,
+  uploadImageErrorStatus: React.PropTypes.objectOf(
+    React.PropTypes.string,
+  ),
+};

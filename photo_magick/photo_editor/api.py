@@ -194,7 +194,7 @@ class ProcessImage(APIView):
         )
         out = image_processor_methods[method_index - 1]()
 
-        # save image to storage
+        # save image to temporary storage
         image_partial_url = '/photo_editor/img/temp_image.%s' % (
             image.format.lower())
         file_path = STATICFILES_DIRS[0] + image_partial_url

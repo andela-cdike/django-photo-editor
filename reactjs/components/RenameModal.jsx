@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Button, Col, ControlLabel, Form, FormControl,
-  FormGroup, Modal, Overlay, Popover
+  FormGroup, Modal, Overlay, Popover,
 } from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 
@@ -9,16 +9,21 @@ import { findDOMNode } from 'react-dom';
 export default class RenameModal extends React.Component {
   constructor(props) {
     super(props);
+    this.close = this.close.bind(this);
+    this.focusNameInput = this.focusNameInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.rename = this.rename.bind(this);
     this.state = {
       name: props.itemName,
-      showModal: props.showModal
-    }
+      showModal: props.showModal,
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ 
+    this.setState({
       name: nextProps.itemName,
-      showModal: nextProps.showModal 
+      showModal: nextProps.showModal,
     });
   }
 
@@ -30,15 +35,15 @@ export default class RenameModal extends React.Component {
 
   focusNameInput() {
     // focus on name input and move forward
-    const element = findDOMNode(this.refs.nameInput);
-    const temp_value = element.value;
+    const element = findDOMNode(this.nameInput);
+    const tempValue = element.value;
     element.focus();
     element.value = '';
-    element.value = temp_value;
+    element.value = tempValue;
   }
 
   handleChange(e) {
-    this.setState({ name: e.target.value})
+    this.setState({ name: e.target.value });
   }
 
   handleKeyPress(e) {
@@ -49,8 +54,8 @@ export default class RenameModal extends React.Component {
   }
 
   rename() {
-    let args = Object.assign({}, this.props.arguments,
-      {name: this.state.name}
+    const args = Object.assign({}, this.props.arguments,
+      { name: this.state.name }
     );
     this.props.dispatch(this.props.action(args));
     this.close();
@@ -60,8 +65,8 @@ export default class RenameModal extends React.Component {
     return (
       <Modal
         show={this.state.showModal}
-        onHide={this.close.bind(this)}
-        onEnter={this.focusNameInput.bind(this)}
+        onHide={this.close}
+        onEnter={this.focusNameInput}
       >
         <Modal.Header closeButton>
           <Modal.Title>Rename {this.props.type}</Modal.Title>
@@ -77,13 +82,13 @@ export default class RenameModal extends React.Component {
                 <FormControl
                   value={this.state.name}
                   type="text"
-                  ref="nameInput"
-                  onChange={this.handleChange.bind(this)}
-                  onKeyPress={this.handleKeyPress.bind(this)}
+                  ref={(input) => { this.nameInput = input; }}
+                  onChange={this.handleChange}
+                  onKeyPress={this.handleKeyPress}
                 />
                 <Overlay
                   show={this.state.showNameInputSubmitError}
-                  target={() => findDOMNode(this.refs.nameInput)}
+                  target={() => this.nameInput}
                   placement="bottom"
                 >
                   <Popover id="popover-positioned-bottom" title="Input Error">
@@ -96,8 +101,8 @@ export default class RenameModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={this.close.bind(this)}>Cancel</Button>
-          <Button onClick={this.rename.bind(this)}>
+          <Button onClick={this.close}>Cancel</Button>
+          <Button onClick={this.rename}>
             Rename
           </Button>
         </Modal.Footer>
@@ -105,3 +110,16 @@ export default class RenameModal extends React.Component {
     );
   }
 }
+
+RenameModal.propTypes = {
+  action: React.PropTypes.func.isRequired,
+  arguments: React.PropTypes.oneOfType([
+    React.PropTypes.any,
+  ]),
+  callBackParent: React.PropTypes.func.isRequired,
+  childKey: React.PropTypes.string.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
+  itemName: React.PropTypes.string,
+  showModal: React.PropTypes.bool.isRequired,
+  type: React.PropTypes.string.isRequired,
+};

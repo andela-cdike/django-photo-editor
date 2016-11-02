@@ -50,7 +50,7 @@ class ImageProcessor(object):
             'solarize': ImageOps.solarize
         }
         if self.operation == 'posterize':
-            out = operations[self.operation](self.img, 1)
+            out = operations[self.operation](self.img, bits=1)
         else:
             out = operations[self.operation](self.img)
         return out

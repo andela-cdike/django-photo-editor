@@ -1,19 +1,17 @@
 import React from 'react';
 import {
-    Col, Grid, Row
+    Col, Grid, Row,
 } from 'react-bootstrap';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
+import { refreshToken } from '../actions/cookieActions';
 import { fetchFolders } from '../actions/folderActions';
-import {
-  fetchImageProcessorTools
-} from '../actions/imageProcessorToolsActions';
-import {
-  updateToolBarVisibility
-} from '../actions/toolBarVisibilityActions';
-import {
-    updateEnhanceToolsValues
-} from '../actions/enhanceToolsActions';
+import fetchImageProcessorTools
+  from '../actions/imageProcessorToolsActions';
+import updateToolBarVisibility
+  from '../actions/toolBarVisibilityActions';
+import updateEnhanceToolsValues
+  from '../actions/enhanceToolsActions';
 
 import ImagePane from '../components/ImagePane';
 import LeftToolsGroupBar from '../components/LeftToolsGroupBar';
@@ -22,24 +20,22 @@ import ToolBars from '../components/ToolBars';
 import StatusBar from '../components/StatusBar';
 import TopMenuBar from '../components/TopMenuBar';
 
-import { shouldRefreshToken } from "../utils/refreshToken";
+import { shouldRefreshToken } from '../utils/refreshToken';
 
 
-@connect((store) => {
-  return {
-    activeImage: store.images.activeImage,
-    cookie: store.cookie.cookie,
-    effectTools: store.imageProcessorTools.effectTools,
-    enhanceToolsValues: store.enhanceTools.enhanceToolsValues,
-    filterTools: store.imageProcessorTools.filterTools,
-    folders: store.folders,
-    processingInProgress: store.images.processingInProgress,
-    showSpinner: store.images.showSpinner,
-    statistics: store.folders.statistics,
-    toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
-    uploadImageErrorStatus: store.images.uploadImageErrorStatus,
-  };
-})
+@connect(store => ({
+  activeImage: store.images.activeImage,
+  cookie: store.cookie.cookie,
+  effectTools: store.imageProcessorTools.effectTools,
+  enhanceToolsValues: store.enhanceTools.enhanceToolsValues,
+  filterTools: store.imageProcessorTools.filterTools,
+  folders: store.folders.folders,
+  processingInProgress: store.images.processingInProgress,
+  showSpinner: store.images.showSpinner,
+  statistics: store.folders.statistics,
+  toolBarVisibility: store.toolBarVisibility.toolBarVisibility,
+  uploadImageErrorStatus: store.images.uploadImageErrorStatus,
+}))
 
 
 export default class Home extends React.Component {
@@ -118,7 +114,50 @@ export default class Home extends React.Component {
           </Grid>
         </section>
       </main>
-
-    )
+    );
   }
 }
+
+Home.propTypes = {
+  activeImage: React.PropTypes.objectOf([
+    React.PropTypes.number,
+    React.PropTypes.string,
+  ]),
+  cookie: React.PropTypes.objectOf([
+    React.PropTypes.string,
+  ]),
+  dispatch: React.PropTypes.func,
+  effectTools: React.PropTypes.arrayOf([
+    React.PropTypes.objectOf([
+      React.PropTypes.number,
+      React.PropTypes.string,
+    ]),
+  ]),
+  enhanceToolsValues: React.PropTypes.objectOf([
+    React.PropTypes.number,
+  ]),
+  filterTools: React.PropTypes.arrayOf([
+    React.PropTypes.objectOf([
+      React.PropTypes.number,
+      React.PropTypes.string,
+    ]),
+  ]),
+  folders: React.PropTypes.arrayOf([
+    React.PropTypes.objectOf([
+      React.PropTypes.number,
+      React.PropTypes.string,
+    ]),
+  ]),
+  processingInProgress: React.PropTypes.bool,
+  showSpinner: React.PropTypes.bool,
+  statistics: React.PropTypes.objectOf([
+    React.PropTypes.number,
+    React.PropTypes.string,
+  ]),
+  toolBarVisibility: React.PropTypes.objectOf([
+    React.PropTypes.bool,
+  ]),
+  uploadImageErrorStatus: React.PropTypes.objectOf([
+    React.PropTypes.string,
+  ]),
+};

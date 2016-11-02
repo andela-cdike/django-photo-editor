@@ -1,17 +1,18 @@
 import React from 'react';
-import{ Alert, Button } from 'react-bootstrap';
+import { Alert, Button } from 'react-bootstrap';
 
 
 export default class CustomAlert extends React.Component {
   constructor() {
     super();
+    this.handleAlertDismiss = this.handleAlertDismiss.bind(this);
     this.state = {
       alertVisible: false,
-    }
+    };
   }
 
   componentWillReceiveProps(nextprops) {
-    this.setState({ alertVisible: nextprops.showAlert});
+    this.setState({ alertVisible: nextprops.showAlert });
   }
 
   handleAlertDismiss() {
@@ -21,24 +22,33 @@ export default class CustomAlert extends React.Component {
   }
 
   render() {
-    const { spanClass, message, style, title } = this.props;
+    const { spanClass, message, customStyle, title } = this.props;
     const alert = (
-      <Alert bsStyle={style} onDismiss={this.handleAlertDismiss.bind(this)}>
+      <Alert bsStyle={customStyle} onDismiss={this.handleAlertDismiss}>
         <h4>{title}</h4>
         <p>{message}</p>
-        
+
         <p>
-          <Button bsStyle={style} onClick={this.handleAlertDismiss.bind(this)}>
+          <Button bsStyle={customStyle} onClick={this.handleAlertDismiss}>
             Close
-        </Button>
+          </Button>
         </p>
       </Alert>
     );
 
     return (
-      <span class={spanClass}>
+      <span clasNames={spanClass}>
         { this.state.alertVisible ? alert : null }
       </span>
     );
   }
 }
+
+CustomAlert.propTypes = {
+  callBackParent: React.PropTypes.func.isRequired,
+  childKey: React.PropTypes.string.isRequired,
+  message: React.PropTypes.string,
+  spanClass: React.PropTypes.string,
+  customStyle: React.PropTypes.string,
+  title: React.PropTypes.string,
+};

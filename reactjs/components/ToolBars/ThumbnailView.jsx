@@ -1,17 +1,21 @@
 import React from 'react';
 import {
-  Col, Image, Row
+  Col, Image, Row,
 } from 'react-bootstrap';
 
-var Packery = require('react-packery-component')(React);
+const Packery = require('react-packery-component')(React);
 
 
 export default class ThumbNailView extends React.Component {
+  constructor() {
+    super();
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   // Calls appropriate actions when thumbnail is clicked
   handleClick(e) {
     e.preventDefault();
-    const imageId = e.currentTarget.id
+    const imageId = e.currentTarget.id;
     this.props.dispatch(this.props.showSpinner());
 
     // separate image thumbnails from tools thumbnails
@@ -27,25 +31,25 @@ export default class ThumbNailView extends React.Component {
   }
 
   render() {
-    const { id, title, items, shouldHaveOptions } = this.props;
+    const { id, title, items } = this.props;
 
     const mappedItems = items.map((item, i) =>
       <Col key={i} md={4} class="image-thumbnail">
         <a
-          id={item.id || this.props.activeImage.id}
+          id={item.id || this.props.activeImageId}
           data-folderid={item.folder || null}
-          name = {item.name}
+          name={item.name}
           href={item.large_image_url || '#'}
-          onClick={this.handleClick.bind(this)}
+          onClick={this.handleClick}
         >
-            <Image
-              src={item.thumbnail_image_url}
-              alt={item.name}
-              height="60"
-              width="90%"
-              square
-            />
-            <figcaption>{item.name}</figcaption>
+          <Image
+            src={item.thumbnail_image_url}
+            alt={item.name}
+            height="60"
+            width="90%"
+            square
+          />
+          <figcaption>{item.name}</figcaption>
         </a>
         {this.props.thumbnailMenu || null}
       </Col>
@@ -66,3 +70,17 @@ export default class ThumbNailView extends React.Component {
     );
   }
 }
+
+ThumbNailView.propTypes = {
+  action: React.PropTypes.func.isRequired,
+  activeImageId: React.PropTypes.number,
+  dispatch: React.PropTypes.func.isRequired,
+  id: React.PropTypes.string,
+  items: React.PropTypes.arrayOf(
+    React.PropTypes.object,
+  ),
+  showSpinner: React.PropTypes.func.isRequired,
+  title: React.PropTypes.string,
+  thumbnailMenu: React.PropTypes.node,
+  token: React.PropTypes.string.isRequired,
+};

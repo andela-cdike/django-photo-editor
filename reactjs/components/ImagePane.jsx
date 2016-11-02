@@ -1,32 +1,43 @@
 import React from 'react';
 import {
-  Col, Image, Row
+  Col, Image, Row,
 } from 'react-bootstrap';
 
-export default class ImagePane extends React.Component {
-  render() {
-    const spinnerAnimation = (
-      <div id="spinner-icon">
-      <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
-      <span class="sr-only">Loading...</span>
-      </div>      
-    );
+const ImagePane = ({ activeImage, showSpinner }) => {
+  const spinnerAnimation = (
+    <div id="spinner-icon">
+      <i className="fa fa-spinner fa-pulse fa-5x fa-fw" />
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
 
-    const content = (
-      <Col md={12}>
-        <Image id="active-image" src={this.props.activeImage.url} responsive alt="Current Image" />
-        { this.props.showSpinner ? spinnerAnimation : null }
-      </Col>
-    );
+  const content = (
+    <Col md={12}>
+      <Image id="active-image" src={activeImage.url} responsive alt="Current Image" />
+      { showSpinner ? spinnerAnimation : null }
+    </Col>
+  );
 
-    return (
-      <Row>
-        {
-          this.props.activeImage.id
-            ? content
-            : null
-        }
-      </Row>
-    );
-  }
-}
+  return (
+    <Row>
+      {
+        activeImage.id
+          ? content
+          : null
+      }
+    </Row>
+  );
+};
+
+// Disable eslint here because it doesn't yet support shape proptype
+/* eslint-disable */
+ImagePane.propTypes = {
+  activeImage: React.PropTypes.shape({
+    id: React.PropTypes.number,
+    url: React.PropTypes.string,
+  }),
+  showSpinner: React.PropTypes.bool,
+};
+/* eslint-enable */
+
+export default ImagePane;

@@ -1,17 +1,26 @@
 import React from 'react';
-import { 
-    Button, Col, Checkbox, ControlLabel, Form,
+import {
+    Button, Col, ControlLabel, Form,
     FormGroup, FormControl, Modal, Overlay,
-    Popover, Tooltip 
-} from 'react-bootstrap'
+    Popover, Tooltip,
+} from 'react-bootstrap';
 import { findDOMNode } from 'react-dom';
 
-import { addFolder, fetchFolders } from '../../actions/folderActions';
+
+import { addFolder } from '../../actions/folderActions';
 
 
-export default class AddButton extends React.Component {
-  constructor(props) {
-    super(props);
+export default class AddNewFolder extends React.Component {
+  constructor() {
+    super();
+    this.addFolder = this.addFolder.bind(this);
+    this.close = this.close.bind(this);
+    this.focusNameInput = this.focusNameInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.open = this.open.bind(this);
+    this.toggleTooltipOn = this.toggleTooltipOn.bind(this);
+    this.toggleTooltipOff = this.toggleTooltipOff.bind(this);
     this.state = {
       showModal: false,
       showTooltip: false,
@@ -24,26 +33,26 @@ export default class AddButton extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       if (this.props.count === 0) {
-        this.setState({ showTooltip: true});
+        this.setState({ showTooltip: true });
       }
     }, 2000);
   }
 
   focusNameInput() {
     // focus on name input field when modal loads
-    findDOMNode(this.refs.nameInput).focus();
+    findDOMNode(this.nameInput).focus();
   }
 
   // show error message to user submits empty field
   validateNameFieldFailed() {
     if (this.state.name.length === 0) {
-      this.setState({ showNameInputSubmitError: true });  
+      this.setState({ showNameInputSubmitError: true });
       setTimeout(() => {
-        this.setState({ showNameInputSubmitError: false });  
-      }, 2000)
-      return true
+        this.setState({ showNameInputSubmitError: false });
+      }, 2000);
+      return true;
     }
-    return false
+    return false;
   }
 
   addFolder() {
@@ -71,7 +80,7 @@ export default class AddButton extends React.Component {
   // store name field in a state
   handleChange(e) {
     const name = e.target.value;
-    this.setState({ name: name});
+    this.setState({ name });
   }
 
   // store checkbox value in state
@@ -89,31 +98,31 @@ export default class AddButton extends React.Component {
 
   // show tooltip
   toggleTooltipOn() {
-    this.setState({ showTooltip: true});
+    this.setState({ showTooltip: true });
   }
 
   // hide tooltip
   toggleTooltipOff() {
-    this.setState({ showTooltip: false});
+    this.setState({ showTooltip: false });
   }
 
   render() {
     return (
       <Col md={2}>
-        <div id="add-folder-button"> 
-          <a
-            href="#"
-            ref="addFolderButton"
-            onMouseEnter={this.toggleTooltipOn.bind(this)}
-            onMouseLeave={this.toggleTooltipOff.bind(this)}
-            onClick={this.open.bind(this)}
+        <div id="add-folder-button">
+          <Button
+            bsStyle="link"
+            ref={(input) => { this.addFolderButton = input; }}
+            onMouseEnter={this.toggleTooltipOn}
+            onMouseLeave={this.toggleTooltipOff}
+            onClick={this.open}
           >
-            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-          </a>
+            <i className="fa fa-plus-circle" aria-hidden="true" />
+          </Button>
 
           <Overlay
             show={this.state.showTooltip}
-            target={() => findDOMNode(this.refs.addFolderButton)}
+            target={() => this.addFolderButton}
             placement="bottom"
           >
             <Tooltip id="tooltip">Add Folder</Tooltip>
@@ -122,12 +131,13 @@ export default class AddButton extends React.Component {
 
         <Modal
           show={this.state.showModal}
-          onHide={this.close.bind(this)}
-          onEnter={this.focusNameInput.bind(this)}>
+          onHide={this.close}
+          onEnter={this.focusNameInput}
+        >
           <Modal.Header closeButton>
             <Modal.Title>Add Folder</Modal.Title>
           </Modal.Header>
-          
+
           <Modal.Body>
             <Form horizontal>
               <FormGroup controlId="name">
@@ -135,17 +145,17 @@ export default class AddButton extends React.Component {
                   Name
                 </Col>
                 <Col sm={11}>
-                  <FormControl 
+                  <FormControl
                     value={this.state.name}
-                    type="text" 
-                    placeholder="Holiday" 
-                    ref="nameInput"
-                    onChange={this.handleChange.bind(this)}
-                    onKeyPress={this.handleKeyPress.bind(this)}
+                    type="text"
+                    placeholder="Holiday"
+                    ref={(input) => { this.nameInput = input; }}
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleKeyPress}
                   />
                   <Overlay
                     show={this.state.showNameInputSubmitError}
-                    target={() => findDOMNode(this.refs.nameInput)}
+                    target={() => this.nameInput}
                     placement="bottom"
                   >
                     <Popover id="popover-positioned-bottom" title="Input Error">
@@ -156,15 +166,21 @@ export default class AddButton extends React.Component {
               </FormGroup>
             </Form>
           </Modal.Body>
-          
+
           <Modal.Footer>
-            <Button onClick={this.close.bind(this)}>Cancel</Button>
-            <Button onClick={this.addFolder.bind(this)}>
+            <Button onClick={this.close}>Cancel</Button>
+            <Button onClick={this.addFolder}>
               Add
             </Button>
           </Modal.Footer>
-        </Modal>          
+        </Modal>
       </Col>
-    )
+    );
   }
 }
+
+AddNewFolder.propTypes = {
+  count: React.PropTypes.number,
+  dispatch: React.PropTypes.func.isRequired,
+  token: React.PropTypes.string.isRequired,
+};

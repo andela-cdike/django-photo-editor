@@ -1,21 +1,28 @@
 import React from 'react';
 import {
   Button, Col, ControlLabel, Form, FormControl, FormGroup,
-  Modal, NavItem, Overlay, Popover
+  Modal, Overlay, Popover,
 } from 'react-bootstrap';
-import { findDOMNode } from 'react-dom'
+import { findDOMNode } from 'react-dom';
 
-import { fetchFolders } from '../../actions/folderActions';
 import {
-  resetUploadErrorStatus, uploadImage, showSpinner
+  resetUploadErrorStatus, uploadImage, showSpinner,
 } from '../../actions/imageActions';
-
-import CustomAlert from '../CustomAlert';
 
 
 export default class UploadImageModal extends React.Component {
   constructor(props) {
     super(props);
+
+    this.close = this.close.bind(this);
+    this.focusNameInput = this.focusNameInput.bind(this);
+    this.handleFolderChange = this.handleFolderChange.bind(this);
+    this.handleImageFileChange = this.handleImageFileChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.hidePopover = this.hidePopover.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
+
     this.state = {
       folderId: null,
       image: null,
@@ -26,7 +33,7 @@ export default class UploadImageModal extends React.Component {
       imageFieldValid: true,
       imageValidityState: null,
       uploadImageFailed: false,
-    }
+    };
   }
 
   componentWillReceiveProps(nextprops) {
@@ -37,20 +44,20 @@ export default class UploadImageModal extends React.Component {
         break;
       }
       case 'success': {
-        this.close()
+        this.close();
         break;
       }
       default: {
         this.setState({
           folderId: nextprops.defaultFolderId,
-          showModal: nextprops.showModal
+          showModal: nextprops.showModal,
         });
       }
     }
   }
 
-  focusNameInput(component, e) {
-    findDOMNode(this.refs.nameInput).focus();
+  focusNameInput() {
+    findDOMNode(this.nameInput).focus();
   }
 
   handleNameChange(e) {
@@ -71,33 +78,32 @@ export default class UploadImageModal extends React.Component {
   }
 
   handleImageFileChange(e) {
-    let file = e.target.files[0];
+    const file = e.target.files[0];
 
     if (file.type.split('/')[0] === 'image') {
-      this.setState({ 
+      this.setState({
         image: file,
         imageValidityState: 'success',
-        name: file.name
+        name: file.name,
       });
       return true;
-    } else {
-      this.setState({ imageValidityState: 'error' });
-      return false;
     }
+    this.setState({ imageValidityState: 'error' });
+    return false;
   }
 
   hidePopover() {
     // hide popover after 8s
-    setTimeout(()=> {
+    setTimeout(() => {
       this.setState({ uploadImageFailed: false });
     }, 8000);
   }
 
   close() {
-    this.props.dispatch(resetUploadErrorStatus()); 
+    this.props.dispatch(resetUploadErrorStatus());
     this.setState({
       name: '',
-      showModal: false 
+      showModal: false,
     });
     this.props.callBackParent(this.props.childKey, false);
   }
@@ -109,35 +115,34 @@ export default class UploadImageModal extends React.Component {
     if (this.state.imageValidityState === 'success') {
       dispatch(showSpinner());
       dispatch(uploadImage(token, name, folderId, image));
-    }
-    else {
+    } else {
       this.setState({ uploadImageFailed: true });
     }
   }
 
   render() {
-    const { folders } = this.props.folders;
+    const { folders } = this.props;
     const imageErrorMessage = (
       this.state.imageValidityState
         ? 'Select a valid image file'
         : null
     );
-    const mappedFolders = folders.map((folder, i) => 
+    const mappedFolders = folders.map(folder =>
       <option key={folder.id} value={folder.id}>{folder.name}</option>
     );
 
     return (
       <Modal
         show={this.state.showModal}
-        onHide={this.close.bind(this)}
-        onEnter={this.focusNameInput.bind(this)}
+        onHide={this.close}
+        onEnter={this.focusNameInput}
       >
         <Modal.Header closeButton>
           <Modal.Title>Upload Image</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form horizontal onKeyPress={this.handleKeyPress.bind(this)}>
+          <Form horizontal onKeyPress={this.handleKeyPress}>
             <FormGroup controlId="name">
               <Col componentClass={ControlLabel} sm={1}>
                 Name
@@ -147,14 +152,14 @@ export default class UploadImageModal extends React.Component {
                   value={this.state.name}
                   type="text"
                   placeholder="Leave blank if you want the original image name to be used"
-                  ref="nameInput"
-                  onChange={this.handleNameChange.bind(this)}
+                  ref={(input) => { this.nameInput = input; }}
+                  onChange={this.handleNameChange}
                 />
                 <Overlay
                   show={this.state.uploadImageFailed}
-                  target={() => findDOMNode(this.refs.nameInput)}
+                  target={() => this.nameInput}
                   placement="bottom"
-                  onEntered={this.hidePopover.bind(this)}
+                  onEntered={this.hidePopover}
                 >
                   <Popover id="popover-positioned-bottom" title="Input Error">
                     {this.props.uploadImageErrorStatus.msg}
@@ -170,7 +175,7 @@ export default class UploadImageModal extends React.Component {
                 <FormControl
                   componentClass="select"
                   placeholder="Select folder"
-                  onChange={this.handleFolderChange.bind(this)}
+                  onChange={this.handleFolderChange}
                 >
                   {mappedFolders}
                 </FormControl>
@@ -180,13 +185,13 @@ export default class UploadImageModal extends React.Component {
               controlId="image-file"
               validationState={this.state.imageValidityState}
             >
-              <Col sm={ControlLabel} sm={1}>
+              <Col componentClass={ControlLabel} sm={1}>
                 <ControlLabel>Image</ControlLabel>
               </Col>
               <Col sm={11}>
                 <FormControl
                   type="file" accept="image/*"
-                  onChange={this.handleImageFileChange.bind(this)}
+                  onChange={this.handleImageFileChange}
                 />
                 {imageErrorMessage || 'Click to select Image to upload'}
               </Col>
@@ -195,10 +200,24 @@ export default class UploadImageModal extends React.Component {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button onClick={this.close.bind(this)}>Cancel</Button>
-          <Button onClick={this.uploadImage.bind(this)}>Upload</Button>
+          <Button onClick={this.close}>Cancel</Button>
+          <Button onClick={this.uploadImage}>Upload</Button>
         </Modal.Footer>
       </Modal>
     );
   }
 }
+
+UploadImageModal.propTypes = {
+  callBackParent: React.PropTypes.func.isRequired,
+  childKey: React.PropTypes.string.isRequired,
+  dispatch: React.PropTypes.func.isRequired,
+  folders: React.PropTypes.arrayOf(
+    React.PropTypes.object,
+  ),
+  showModal: React.PropTypes.bool.isRequired,
+  token: React.PropTypes.string.isRequired,
+  uploadImageErrorStatus: React.PropTypes.objectOf(
+    React.PropTypes.string,
+  ),
+};
