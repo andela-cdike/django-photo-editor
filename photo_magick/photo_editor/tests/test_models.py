@@ -1,78 +1,50 @@
-from os.path import dirname
-
-from django.contrib.auth.models import User
-from django.conf import settings
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
 from photo_editor.models import Folder, Image, ImageProcessorTool
+from photo_editor.tests import factories
 
 
 class UserModelTestCase(TestCase):
     """Test User model"""
     def test_user_model(self):
-        user = User.objects.create(username='rikky', password='marryam')
-        self.assertEqual(str(user), 'rikky')
+        user = factories.UserFactory()
+        self.assertEqual(str(user), user.username)
 
 
 class FolderTestCase(TestCase):
     """Tests for the Folder model"""
     def setUp(self):
-        user = User.objects.create(username='rikky', password='marryam')
-        Folder.objects.create(name='None', owner=user)
+        self.folder = factories.FolderFactory()
 
     def test_folder_model(self):
-        user = User.objects.all()[0]
         folder = Folder.objects.all()[0]
-        self.assertEqual(str(folder), 'None')
-        self.assertEqual(folder.owner, user)
+        self.assertEqual(str(folder), self.folder.name)
+        self.assertEqual(folder.owner, self.folder.owner)
         self.assertEqual(Folder.objects.count(), 1)
 
 
 class ImageModelTestCase(TestCase):
     """Tests for the Image model"""
     def setUp(self):
-        user = User.objects.create(username="rikky", password='marryam')
-        folder = Folder.objects.create(name='None', owner=user)
-        image_path = '{0}/photo_editor/tests/img/test.png'.format(
-            dirname(settings.BASE_DIR))
-        image = SimpleUploadedFile(
-            name='test.png',
-            content=open(image_path, 'rb').read(),
-            content_type='image/png'
-        )
-        Image.objects.create(image=image, folder=folder)
+        self.image = factories.ImageFactory()
 
     def test_image_model(self):
-        folder = Folder.objects.all()[0]
         image = Image.objects.all()[0]
-        self.assertEqual(str(image), 'test.png')
-        self.assertEqual(image.folder, folder)
+        self.assertEqual(str(image), self.image.name)
+        self.assertEqual(image.folder, self.image.folder)
 
     def tearDown(self):
-        image = Image.objects.all()[0]
-        image.delete()
+        self.image.delete()
 
 
 class ImageProcessorToolTestCase(TestCase):
     """Tests for the ImageProcessor model"""
     def setUp(self):
-        image_path = '{0}/photo_editor/tests/img/test.png'.format(
-            dirname(settings.BASE_DIR))
-        image = SimpleUploadedFile(
-            name='test.png',
-            content=open(image_path, 'rb').read(),
-            content_type='image/png'
-        )
-        ImageProcessorTool.objects.create(
-            name='gray scale',
-            image=image,
-            processor_type='effect'
-        )
+        self.processor_tool = factories.ImageProcessorToolFactory()
 
     def test_image_processor_model(self):
         processor_tool = ImageProcessorTool.objects.all()[0]
-        self.assertEqual(str(processor_tool), 'gray scale')
+        self.assertEqual(str(processor_tool), self.processor_tool.name)
         self.assertEqual(
             type(processor_tool.thumbnail_image_url()), unicode
         )

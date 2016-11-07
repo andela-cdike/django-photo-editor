@@ -9,7 +9,8 @@ import PIL
 from rest_framework import status
 
 from photo_editor.image_utils import ImageProcessor
-from photo_editor.models import Folder, Image, ImageProcessorTool
+from photo_editor.models import Image
+from photo_editor.tests import factories
 from .http_header import ApiHeaderAuthorization
 
 
@@ -27,13 +28,15 @@ class FolderViewTestSuite(ApiHeaderAuthorization):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_user_can_rename_folder(self):
-        url = reverse_lazy('folder-detail', kwargs={'pk': 1})
+        url = reverse_lazy('folder-detail',
+                           kwargs={'pk': self.image.folder.pk})
         data = {'name': 'Unknown'}
         response = self.client.put(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_can_delete_folder(self):
-        url = reverse_lazy('folder-detail', kwargs={'pk': 1})
+        url = reverse_lazy('folder-detail',
+                           kwargs={'pk': self.image.folder.pk})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
@@ -41,21 +44,9 @@ class FolderViewTestSuite(ApiHeaderAuthorization):
 class ImageProcessorToolViewTestSuite(ApiHeaderAuthorization):
     """Tests the ImageProcessor View"""
     def setUp(self):
-        image_path = '{0}/photo_editor/tests/img/test.png'.format(
-            os.path.dirname(settings.BASE_DIR))
-        image = SimpleUploadedFile(
-            name='test.png',
-            content=open(image_path, 'rb').read(),
-            content_type='image/png'
-        )
-        ImageProcessorTool.objects.create(
-            name='gray scale',
-            image=image,
-            processor_type='effect'
-        )
-        ImageProcessorTool.objects.create(
+        self.effect_tool = factories.ImageProcessorToolFactory()
+        self.filter_tool = factories.ImageProcessorToolFactory(
             name='color',
-            image=image,
             processor_type='filter'
         )
         super(ImageProcessorToolViewTestSuite, self).setUp()
@@ -72,33 +63,32 @@ class ImageProcessorToolViewTestSuite(ApiHeaderAuthorization):
 class ImageCreateDeleteViewTestSuite(ApiHeaderAuthorization):
     """Tests the UploadImage view"""
     def setUp(self):
-        image_path = '{0}/photo_editor/tests/img/test.png'.format(
-            os.path.dirname(settings.BASE_DIR))
-        self.image = SimpleUploadedFile(
-            name='test.png',
-            content=open(image_path, 'rb').read(),
+        self.image_to_upload = SimpleUploadedFile(
+            name='image_to_upload.png',
+            content=open(factories.IMAGE_PATH, 'rb').read(),
             content_type='image/png'
         )
-        self.another_image = SimpleUploadedFile(
-            name='demo.png',
-            content=open(image_path, 'rb').read(),
-            content_type='image/png'
-        )
-        self.folder = Folder.objects.filter(name='None')[0]
         super(ImageCreateDeleteViewTestSuite, self).setUp()
 
     def test_user_can_upload_image(self):
         url = reverse_lazy('create-image')
-        data = {'image': self.image, 'folder_id': 1, 'name': 'test'}
+        data = {
+            'image': self.image_to_upload,
+            'folder_id': self.image.folder.id,
+            'name': 'image_to_upload.png'
+        }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertIn("https://res.cloudinary.com/andela-troupon/image/upload",
                       response.content)
 
     def test_a_folder_cannot_have_image_of_duplicate_names(self):
-        Image.objects.create(image=self.image, folder=self.folder, name='test')
         url = reverse_lazy('create-image')
-        data = {'image': self.another_image, 'folder_id': 1, 'name': 'test'}
+        data = {
+            'image': self.image_to_upload,
+            'folder_id': self.image.folder.id,
+            'name': 'test.png'
+        }
         response = self.client.post(url, data)
         self.assertEqual(
             response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -106,8 +96,7 @@ class ImageCreateDeleteViewTestSuite(ApiHeaderAuthorization):
         self.assertIn('msg', response.data.keys())
 
     def test_user_can_rename_image(self):
-        image = Image.objects.create(image=self.image, folder=self.folder)
-        url = reverse_lazy('image-detail', kwargs={'image_id': image.id})
+        url = reverse_lazy('image-detail', kwargs={'image_id': self.image.id})
         data = {'name': 'retest'}
         response = self.client.put(url, data)
         image = Image.objects.get(name=data['name'])
@@ -115,13 +104,12 @@ class ImageCreateDeleteViewTestSuite(ApiHeaderAuthorization):
         self.assertEqual(image.name, data['name'])
 
     def test_user_can_delete_image(self):
-        image = Image.objects.create(image=self.image, folder=self.folder)
-        url = reverse_lazy('image-detail', kwargs={'image_id': image.id})
+        url = reverse_lazy('image-detail', kwargs={'image_id': self.image.id})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_delete_non_existent_image_returns_error_with_msg(self):
-        url = reverse_lazy('image-detail', kwargs={'image_id': 1})
+        url = reverse_lazy('image-detail', kwargs={'image_id': 1000})
         response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -130,16 +118,7 @@ class ProcessImageTestSuite(ApiHeaderAuthorization):
     """Tests that ProcessImage view works appropriately"""
 
     def setUp(self):
-        self.image_path = '{0}/photo_editor/tests/img/test.png'.format(
-            os.path.dirname(settings.BASE_DIR))
         self.temp_file_path = '/static/photo_editor/img/temp_image.png'
-        folder = Folder.objects.filter(name='None')[0]
-        image = SimpleUploadedFile(
-            name='test.png',
-            content=open(self.image_path, 'rb').read(),
-            content_type='image/png'
-        )
-        self.image = Image.objects.create(image=image, folder=folder)
         super(ProcessImageTestSuite, self).setUp()
 
     def test_grayscale(self):
@@ -382,18 +361,9 @@ class ProcessedImageTestSuite(ApiHeaderAuthorization):
     """Creates data that would be used for tests that inherit from it"""
     def setUp(self):
         super(ProcessedImageTestSuite, self).setUp()
-        folder = Folder.objects.filter(name='None')[0]
-        image_path = '{0}/photo_editor/tests/img/test.png'.format(
-            os.path.dirname(settings.BASE_DIR))
-        image = SimpleUploadedFile(
-            name='test.png',
-            content=open(image_path, 'rb').read(),
-            content_type='image/png'
-        )
-        self.image = Image.objects.create(image=image, folder=folder)
 
         # convert image to grayscale
-        image = PIL.Image.open(image_path)
+        image = PIL.Image.open(factories.IMAGE_PATH)
         image_processor = ImageProcessor(image, 'gray_scale')
         image = image_processor.apply_pil_process_ops()
 
