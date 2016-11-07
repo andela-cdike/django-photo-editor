@@ -43,7 +43,9 @@ Follow the steps below to install photomagick on your computer:
     ```
 
 3. It is recommended that you create a virtual environment here before proceeding with installation: 
-    ```$ mkvirtualenv name_of_virtual_environment```
+    ```cmd
+    $ mkvirtualenv name_of_virtual_environment
+    ```
 
 4. Install all project's dependencies both backend and frontend by running the following commands in order (from project root):
     ```cmd
@@ -64,13 +66,15 @@ Run ```$ python photo_magick/manage.py runserver``` to start the server.
 
 ### Tests
 To run tests:
-    ```$ python photo_magick/manage.py test --settings=photo_magick.settings.test```
+```cmd
+$ python photo_magick/manage.py test --settings=photo_magick.settings.test
+```
 
 For coverage report:
-    ```cmd
-    $ coverage run --source=photo_editor photo_magick/manage.py test photo_magick --noinput --settings=photo_magick.settings.test
-    $ coverage report -m
-    ```
+```cmd
+$ coverage run --source=photo_editor photo_magick/manage.py test photo_magick --noinput --settings=photo_magick.settings.test
+$ coverage report -m
+```
 
 ## License
 GNU GPL
