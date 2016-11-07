@@ -1,0 +1,25 @@
+{
+  "name": "django-photo-editor",
+  "description": "App's frontend requirements",
+  "main": "",
+  "authors": [
+    "Chukwuerika Dike"
+  ],
+  "license": "ISC",
+  "homepage": "https://photomagick.herokuapp.com",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.7",
+    "font-awesome": "~4.6.3",
+    "jquery": "~3.1.0",
+    "react": "~15.3.1",
+    "react-bootstrap": "~0.30.3"
+  }
+}

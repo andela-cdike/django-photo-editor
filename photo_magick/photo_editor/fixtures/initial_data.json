@@ -1,0 +1,48 @@
+[
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$vSPA5ES6geDm$D4hgvMoQ19NbGyVAjz/YZYNEfcgN6lDnItpqWt0qQew=",
+        "last_login": "2016-07-11",
+        "is_superuser": true,
+        "username": "Erika",
+        "first_name": "",
+        "last_name": "",
+        "email": "chukwuerika.dike@andela.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2016-07-11",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$24000$zXdCMkYs5UYH$BwbLYwryWI/haJjUGlKAHnWqdaoNaLnvGUZRWQW3qB4=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Malik",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2016-07-12",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "photo_editor.folder",
+    "pk": 1,
+    "fields": {
+        "date_created": "2016-07-11",
+        "date_last_modified": "2016-07-11",
+        "name": "None",
+        "owner": 1
+    }
+}
+]

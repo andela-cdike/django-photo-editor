@@ -1,0 +1,42 @@
+language: python
+python:
+  - "2.7"
+
+# setup environment
+env:
+  - DJANGO_VERSION=1.9.7
+  - DJANGO_SETTINGS_MODULE='photo_magick.settings.test'
+
+
+# install dependencies
+install:
+  - pip install -r requirements.txt
+  - npm install bower
+
+# run test scripts
+script:
+  - bower install --settings=photo_magick.settings.test
+  - python photo_magick/manage.py collectstatic --noinput --settings=photo_magick.settings.test
+  - coverage run --source=photo_editor photo_magick/manage.py test photo_magick --noinput --settings=photo_magick.settings.test
+
+# run coveralls after successful tests
+after_success:
+  - coveralls
+
+# Deploy to staging or production with proper settings
+deploy:
+  provider: heroku
+  api_key:
+    secure: JiDOXorcMRyBoMXnc7TGbjgsMnj/1mKLkA0n48QSyFkC1BRGRtaoo+0SGsj9WkaSkMZFeYOl5jCTHIM0abDHEMkSCLwebsm8W4MT8EdnBBUxBknVugIIfVh1EaqV1D5BsOZvPU2y3OntzcIMlKUXhvz0/acWRJENK7a/1zwHjghpNHFAyGR/G6iiyQhmfn1ivdUz3OcZ6qp2W4XLMPSDxbpje2gNXh6SYv3zebWIrgEzCH6atFQ2F24NU9aWmRK9v116cxAqXiE8p7dRWm875oT4X9OAolajIy9mqj8WSl+znusDpfWlmnM4c9r9YnK7fWILN9U9DqwxIoRIukkBE+vnkLVa4l+D+iY6CpS8FbYwBBztGCzZtzAo6EksVmp22LELJ4jrYRkNsj0EzzDDWhO2k7j4yBAh9DdB0AUwgiGwPrPieV9h2icFlfeQiNG0l8BPrGNuSK5zu4cW+PxjeYD31/rcYU18hUbCSs++XIlsoUhYRAe98rF/+DUl0ouLh3fBDuT0ixMRQebfLFwcQeutIlJdQo14O+H0zqcvlPfR74EBn0WJkIpja04zyRpQlq/DRWspgWBHDNBlCMcqW4J0IOFDi31MBH5T3Dk0Bs2FEqCCbGIgTpWsWmDoWBKzfgleESWik39cLh7wqk6dBXxWuTio1TM+OcUOPzBk5bc=
+  buildpack:
+    - node
+    - python
+  app: photomagick
+  on:
+    repo: andela-cdike/django-photo-editor
+    all_branches: true
+  run:
+    - "export DJANGO_SETTINGS_MODULE=photo_magick.settings.production"
+    - "python photo_magick/manage.py collectstatic --noinput --settings=photo_magick.settings.production"
+    - "python photo_magick/manage.py makemigrations --settings=photo_magick.settings.production"
+    - "python photo_magick/manage.py migrate --settings=photo_magick.settings.production"

@@ -1,0 +1,571 @@
+/*font-family: 'Audiowide', cursive;
+font-family: 'Lancelot', cursive;
+font-family: 'Pirata One', cursive;
+*/
+html {
+  height: 100%
+}
+
+body {
+  background-color: #222;
+  height: 100%;
+  font-family: 'Ubuntu', sans-serif;
+  color: #f1f1f1;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+#App1 {
+  height: 100%;
+}
+
+main {
+  height: 100%;
+}
+
+header {
+  height: 8%;
+}
+
+figcaption {
+  font-family: font-family: 'Lancelot', cursive;;
+  font-size: 10px;
+  margin-bottom: 3rem;
+  text-transform: capitalize;
+}
+
+a {
+  color: #f1f1f1;
+}
+
+a:focus,
+a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+/**
+  Login page styles
+**/
+.login-page-background {
+  background-image: url("../img/background-img.jpg");
+  background-size: 100%;
+}
+
+#login-container {
+  background-color: rgba;
+}
+
+.fadeIndDown {
+  animation-name: fadeInDown;
+}
+
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+#frame {
+  margin-top: 10%;
+}
+
+.panel {
+  background-color: rgba(31, 56, 58, 0.9);
+  box-shadow: 0px 0px 20px 1px black;
+  border-radius: 20px;
+  height: 30rem;
+}
+
+.panel-title {
+  font-family: 'Old Standard TT', serif;
+}
+
+.btn-social {
+  position: relative;
+  padding-left: 44px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-social.btn-lg {
+  padding-left: 61px;
+}
+
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-facebook:hover {
+  color: #fff;
+  background-color: #30487b;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-social.btn-lg :first-child {
+  line-height: 1.5em;
+  width: 45px;
+  font-size: 1.7em;
+}
+
+.btn-social :first-child {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  text-align: center;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/**
+  App styles
+**/
+
+:focus {
+  outline: none;
+}
+
+#header-bar {
+  background-color: #222;
+}
+
+.navbar {
+  border-radius: 0;
+  border-color: transparent;
+}
+
+@media (min-width: 1100px) {
+  .container {
+    width: 100%;
+  }
+}
+
+#logo {
+  display: inline-block;
+  height: 30px;
+  width: 36px;
+  margin-top: -3px;
+}
+
+.brand-name {
+  color: #fff;
+  font-family: 'Old Standard TT', serif;
+}
+
+.profile-link .dropdown-menu {
+  background-color: #222;
+}
+
+.profile-link .dropdown-menu > li > a {
+  color: #f1f1f1;
+}
+
+.profile-link .dropdown-menu > li > a:hover {
+  background-color: #aab5bc;
+}
+
+#content {
+  height: 92%;
+}
+
+#content .container {
+  height: 100%;
+  width: 100%;
+}
+
+
+/**
+  TOP MENU BAR
+**/
+
+#top-menu-bar {
+  background-color: #aab5bc;
+  height: 7%;
+}
+
+#top-menu-bar .nav > li > a {
+  color: #f1f1f1;
+}
+
+#top-menu-bar .nav > li > a > i {
+  color: #222;
+}
+
+#top-menu-bar .nav > li > a:focus,
+#top-menu-bar .nav > li > a:hover {
+  color: #fff;
+  background-color: transparent;
+}
+
+#top-menu-bar .nav > li.disabled > a {
+  color: #ccc;
+}
+
+.share-error-alert {
+  position: absolute;
+  right: 8px;
+  opacity: 0.9;
+  z-index: 1;
+}
+
+
+/**
+  MID SECTION WHERE THE EDITING HAPPENS
+**/
+
+#mid {
+  height: 85%;
+}
+
+#mid .list-group-item {
+  background-color: transparent;
+  border: none;
+  color: #222;
+}
+
+
+/**
+  TOOLS GROUP BAR
+**/
+
+#left-tools-group-bar {
+  display: table;
+  background-color: #aab5bc;
+  height: 100%;
+}
+
+#left-tools-group-bar .list-group {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+}
+
+#left-tools-group-bar .list-group-item:hover {
+  color: #f1f1f1;
+}
+
+#left-tools-group-bar .list-group-item.active {
+  color: #f1f1f1;
+}
+
+
+/**
+  TOOL BAR
+**/
+#toolbar {
+  background-color: #222;
+  height: 100%;
+  overflow: auto;
+}
+
+#toolbar .list-group-item {
+  background-color: transparent;
+  border: none;
+  color: #aab5bc;
+}
+
+#toolbar .list-group-item:hover {
+  color: #f1f1f1;
+}
+
+#toolbar .btn {
+  color: #f1f1f1;
+}
+
+
+/**
+  FOLDER TOOLBAR
+**/
+#toolbar .folder-list-item .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.add-folder-button .default {
+  color: #aab5bc;
+}
+
+.folder-delete-rename-btns {
+  visibility: hidden;
+  top: 9px;
+  right : -9px;
+}
+
+#toolbar .folder-list-item:hover .folder-delete-rename-btns {
+  visibility: visible;
+}
+
+#toolbar .btn-link {
+  padding: 0;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+#toolbar .image-menu-btns {
+  visibility: hidden;
+  position: absolute;
+  top: -17px;
+}
+
+#toolbar .image-thumbnail:hover .image-menu-btns {
+  visibility: visible;
+}
+
+#toolbar .image-menu-btns .delete-image-link {
+  position: absolute;
+  right: -48px;
+}
+
+#toolbar .fa-pencil {
+  margin-right: 4px;
+}
+
+/**
+  MISC TOOLBAR
+**/
+#toolbar .btn-default {
+  background-color: #aab5bc;
+  border-color: #aab5bc;
+}
+
+/**
+  Enhance toolbar
+  input sliders
+**/
+.form {
+  height: 52px;
+  margin: 0 auto;
+  padding-top: 15px;
+  width: 100%;
+}
+
+.formField {
+  margin-bottom: 5rem;
+}
+
+.formField p {
+  text-transform: capitalize;
+}
+
+.InputRange {
+  cursor: pointer;
+  height: 1rem;
+  position: relative;
+  width: 100%;
+}
+
+.InputRange-label {
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.InputRange-label--min,
+.InputRange-label--max {
+  bottom: -1.4rem;
+  position: absolute;
+}
+
+.InputRange-label--min {
+  left: 0;
+}
+
+.InputRange-label--max {
+  right: -1rem;
+}
+
+.InputRange-label--value {
+  position: absolute;
+  top: -1.8rem;
+}
+
+.InputRange-labelContainer {
+  left: -50%;
+  position: relative;
+}
+
+.InputRange-labelContainer .InputRange-label--max {
+  left: 50%;
+}
+
+.InputRange-slider {
+  appearance: none;
+  background: #d6dbdf;
+  border: 1px solid #d6dbdf;
+  border-radius: 100%;
+  cursor: pointer;
+  display: block;
+  height: 1rem;
+  margin-left: -0.5rem;
+  margin-top: -0.65rem;
+  outline: none;
+  position: absolute;
+  top: 50%;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  width: 1rem;
+}
+
+.InputRange-slider:active {
+  transform: scale(1.3);
+}
+
+.InputRange-slider:focus {
+  box-shadow: 0 0 0 5px transparentize(#d6dbdf, 0.8)
+}
+
+.InputRange-slider .InputRange.is-disabled {
+  background: #aab5bc;
+  border: 1px solid #aab5bc;
+  box-shadow: none;
+  transform: none;
+}
+
+.InputRange-sliderContainer {
+  transition: left 0.3s ease-out;
+}
+
+.InputRange-track {
+  background: #aab5bc;
+  border-radius: 0.3rem;
+  display: block;
+  height: 0.3rem;
+  position: relative;
+  transition: left 0.3s ease-out, width 0.3s ease-out;
+}
+
+.InputRange-track .InputRange.is-disabled {
+  background: #cbd2d6;
+}
+
+.InputRange-track--container {
+  left: 0;
+  margin-top: -0.15rem;
+  position: absolute;
+  right: 0;
+  top: 50%;
+}
+
+.InputRange-track--active {
+  background: #d6dbdf;
+}
+
+
+/**
+  Misc Tools
+**/
+.form-control {
+  color: #f1f1f1;
+  background-color: #aab5bc;
+}
+
+/*#misc-toolbar .btn {
+  color: #f1f1f1;
+  background-color: #aab5bc;
+  border-color: #aab5bc;
+}
+*/
+
+/**
+  Image Pane
+**/
+
+#image-pane {
+  background-color: #222;
+  background-image: linear-gradient(45deg, #aab5bc 25%, transparent 25%, transparent 75%, #aab5bc 75%), 
+  linear-gradient(45deg, #aab5bc 25%, transparent 25%, transparent 75%, #aab5bc 75%);
+  background-size: 5px 5px;
+  background-position: 0 0, 10px 10px;
+  height: 100%;
+  opacity: 0.9;
+}
+
+#image-pane .row {
+  height: 100%;
+}
+
+#image-pane .col-md-12 {
+  position: relative;
+  height: 100%;
+}
+
+#active-image {
+  width: 90%;
+  height: 97%;
+  margin: 0.8rem auto;
+}
+
+#spinner-icon {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+}
+
+
+/**
+  Status bar
+**/
+
+#bottom-status-bar {
+  background-color: #aab5bc;
+  height: 8%;
+}
+
+#bottom-status-bar p {
+  text-align: center;
+}
+
+/**
+  Modals Reset
+**/
+.modal-content {
+  background-color: #222;
+}
+
+.modal-header {
+  border-bottom: 1px solid #aab5bc;
+}
+
+.modal-header .close {
+  color: #f1f1f1;
+}
+
+.modal-footer {
+  border-top: 1px solid #aab5bc;
+}
+
+.modal-footer .btn-default {
+  background-color: #aab5bc;
+  color: #f1f1f1;
+}
+
+
+/**
+  Alert Box
+**/
+.alert.alert-danger.alert-dismissable {
+  background-color: #aab5bc;
+}
+
+
+/**
+  Popover box
+**/
+#popover-positioned-bottom {
+  background-color: #aab5bc;
+}
+
+.popover.bottom>.arrow:after {
+  border-bottom-color: #aab5bc;
+}
+
+h3.popover-title {
+  background-color: #222;
+  border-bottom: 1px solid #aab5bc;
+  color: #a94442;
+}
+
+.popover-content {
+  background-color: #aab5bc;
+}

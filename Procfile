@@ -1,0 +1,1 @@
+web: python photo_magick/manage.py bower install; python photo_magick/manage.py collectstatic --noinput --settings=photo_magick.settings.production --verbosity 0; gunicorn photo_magick.wsgi --pythonpath=photo_magick --timeout 15 --keep-alive 5 --log-level debug --log-file -

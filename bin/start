@@ -1,0 +1,2 @@
+export DJANGO_SETTINGS_MODULE=photo_magick.settings
+gunicorn photo_magick.wsgi --pythonpath=photo_magick --log-file -
